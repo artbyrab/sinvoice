@@ -22,6 +22,7 @@ $itemA = new Item();
 $itemA->setPrice(2);
 $itemA->setQuantity(10);
 $itemA->setName('Baseball Sticker Pack');
+$itemA->setDiscountFromPercentage(10);
 $invoice->addItem($itemA);
 
 // add another item
@@ -108,8 +109,9 @@ $invoice->calculateTotals();
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Price Total</th>
-                            <th>Discount Percentage</th>
-                            <th>Discount Total</th>
+                            <?php if (!empty($invoice->getItemDiscountTotal())) { ?>
+                                <th>Discount</th>
+                            <?php } ?>
                             <th>Net Total</th>
                         </tr>
                     <?php foreach ($invoice->getItems() as $item) { ?>
@@ -118,23 +120,16 @@ $invoice->calculateTotals();
                             <td><?php echo $item->getPrice();?></td>
                             <td><?php echo $item->getQuantity();?></td>
                             <td><?php echo $item->getPriceTotal();?></td>
-                            <td> - <?php echo $item->getDiscountPercentage();?></td>
-                            <td> - <?php echo $item->getDiscountTotal();?></td>
+                            <?php if (!empty($invoice->getItemDiscountTotal())) { ?>
+                                <td><?php echo $item->getDiscount();?></td>
+                            <?php } ?>
                             <td><strong><?php echo $item->getNetTotal();?></strong></td>
                         </tr>
                     <?php }; ?>
                     </table>
                     <table class="table table-striped table-bordered pull-right" style="width:40%">
                         <tr>
-                            <th>Item Price Total:</th>
-                            <td><?php echo $invoice->getItemPriceTotal(); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Item Discount Total:</th>
-                            <td> - <?php echo $invoice->getItemDiscountTotal(); ?></td>
-                        </tr>
-                        <tr>
-                            <th>Item NetTotal:</th>
+                            <th>Net Total:</th>
                             <td><?php echo $invoice->getNetTotal(); ?></td>
                         </tr>
                         <tr>

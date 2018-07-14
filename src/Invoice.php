@@ -115,22 +115,14 @@ class Invoice {
     private $taxPercentage;
 
     /**
-     * @var integer $itemPriceTotal Is:
-     *  - the total of all the item price totals
-     */
-    private $itemPriceTotal;
-
-    /**
-     * @var integer $itemDiscountTotal Is:
-     *  - the total of all the item discounts
+     * @var integer $itemDiscountItemTotal Is:
+     *  - All the item discounts 
+     * 
+     * We might never use this when displaying an invoice, however when we are 
+     * displaying an invoice in a view, we need to know the total to determine
+     * whether to show a discount columb on the item section.
      */
     private $itemDiscountTotal;
-
-    /**
-     * @var integer $itemNetTotal Is:
-     *  - the total of all the item net totals
-     */
-    private $itemNetTotal;
 
     /**
      * @var integer $netTotal Is:
@@ -161,6 +153,30 @@ class Invoice {
      * @var integer $otherChargesTotal Is the ...
      */
     private $otherChargesTotal;
+
+    /**
+     * @var integer $discount Is an invoice level discount. Let's say you are
+     * already giving individual discount on your items and you need to offer
+     * your customer a flat invoice level discount.
+     * 
+     * This Is the discount as an integer value, for example '5.00' or '10.00'. 
+     * 
+     * You can set the discount as a integer value using the setDiscount() 
+     * function. Or, you can set the discount from a percentage value using the 
+     * setDiscountFromPercentage() function. Both populate this field.
+     */
+    private $discount;
+
+    /**
+     * @var integer $discountTotal is:
+     *  - discount 
+     *  - plus item discount total
+     * 
+     * This is really only here for admin functionality. Let's say you want to
+     * work out the average total discount on an invoice at item and invoice 
+     * level then this will help.
+     */
+    private $discount;
 
     /**
      * @var integer $grossTotal Is grossTotal due from the customer. The 
@@ -358,6 +374,31 @@ class Invoice {
     }
 
     /**
+     * Set the discount percentage
+     * 
+     * If you just want to set fixed value discount then use this function.
+     *
+     * @param integer $integer
+     */
+    public function setDiscount($integer)
+    {
+        $this->discount = round($integer, 2);
+    }
+
+    /**
+     * Set the discount percentage from a percentage
+     * 
+     * If you want to calculate your discount figure from a percentage then
+     * simply utilise this function.
+     *
+     * @param integer $percentage
+     */
+    public function setDiscountFromPercentage($percentage)
+    {
+        $this->discount = round(($this->getPriceTotal()/100) * $percentage, 2);
+    }
+
+    /**
      * Set Default Dates
      *
      * This will set some default dates that can be overridden if required.
@@ -377,9 +418,6 @@ class Invoice {
      */
     private function setDefaultTotals()
     {
-        $this->itemPriceTotal = 0.00;
-        $this->itemDiscountTotal = 0.00;
-        $this->itemNetTotal = 0.00;
         $this->shippingHandlingTotal = 0.00;
         $this->otherChargesTotal = 0.00;
         $this->netTotal = 0.00;
@@ -447,14 +485,15 @@ class Invoice {
 
         if (!empty($this->items)) {
             foreach ($this->items as $item){
-                $this->itemPriceTotal = $this->itemPriceTotal + $item->getPriceTotal();
-                $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscountTotal();
-                $this->itemNetTotal = $this->itemNetTotal + $item->getNetTotal(); 
+                $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscount(); 
+                $this->netTotal = $this->netTotal + $item->getNetTotal(); 
+                
             }
 
-            $this->netTotal = $this->itemNetTotal + $this->shippingHandlingTotal + $this->otherChargesTotal;
-            $this->taxTotal = ($this->netTotal/100) * $this->taxPercentage;
-            $this->grossTotal = $this->itemNetTotal + $this->taxTotal;
+            $this->discountTotal = $this->discount + $this->itemDiscountTotal;
+            $this->netTotal = $this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal;
+            $this->taxTotal = round(($this->netTotal/100) * $this->taxPercentage, 2);
+            $this->grossTotal = $this->netTotal + $this->taxTotal;
         }
     }
 
@@ -569,36 +608,6 @@ class Invoice {
     }
 
     /**
-     * Get the itemPriceTotal
-     *
-     * @return integer
-     */
-    public function getItemPriceTotal()
-    {
-        return $this->itemPriceTotal;
-    }
-
-    /**
-     * Get the discountTotal
-     *
-     * @return integer
-     */
-    public function getItemDiscountTotal()
-    {
-        return $this->itemDiscountTotal;
-    }
-
-    /**
-     * Get the itemNetTotal
-     *
-     * @return integer
-     */
-    public function getitemNetTotal()
-    {
-        return $this->itemNetTotal;
-    }
-
-    /**
      * Get the taxTotal
      *
      * @return integer
@@ -636,6 +645,26 @@ class Invoice {
     public function getOtherChargesTotal()
     {
         return $this->otherChargesTotal;
+    }
+
+    /**
+     * Get the discount
+     *
+     * @return integer
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Get the itemDiscountTotal
+     *
+     * @return integer
+     */
+    public function getItemDiscountTotal()
+    {
+        return $this->itemDiscountTotal;
     }
 
     /**

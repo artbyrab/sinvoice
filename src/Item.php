@@ -59,11 +59,14 @@ class Item {
     private $quantity;
 
     /**
-     * @var integer $discountPercentage Is the discount you with to give on the
-     * item in a percentage format. So if you wanted to give a 20% discount you 
-     * would set it at '20'.
+     * @var integer $discount Is the discount as an integer value, for example
+     * '5.00' or '10.00'. 
+     * 
+     * You can set the discount as a integer value using the setDiscount() 
+     * function. Or, you can set the discount from a percentage value using the 
+     * setDiscountFromPercentage() function. Both populate this field.
      */
-    public $discountPercentage;
+    public $discount;
 
     /**
      * Construct
@@ -119,12 +122,27 @@ class Item {
 
     /**
      * Set the discount percentage
+     * 
+     * If you just want to set fixed value discount then use this function.
      *
-     * @param integer $discountPercentage
+     * @param integer $integer
      */
-    public function setDiscountPercentage($discountPercentage)
+    public function setDiscount($integer)
     {
-        $this->discountPercentage = $discountPercentage;
+        $this->discount = round($integer, 2);
+    }
+
+    /**
+     * Set the discount percentage from a percentage
+     * 
+     * If you want to calculate your discount figure from a percentage then
+     * simply utilise this function.
+     *
+     * @param integer $percentage
+     */
+    public function setDiscountFromPercentage($percentage)
+    {
+        $this->discount = round(($this->getPriceTotal()/100) * $percentage, 2);
     }
 
     /**
@@ -168,13 +186,13 @@ class Item {
     }
 
     /**
-     * Get the discountPercentage
+     * Get the discount
      *
      * @return string
      */
-    public function getDiscountPercentage()
+    public function getDiscount()
     {
-        return $this->discountPercentage;
+        return $this->discount;
     }
 
     /**
@@ -199,20 +217,6 @@ class Item {
      */
     public function getNetTotal()
     {
-        return $this->getPriceTotal() - $this->getDiscountTotal();
+        return $this->getPriceTotal() - $this->getDiscount();
     }
-
-    /**
-     * Get the discount total
-     *
-     * This calculates the invoice item discount total. which is the price 
-     * total divided by 100 multiplied by the discount percentage.
-     *
-     * @return integer
-     */
-    public function getDiscountTotal()
-    {
-        return ($this->getPriceTotal() / 100) * $this->discountPercentage;
-    }
-
 }
