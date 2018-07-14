@@ -39,24 +39,24 @@ class Item {
     /**
      * @var string $name Is the name of the item, 'Basketball' or 'Bitcoin Mug'.
      */
-    public $name;
+    private $name;
 
     /**
      * @var string $description is the item description if needed. Default is 
      * automatically set.
      */
-    public $description = 'N/A';
+    private $description;
 
     /**
      * @var integer $price Is the price of the item in integer or decimal 
      * format, '20', or '21.99'.
      */
-    public $price;
+    private $price;
 
     /**
      * @var integer $quantity Is the number of items.
      */
-    public $quantity;
+    private $quantity;
 
     /**
      * @var integer $discountPercentage Is the discount you with to give on the
@@ -66,11 +66,6 @@ class Item {
     public $discountPercentage;
 
     /**
-     * @var ...
-     */
-    public $taxPercentage;
-
-    /**
      * Construct
      *
      * As well as contrusting the item we can set any default attribute values
@@ -78,22 +73,108 @@ class Item {
      */
     public function __construct()
     {
-        $this->setTaxPercentage(20);
     }
 
     /**
-     * Set tax Percentage
-     * 
-     * The tax is set at item level, as some items may not require tax. If you 
-     * need to overide the default tax simply set it after you initialise
-     * the object.
-     * 
-     * @param integer $percentage Is the tax percentage for the item in integer
-     * or decimal format. For example for 20% you would pass '20'.
+     * Set the name
+     *
+     * @param string $name
      */
-    private function setTaxPercentage($percentage)
+    public function setName($name)
     {
-        $this->taxPercentage = $percentage;
+        $this->name = $name;
+    }
+
+    /**
+     * Set the description
+     *
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Set the price
+     *
+     * We will ensure the price is rounded
+     *
+     * @param integer $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = round($price, 2);
+    }
+
+    /**
+     * Set the quantity
+     *
+     * @param integer $quantity
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * Set the discount percentage
+     *
+     * @param integer $discountPercentage
+     */
+    public function setDiscountPercentage($discountPercentage)
+    {
+        $this->discountPercentage = $discountPercentage;
+    }
+
+    /**
+     * Get the name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Get the price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Get the quantity
+     *
+     * @return string
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Get the discountPercentage
+     *
+     * @return string
+     */
+    public function getDiscountPercentage()
+    {
+        return $this->discountPercentage;
     }
 
     /**
@@ -102,7 +183,7 @@ class Item {
      * This calculates the invoice item price total. This is the price 
      * multiplied by the item quantity.
      *
-     * @return integer
+     * @param integer $reference
      */
     public function getPriceTotal()
     {
@@ -110,29 +191,15 @@ class Item {
     }
 
     /**
-     * Get the sub total
+     * Get the net total
      *
-     * This calculates the sub total which is the price total - discount total.
+     * This calculates the net total which is the price total - discount total.
      *
      * @return integer
      */
-    public function getSubTotal()
+    public function getNetTotal()
     {
         return $this->getPriceTotal() - $this->getDiscountTotal();
-    }
-
-    /**
-     * Get the VAT total
-     *
-     * This calculates the invoice item VAT total. This will divide the price 
-     * total plus the discount total divided by 100 then multiply by the tax 
-     * percentage.
-     *
-     * @return integer
-     */
-    public function getTaxTotal()
-    {
-        return ($this->getSubTotal() / 100) * $this->taxPercentage;
     }
 
     /**
@@ -148,16 +215,4 @@ class Item {
         return ($this->getPriceTotal() / 100) * $this->discountPercentage;
     }
 
-    /**
-     * Get the total
-     *
-     * This calculates the invoice item total, which is the sub total plus the 
-     * total tax.
-     *
-     * @return integer
-     */
-    public function getTotal()
-    {
-        return ($this->getSubTotal() + $this->getTaxTotal());
-    }
 }

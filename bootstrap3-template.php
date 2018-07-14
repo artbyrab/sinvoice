@@ -1,9 +1,9 @@
 <?php
 
 // Uncomment the below if you need to see errors
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -12,24 +12,31 @@ use Rabus\Sinvoice\Item;
 
 // lets create our new invoice
 $invoice = new Invoice();
-$invoice->number = "54678";
-$invoice->supplier = "Grant's Baseball Store, 1 High Street, London, England";
-$invoice->customer = "Frank Castle, 10 Main Street, Exeter, England";
-$invoice->customerShippingAddress = $invoice->customer;
+$invoice->setNumber("54678");
+$invoice->setSupplier("Grant's Baseball Store, 1 High Street, London, England");
+$invoice->setCustomer("Frank Castle, 10 Main Street, Exeter, England");
+$invoice->setCustomerShippingAddress($invoice->getCustomer());
 
 // add an item
 $itemA = new Item();
-$itemA->price = 2;
-$itemA->quantity = 10;
-$itemA->name = 'Baseball Sticker Pack';
+$itemA->setPrice(2);
+$itemA->setQuantity(10);
+$itemA->setName('Baseball Sticker Pack');
 $invoice->addItem($itemA);
 
 // add another item
 $itemB = new Item();
-$itemB->price = 20.0;
-$itemB->quantity = 2;
-$itemB->name = 'Baseball Sticker Book';
+$itemB->setPrice(20.0);
+$itemB->setQuantity(2);
+$itemB->setName('Baseball Sticker Book');
 $invoice->addItem($itemB);
+
+// add another item
+$itemC = new Item();
+$itemC->setName('Punisher Tshirt');
+$itemC->setPrice(19.99);
+$itemC->setQuantity(1);
+$invoice->addItem($itemC);
 
 // calculate the totals
 $invoice->calculateTotals();
@@ -41,9 +48,9 @@ $invoice->calculateTotals();
 <head>
   <meta charset="utf-8">
 
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
+  <title>Sinvoice - Bootstrap 3 Template</title>
+  <meta name="description" content="Sinvoice - Bootstrap 3 Template">
+  <meta name="author" content="RABUS">
 
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 
@@ -63,23 +70,13 @@ $invoice->calculateTotals();
 
 <body>
     <div class="container">
-        <nav class="navbar navbar-inverse">
-            <a class="navbar-brand" href="#">Sinvoice</a>
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="index.php">Home</a>
-                </li>
-                <li>
-                    <a href="bootstrap3-template.php">Bootstrap 3 Invoice</a>
-                </li>
-            </ul>
-        </nav>
+        <?php include "_nav.php"; ?> 
     </div>
     <div class="container">
         <div class="well">
             <div class="row">
                 <div class="col-lg-6">
-                    <h2>Invoice #<?php echo $invoice->number; ?></h2>
+                    <h2>Invoice #<?php echo $invoice->getNumber(); ?></h2>
                 </div><!--/.col-->
                 <div class="col-lg-6">
                 </div><!--/.col-->
@@ -88,19 +85,19 @@ $invoice->calculateTotals();
                 </div><!--/.col-->
                 <div class="col-lg-12">
                     <h3>Invoice From:</h3>
-                    <p><?php echo $invoice->supplier; ?></p>
+                    <p><?php echo $invoice->getSupplier(); ?></p>
                 </div><!--/.col-->
                 <div class="col-lg-6">
                     <h3>Invoice Details:</h3>
-                    Invoice Issued date: <?php echo $invoice->createdDate; ?><br>
-                    Invoice Due date: <?php echo $invoice->dueDate; ?><br>
+                    Invoice Issued date: <?php echo $invoice->getCreatedDate(); ?><br>
+                    Invoice Due date: <?php echo $invoice->getDueDate(); ?><br>
                 </div><!--/.col-->
                 <div class="col-lg-12">
                     <hr>
                     <h3>Bill To:</h3>
-                    <p><?php echo $invoice->customer; ?><p><br>
+                    <p><?php echo $invoice->getCustomer(); ?><p><br>
                     <strong>Customer Shipping Address</strong>
-                    <?php echo $invoice->customerShippingAddress; ?><br>
+                    <?php echo $invoice->getCustomerShippingAddress(); ?><br>
                 </div><!--/.col-->
                 <div class="col-lg-12">
                     <br>
@@ -113,38 +110,40 @@ $invoice->calculateTotals();
                             <th>Price Total</th>
                             <th>Discount Percentage</th>
                             <th>Discount Total</th>
-                            <th>Tax Total</th>
-                            <th>Total</th>
+                            <th>Net Total</th>
                         </tr>
                     <?php foreach ($invoice->getItems() as $item) { ?>
                         <tr>
-                            <td><?php echo $item->name;?></td>
-                            <td><?php echo $item->price;?></td>
-                            <td><?php echo $item->quantity;?></td>
+                            <td><?php echo $item->getName();?></td>
+                            <td><?php echo $item->getPrice();?></td>
+                            <td><?php echo $item->getQuantity();?></td>
                             <td><?php echo $item->getPriceTotal();?></td>
-                            <td><?php echo $item->discountPercentage;?></td>
-                            <td><?php echo $item->getDiscountTotal();?></td>
-                            <td><?php echo $item->getTaxTotal();?></td>
-                            <td><strong><?php echo $item->getTotal();?></strong></td>
+                            <td> - <?php echo $item->getDiscountPercentage();?></td>
+                            <td> - <?php echo $item->getDiscountTotal();?></td>
+                            <td><strong><?php echo $item->getNetTotal();?></strong></td>
                         </tr>
                     <?php }; ?>
                     </table>
                     <table class="table table-striped table-bordered pull-right" style="width:40%">
                         <tr>
-                            <th>SubTotal:</th>
-                            <td><?php echo $invoice->subTotal; ?></td>
+                            <th>Item Price Total:</th>
+                            <td><?php echo $invoice->getItemPriceTotal(); ?></td>
                         </tr>
                         <tr>
-                            <th>Discount Total:</th>
-                            <td><?php echo $invoice->discountTotal; ?></td>
+                            <th>Item Discount Total:</th>
+                            <td> - <?php echo $invoice->getItemDiscountTotal(); ?></td>
+                        </tr>
+                        <tr>
+                            <th>Item NetTotal:</th>
+                            <td><?php echo $invoice->getNetTotal(); ?></td>
                         </tr>
                         <tr>
                             <th>VAT:</th>
-                            <td><?php echo $invoice->taxTotal; ?></td>
+                            <td><?php echo $invoice->getTaxTotal(); ?></td>
                         </tr>
                         <tr>
-                            <th><h3>Total:</h3></th>
-                            <td><h3><strong><?php echo $invoice->total; ?></strong></h3></td>
+                            <th><h3>Gross Total:</h3></th>
+                            <td><h3><strong><?php echo $invoice->getGrossTotal(); ?></strong></h3></td>
                         </tr>
                     </table>
                 </div><!--/.col-->
