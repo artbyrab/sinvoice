@@ -1,10 +1,13 @@
-Sinvoice
-=========================
+# Sinvoice
+
+* http://www.darwinbiler.com/designing-and-making-the-readme-file-for-your-github-repository/
 
 If you are trying to create a new PHP Composer library, whether it will be going to submitted to packagist.org or just in your Github account, this template of files will surely help you make the process a lot easier and faster.
 
-Features
---------
+## Requirements
+
+
+## Features
 
 * PSR-4 autoloading compliant structure
 * Unit-Testing with PHPUnit

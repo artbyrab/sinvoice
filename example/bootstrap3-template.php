@@ -5,17 +5,18 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require __DIR__ . '/vendor/autoload.php';
+require ('../vendor/autoload.php');
 
 use Rabus\Sinvoice\Invoice;
 use Rabus\Sinvoice\Item;
+use Rabus\Sinvoice\Entity;
 
 // lets create our new invoice
 $invoice = new Invoice();
 $invoice->setNumber("54678");
-$invoice->setSupplier("Grant's Baseball Store, 1 High Street, London, England");
-$invoice->setCustomer("Frank Castle, 10 Main Street, Exeter, England");
-$invoice->setCustomerShippingAddress($invoice->getCustomer());
+$supplier = new Entity();
+$supplier->setName('Mr Supplier');
+$invoice->addSupplier($supplier);
 
 // add an item
 $itemA = new Item();
@@ -97,8 +98,7 @@ $invoice->calculateTotals();
                     <hr>
                     <h3>Bill To:</h3>
                     <p><?php echo $invoice->getCustomer(); ?><p><br>
-                    <strong>Customer Shipping Address</strong>
-                    <?php echo $invoice->getCustomerShippingAddress(); ?><br>
+                    
                 </div><!--/.col-->
                 <div class="col-lg-12">
                     <br>
@@ -109,7 +109,7 @@ $invoice->calculateTotals();
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Price Total</th>
-                            <?php if (!empty($invoice->getItemDiscountTotal())) { ?>
+                            <?php if (!empty($invoice->totals->getItemDiscountTotal())) { ?>
                                 <th>Discount</th>
                             <?php } ?>
                             <th>Net Total</th>
@@ -120,7 +120,7 @@ $invoice->calculateTotals();
                             <td><?php echo $item->getPrice();?></td>
                             <td><?php echo $item->getQuantity();?></td>
                             <td><?php echo $item->getPriceTotal();?></td>
-                            <?php if (!empty($invoice->getItemDiscountTotal())) { ?>
+                            <?php if (!empty($invoice->totals->getItemDiscountTotal())) { ?>
                                 <td><?php echo $item->getDiscount();?></td>
                             <?php } ?>
                             <td><strong><?php echo $item->getNetTotal();?></strong></td>
@@ -128,17 +128,28 @@ $invoice->calculateTotals();
                     <?php }; ?>
                     </table>
                     <table class="table table-striped table-bordered pull-right" style="width:40%">
+                        <?php if (!empty($invoice->totals->getDiscountTotal())) { ?>
+                            <tr>
+                                <th>Item Net Total:</th>
+                                <td><?php echo $invoice->totals->getItemNetTotal(); ?></td>
+                            </tr>
+                            <tr>
+                                <th>Discount:</th>
+                                <td><?php echo $invoice->totals->getDiscount(); ?></td>
+                            </tr>
+                        <?php } ?>
                         <tr>
                             <th>Net Total:</th>
-                            <td><?php echo $invoice->getNetTotal(); ?></td>
+                            <td><?php echo $invoice->totals->getNetTotal(); ?></td>
                         </tr>
+                        
                         <tr>
                             <th>VAT:</th>
-                            <td><?php echo $invoice->getTaxTotal(); ?></td>
+                            <td><?php echo $invoice->totals->getTaxTotal(); ?></td>
                         </tr>
                         <tr>
                             <th><h3>Gross Total:</h3></th>
-                            <td><h3><strong><?php echo $invoice->getGrossTotal(); ?></strong></h3></td>
+                            <td><h3><strong><?php echo $invoice->totals->getGrossTotal(); ?></strong></h3></td>
                         </tr>
                     </table>
                 </div><!--/.col-->

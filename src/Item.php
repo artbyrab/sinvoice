@@ -69,13 +69,21 @@ class Item {
     public $discount;
 
     /**
+     * @var string $code Is the code or reference of the items
+     */
+    public $code
+
+    /**
      * Construct
      *
      * As well as contrusting the item we can set any default attribute values
      * we want to define.
      */
-    public function __construct()
+    public function __construct($parameters = array()) 
     {
+        foreach($parameters as $key => $value) {
+            $this->$key = $value;
+        }
     }
 
     /**

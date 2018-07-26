@@ -12,42 +12,26 @@
 
 namespace Rabus\Sinvoice;
 
-use DateTime;
+use \DateTime;
 use Rabus\Sinvoice\Item;
+use Rabus\Sinvoice\Customer;
+use Rabus\Sinvoice\Supplier;
+use Rabus\Sinvoice\Recipient;
+use Rabus\Sinvoice\Shipping;
+use Rabus\Sinvoice\Totals;
 
 /**
  * Sinvoice - Superb Invoice
- * 
- * Why are you sending your customers invoices...? That is... Sinful! This 
- * isn't an invoice... this is a Sinvoice! 
- * 
- * Why did i call it Sinvoices, well, what else can you call an invoice 
- * package? It is truly a Superb Invoice's
- *
- * Sinvoices is designed to make it easy to create invoices and all their 
- * associatted items with relative ease.
- * 
- * In Sinvoices we will use the following terms:
- *  - Sinvoice
- *      - Much better than an invoice, do not let anyone tell you otherwise
- *  - Invoice
- *      - An invoice... just not quite as good as a Sinvoice
- *  - Supplier
- *      - The entity creating the invoice
- *  - Customer
- *      - The entity receiving the invoice, the billable party
- *  - Item
- *      - An item in an invoice
- *      - Items can hold various attributes like quantity and more
  *
  * @author RABUS rabus@art-by-rab.com
  */
-class Invoice {
-
+class Invoice 
+{
     /**
-     * @var string $number Is the invoice number. For legal reasons a invoice 
-     * needs to have a number but of course this can be a mix of numbers and 
-     * letters.
+     * @var string $number Is the invoice number.
+     * 
+     * If you are VAT registered in Europe you will likely need sequential 
+     * invoice numbers.
      */
     private $number;
 
@@ -58,11 +42,10 @@ class Invoice {
 
     /**
      * @var string $issuedDate Is the date the invoice is issued to the
-     * customer. By default this will be set as the created date and can be
-     * overwritten if needed.
+     * customer.
      */
     private $issuedDate;
-
+    
     /**
      * @var string $dueDate Is the date the invoice is due. Typically a due
      * date would be 14 or 21 days after the created date.
@@ -70,42 +53,12 @@ class Invoice {
     private $dueDate;
 
     /**
-     * @var string $shippingDate Is the date the invoice is due to be shipped.
-     */
-    private $shippingDate;
-
-    /**
-     * @var string $reference In some cases you may use a customer reference 
-     * on an invoice. For example if a company seperates invoices by department
-     * then they might have a unique reference for that deptartment.
+     * @var string $reference Is a reference you can apply for a specific
+     * customer need. For example if your invoice is going to a specific 
+     * department of a company, then you might need to provide them a 
+     * reference.
      */
     private $reference;
-
-    /**
-     * @var string $supplier In most cases you can put the supplier name, 
-     * address, telephone number and email in one field. The reason i added it 
-     * in one field is the complexity of the invoice model is reduced 
-     * drastically and therefore i believe worth it.
-     */
-    private $supplier;
-
-    /**
-     * @var string $customerAccountNumber Is any reference you may want to use
-     * to tie the invoice to a specific customer or regular customer.
-     */
-    private $customerAccountNumber;
-
-    /**
-     * @var string $customer In most cases you can put the customer name, 
-     * address, telephone number and email in one field.
-     */
-    protected $customer;
-
-    /**
-     * @var string $customerShippingAddress You can complete the shipping 
-     * address here if the item is due to be sent to the customer.
-     */
-    private $customerShippingAddress = 'N/A';
 
     /**
      * @var integer $taxPercentage The tax percentage is dependant on the 
@@ -113,84 +66,32 @@ class Invoice {
      * Kingdom as of 2018 this would be 20% VAT.
      */
     private $taxPercentage;
+    
+    /**
+     * @var object $customer is an instance of the Entity model. The customer
+     * is receiving the invoice from the supplier.
+     */
+    public $customer;
 
     /**
-     * @var integer $itemDiscountItemTotal Is:
-     *  - All the item discounts 
+     * @var object $shipping is an instance of the Shipping model. if the 
+     * item is being delivered/shipped then you should complete this.
      * 
-     * We might never use this when displaying an invoice, however when we are 
-     * displaying an invoice in a view, we need to know the total to determine
-     * whether to show a discount columb on the item section.
+     * The shipping default is null. If there is no delivery then you do not 
+     * need to fill in the shipping.
      */
-    private $itemDiscountTotal;
+    public $shipping = null;
 
     /**
-     * @var integer $netTotal Is:
-     *  - the item net total
-     *  - plus shipping and handling total
-     *  - plus other charges total
+     * @var object $totals is an instance of the Totals model.
      */
-    private $netTotal;
-
-    /**
-     * @var integer $taxTotal Is:
-     *  - The item net total divided by 100 and then multiplied by the tax 
-     * percentage
-     */
-    private $taxTotal;
-
-    /**
-     * @var integer $shippingHandlingTotal Is the ...
-     */
-    private $shippingHandlingTotal;
-
-    /**
-     * @var integer $otherChargesDescription Is the ...
-     */
-    private $otherChargesDescription;
-
-    /**
-     * @var integer $otherChargesTotal Is the ...
-     */
-    private $otherChargesTotal;
-
-    /**
-     * @var integer $discount Is an invoice level discount. Let's say you are
-     * already giving individual discount on your items and you need to offer
-     * your customer a flat invoice level discount.
-     * 
-     * This Is the discount as an integer value, for example '5.00' or '10.00'. 
-     * 
-     * You can set the discount as a integer value using the setDiscount() 
-     * function. Or, you can set the discount from a percentage value using the 
-     * setDiscountFromPercentage() function. Both populate this field.
-     */
-    private $discount;
-
-    /**
-     * @var integer $discountTotal is:
-     *  - discount 
-     *  - plus item discount total
-     * 
-     * This is really only here for admin functionality. Let's say you want to
-     * work out the average total discount on an invoice at item and invoice 
-     * level then this will help.
-     */
-    private $discount;
-
-    /**
-     * @var integer $grossTotal Is grossTotal due from the customer. The 
-     * gross total is:
-     *  - item net total 
-     *  - plus the tax total 
-     */
-    private $grossTotal;
+    public $totals;
 
     /**
      * @var string $items Is an array if Item models.
      */
     private $items = array();
- 
+
     /**
      * Construct
      *
@@ -199,11 +100,61 @@ class Invoice {
      * @param integer $taxPercentage Is the default tax percentage you wish 
      * to use in your invoice.
      */
-    public function __construct($taxPercentage=20.00)
+    public function __construct()
     {
+        
         $this->setDefaultDates();
-        $this->setDefaultTotals();
         $this->setTaxPercentage($taxPercentage);
+        $this->totals = new Totals();
+
+        if ($taxPercentage == null) {
+            $this->taxPercentage = 20.00;
+        }
+    }
+
+    /**
+     * Add customer
+     * 
+     * @param integer $customer is an instance of the Entity model.
+     */
+    public function addCustomer(Entity $customer)
+    {
+        $this->customer = $customer;
+    }
+
+    /**
+     * Get the customer
+     *
+     * @return string
+     */
+    public function getCustomer()
+    {
+        if (empty($this->customer)) {
+            return 'No customer set';
+        }
+        return $this->customer->formatToString();
+    }
+
+    /**
+     * Add shipping
+     * 
+     * @param integer $shipping is an instance of the Shipping model.
+     */
+    public function addShipping(Shipping $shipping)
+    {
+        $this->shipping = $shipping;
+    }
+
+    /**
+     * Set Default Dates
+     *
+     * This will set some default dates that can be overridden if required.
+     */
+    private function setDefaultDates()
+    {
+        $this->setCreatedDate('today');
+        $this->setIssuedDate('today');
+        $this->setDueDate('+ 14 days');
     }
 
     /**
@@ -214,6 +165,16 @@ class Invoice {
     public function setNumber($number)
     {
         $this->number = $number;
+    }
+
+    /**
+     * Get the number
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 
     /**
@@ -230,6 +191,16 @@ class Invoice {
     }
 
     /**
+     * Get the createdDate
+     *
+     * @return string
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
      * Set issued date
      * 
      * @param integer $date is the date in php DateTime format, for example, 
@@ -240,6 +211,16 @@ class Invoice {
         $date = new DateTime($date);
 
         $this->issuedDate = $date->format('Y-m-d');
+    }
+
+     /**
+     * Get the issuedDate
+     *
+     * @return integer
+     */
+    public function getIssuedDate()
+    {
+        return $this->issuedDate;
     }
 
     /**
@@ -256,77 +237,33 @@ class Invoice {
     }
 
     /**
-     * Set shipping date
-     * 
-     * @param integer $date is the date in php DateTime format, for example, 
-     * '+15 days'
+     * Get the dueDate
+     *
+     * @return integer
      */
-    public function setShippingDate($date)
+    public function getDueDate()
     {
-        $date = new DateTime($date);
-
-        $this->shippingDate = $date->format('Y-m-d');
+        return $this->dueDate;
     }
 
     /**
-     * Set the reference
+     * Set reference
      * 
-     * @param integer $reference
+     * @param string $reference 
      */
     public function setReference($reference)
     {
-        $this->reference = $reference;
+        $this->dueDate = $reference;
     }
 
     /**
-     * Set the supplier
-     * 
-     * @param integer $supplier
+     * Get the reference
+     *
+     * @return string
      */
-    public function setSupplier($supplier)
+    public function getReference()
     {
-        $this->supplier = $supplier;
-    }
-
-    /**
-     * Set the customer account number
-     * 
-     * @param integer $customerAccountNumber
-     */
-    public function setCustomerAccountNumber($customerAccountNumber)
-    {
-        $this->customerAccountNumber = $customerAccountNumber;
-    }
-
-    /**
-     * Set the customer 
-     * 
-     * The customer is typically:
-     *  - Customer name
-     *  - Customer address(billing address)
-     *  - Customer email address/phone number
-     * 
-     * If you have your customer fields in seperate fields simply merge them 
-     * into one string before passing to this function.
-     * 
-     * @param string $customer
-     */
-    public function setCustomer($customer)
-    {
-        $this->customer = $customer;
-    }
-
-    /**
-     * Set the customer shipping address
-     * 
-     * If the customer has a specific shipping address which is different from
-     * their billing address then you can set that here.
-     * 
-     * @param integer $customerShippingAddress
-     */
-    public function setCustomerShippingAddress($customerShippingAddress)
-    {
-        $this->customerShippingAddress = $customerShippingAddress;
+        return $this->reference;
     }
 
     /**
@@ -344,91 +281,27 @@ class Invoice {
     }
 
     /**
-     * Set the shipping and handling total
-     * 
-     * @param integer $shippingHandlingTotal
-     */
-    public function setShippingHandlingTotal($shippingHandlingTotal)
-    {
-        $this->shippingHandlingTotal = round($shippingHandlingTotal, 2);
-    }
-
-    /**
-     * Set the other charges description
-     * 
-     * @param string $otherChargesTotal
-     */
-    public function setOtherChargesDescription($otherChargesDescription)
-    {
-        $this->otherChargesDescription = $otherChargesDescription;
-    }
-
-    /**
-     * Set the other charges total
-     * 
-     * @param integer $otherChargesTotal
-     */
-    public function setOtherChargesTotal($otherChargesTotal)
-    {
-        $this->otherChargesTotal = round($otherChargesTotal, 2);
-    }
-
-    /**
-     * Set the discount percentage
-     * 
-     * If you just want to set fixed value discount then use this function.
+     * Get the tax percentage
      *
-     * @param integer $integer
+     * @return integer
      */
-    public function setDiscount($integer)
+    public function getTaxPercentage()
     {
-        $this->discount = round($integer, 2);
+        return $this->taxPercentage;
     }
 
-    /**
-     * Set the discount percentage from a percentage
-     * 
-     * If you want to calculate your discount figure from a percentage then
-     * simply utilise this function.
-     *
-     * @param integer $percentage
-     */
-    public function setDiscountFromPercentage($percentage)
+    public function calculateTotals()
     {
-        $this->discount = round(($this->getPriceTotal()/100) * $percentage, 2);
+        $this->totals->calculateTotals($this);
     }
 
-    /**
-     * Set Default Dates
-     *
-     * This will set some default dates that can be overridden if required.
-     */
-    private function setDefaultDates()
+    public function getTotals()
     {
-        $this->setCreatedDate('today');
-        $this->setIssuedDate('today');
-        $this->setDueDate('+ 14 days');
-    }
-
-    /**
-     * Set Default Totals
-     * 
-     * This is used at object construction level but is also used when we have 
-     * no items in the object and the totals are calculated.
-     */
-    private function setDefaultTotals()
-    {
-        $this->shippingHandlingTotal = 0.00;
-        $this->otherChargesTotal = 0.00;
-        $this->netTotal = 0.00;
-        $this->taxTotal = 0.00;
-        $this->grossTotal = 0.00;
+        return $this->totals;
     }
 
     /**
      * Add an item to the basket
-     * 
-     * After the item is added we will recalculate the totals.
      *
      * @param object $item is an Item object being added to the items array.
      */
@@ -440,8 +313,6 @@ class Invoice {
 
     /**
      * Remove an item from the basket by its key.
-     * 
-     * After the item is added we will recalculate the totals.
      *
      * @param int $key is the invoice items key
      */
@@ -453,8 +324,6 @@ class Invoice {
 
     /**
      * Get the current items in the basket
-     * 
-     * The items will need to be iterated over when displaying them.
      *
      * @return array An array of Item models.
      */
@@ -465,225 +334,10 @@ class Invoice {
 
     /**
      * Clear all the current items
-     *
      */
     public function clearItems()
     {
         $this->items = array();
-        $this->setDefaultTotals();
-    }
-
-    /**
-     * Calculate total
-     *
-     * This calculates the total of the invoice for most of the total by 
-     * iterating over the items stored and adding the results.
-     */
-    public function calculateTotals()
-    {
-        $this->setDefaultTotals();
-
-        if (!empty($this->items)) {
-            foreach ($this->items as $item){
-                $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscount(); 
-                $this->netTotal = $this->netTotal + $item->getNetTotal(); 
-                
-            }
-
-            $this->discountTotal = $this->discount + $this->itemDiscountTotal;
-            $this->netTotal = $this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal;
-            $this->taxTotal = round(($this->netTotal/100) * $this->taxPercentage, 2);
-            $this->grossTotal = $this->netTotal + $this->taxTotal;
-        }
-    }
-
-    /**
-     * Get the number
-     *
-     * @return string
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
-     * Get the createdDate
-     *
-     * @return string
-     */
-    public function getCreatedDate()
-    {
-        return $this->createdDate;
-    }
-
-    /**
-     * Get the issuedDate
-     *
-     * @return integer
-     */
-    public function getIssuedDate()
-    {
-        return $this->issuedDate;
-    }
-
-    /**
-     * Get the dueDate
-     *
-     * @return integer
-     */
-    public function getDueDate()
-    {
-        return $this->dueDate;
-    }
-
-    /**
-     * Get the shippingDate
-     *
-     * @return integer
-     */
-    public function getShippingDate()
-    {
-        return $this->shippingDate;
-    }
-
-    /**
-     * Get the reference
-     *
-     * @return integer
-     */
-    public function getReference()
-    {
-        return $this->reference;
-    }
-
-    /**
-     * Get the supplier
-     *
-     * @return integer
-     */
-    public function getSupplier()
-    {
-        return $this->supplier;
-    }
-
-    /**
-     * Get the customerAccountNumber
-     *
-     * @return integer
-     */
-    public function getCustomerAccountNumber()
-    {
-        return $this->customerAccountNumber;
-    }
-
-    /**
-     * Get the customer
-     *
-     * @return integer
-     */
-    public function getCustomer()
-    {
-        return $this->customer;
-    }
-
-    /**
-     * Get the customerShippingAddress
-     *
-     * @return integer
-     */
-    public function getCustomerShippingAddress()
-    {
-        return $this->customerShippingAddress;
-    }
-
-    /**
-     * Get the tax percentage
-     *
-     * @return integer
-     */
-    public function getTaxPercentage()
-    {
-        return $this->taxPercentage;
-    }
-
-    /**
-     * Get the taxTotal
-     *
-     * @return integer
-     */
-    public function getTaxTotal()
-    {
-        return $this->taxTotal;
-    }
-
-    /**
-     * Get the shippingHandlingTotal
-     *
-     * @return integer
-     */
-    public function getShippingHandlingTotal()
-    {
-        return $this->shippingHandlingTotal;
-    }
-
-    /**
-     * Get the otherChargesDescription
-     *
-     * @return integer
-     */
-    public function getOtherChargesDescription()
-    {
-        return $this->otherChargesDescription;
-    }
-
-    /**
-     * Get the otherChargesTotal
-     *
-     * @return integer
-     */
-    public function getOtherChargesTotal()
-    {
-        return $this->otherChargesTotal;
-    }
-
-    /**
-     * Get the discount
-     *
-     * @return integer
-     */
-    public function getDiscount()
-    {
-        return $this->discount;
-    }
-
-    /**
-     * Get the itemDiscountTotal
-     *
-     * @return integer
-     */
-    public function getItemDiscountTotal()
-    {
-        return $this->itemDiscountTotal;
-    }
-
-    /**
-     * Get the netTotal
-     *
-     * @return integer
-     */
-    public function getNetTotal()
-    {
-        return $this->netTotal;
-    }
-
-    /**
-     * Get the grossTotal
-     *
-     * @return integer
-     */
-    public function getGrossTotal()
-    {
-        return $this->grossTotal;
+        $this->totals->setDefaultTotals();
     }
 }

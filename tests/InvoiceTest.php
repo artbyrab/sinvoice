@@ -1,6 +1,8 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
+use Rabus\Sinvoice\Entity;
+use \Datetime;
 
 /**
  * Sinvoice Invoice Model Test
@@ -53,9 +55,7 @@ class InvoiceTest extends TestCase
         $this->invoice->setCreatedDate('today');
         $this->invoice->setIssuedDate('today');
         $this->invoice->setDueDate('+14 days');
-        $this->invoice->setShippingDate('today');
         $this->invoice->setReference('fc_1');
-        $this->invoice->setSupplier('Frank Castle, 1 Park Street, New York.');
         $this->invoice->setCustomerAccountNumber('45983');
         $this->invoice->setCustomer('Billy Russo, 1 Lowland Avenue, New York');
         $this->invoice->setTaxPercentage(21);
