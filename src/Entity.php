@@ -47,6 +47,12 @@ class Entity {
      */
     private $reference;
 
+    /**
+     * Construct
+     * 
+     * @param array $parameters Pass any of the models attributes while 
+     * constructing.
+     */
     public function __construct($parameters = array()) 
     {
         foreach($parameters as $key => $value) {
@@ -55,7 +61,7 @@ class Entity {
     }
 
     /**
-     * Get the supplier details formatted
+     * Get the entitys details formatted
      * 
      * @param string $name
      */
@@ -74,7 +80,7 @@ class Entity {
     }
 
     /**
-     * Set the name. 
+     * Set the name
      * 
      * @param string $name
      */

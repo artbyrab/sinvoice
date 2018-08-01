@@ -73,7 +73,6 @@ class Totals {
 
     /**
      * Construct
-     *
      */
     public function __construct()
     {
@@ -208,8 +207,10 @@ class Totals {
                 $this->shippingHandlingTotal = $invoice->shipping->getPrice();
             }
 
-            $this->discountTotal = $this->discount + $this->itemDiscountTotal;
-            $this->netTotal = $this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal;
+            $this->itemDiscountTotal = round($this->itemDiscountTotal, 2);
+            $this->itemNetTotal = round($this->itemNetTotal, 2);
+            $this->discountTotal = round($this->discount + $this->itemDiscountTotal, 2);
+            $this->netTotal = round($this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal, 2);
             $this->taxTotal = round(($this->netTotal/100) * $invoice->getTaxPercentage(), 2);
             $this->grossTotal = $this->netTotal + $this->taxTotal;
         }

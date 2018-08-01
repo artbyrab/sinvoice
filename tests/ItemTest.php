@@ -42,7 +42,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the ... function
+     * Test the construct function
      */
     public function testConstruct()
     {
@@ -52,7 +52,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the ... function
+     * Test the construct function with paramater values.
      */
     public function testConstructWithParams()
     {
@@ -76,7 +76,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get name functions
      */
     public function testSetGetName()
     {
@@ -87,7 +87,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get price functions
      */
     public function testSetGetPrice()
     {
@@ -98,7 +98,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get description functions
      */
     public function testSetGetDescription()
     {
@@ -109,7 +109,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get quantity functions
      */
     public function testSetGetQuantity()
     {
@@ -120,7 +120,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get discont functions
      */
     public function testSetGetDiscount()
     {

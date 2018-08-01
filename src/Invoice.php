@@ -14,14 +14,35 @@ namespace Rabus\Sinvoice;
 
 use \DateTime;
 use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Customer;
-use Rabus\Sinvoice\Supplier;
-use Rabus\Sinvoice\Recipient;
+use Rabus\Sinvoice\Entity;
 use Rabus\Sinvoice\Shipping;
 use Rabus\Sinvoice\Totals;
 
 /**
- * Sinvoice - Superb Invoice
+ * Invoice 
+ * 
+ * This is the primary model in the Sinvoice package, the invoice model.
+ * 
+ * The following are the various parts of the invoice model:
+ *  - Number
+ *      - The unique invoice number
+ *  - Dates
+ *      - The invoice can hold created, issued and due dates
+ *  - Reference
+ *      - Set a unique reference for the invoice. This might be a department
+ *      code for the invoice
+ *  - Tax
+ *      - The tax is set via a percentage
+ *  - Entities
+ *      - The invoice holds the entities associatted with the invoice:
+ *          - Supplier
+ *          - Customer
+ *          - Recipient
+ *  - Totals
+ *      - TODO needs editing
+ *  - Item
+ * All the entities are added to the invoice by their respective methods. The 
+ * invoice also holds items, which are added by their respective method.
  *
  * @author RABUS rabus@art-by-rab.com
  */
@@ -29,9 +50,6 @@ class Invoice
 {
     /**
      * @var string $number Is the invoice number.
-     * 
-     * If you are VAT registered in Europe you will likely need sequential 
-     * invoice numbers.
      */
     private $number;
 
@@ -101,16 +119,34 @@ class Invoice
      * to use in your invoice.
      */
     public function __construct()
-    {
-        
+    { 
         $this->setDefaultDates();
-        $this->setTaxPercentage($taxPercentage);
         $this->totals = new Totals();
-
-        if ($taxPercentage == null) {
-            $this->taxPercentage = 20.00;
-        }
     }
+
+    /**
+     * Add supplier
+     * 
+     * @param integer $customer is an instance of the Entity model.
+     */
+    public function addSupplier(Entity $supplier)
+    {
+        $this->supplier = $supplier;
+    }
+
+    /**
+     * Get the supplier
+     *
+     * @return string
+     */
+    public function getSupplier()
+    {
+        if (empty($this->supplier)) {
+            return 'No supplier set';
+        }
+        return $this->supplier->formatToString();
+    }
+
 
     /**
      * Add customer
@@ -227,7 +263,7 @@ class Invoice
      * Set due date
      * 
      * @param integer $date is the date in php DateTime format, for example, 
-     * '+15 days'
+     * '+14 days'
      */
     public function setDueDate($date)
     {
@@ -253,7 +289,7 @@ class Invoice
      */
     public function setReference($reference)
     {
-        $this->dueDate = $reference;
+        $this->reference = $reference;
     }
 
     /**

@@ -35,21 +35,38 @@ class Shipping {
     public $recipient = null;
 
     /**
+     * Price
+     * 
+     * The net cost of the shipping.
+     * 
      * @var string
      */
     private $price;
 
     /**
+     * Delivery date
+     * 
+     * The delivery date for the shipping. 
+     * 
      * @var string
      */
     private $deliveryDate;
 
     /**
+     * Handler
+     * 
+     * The handler can be the shipping company who will deliver to your
+     * customer/recipient.
+     * 
      * @var string
      */
     private $handler;
 
     /**
+     * Reference
+     * 
+     * If you want to attach a unique reference to the shipping.
+     * 
      * @var string
      */
     private $reference;

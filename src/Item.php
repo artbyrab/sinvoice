@@ -71,13 +71,13 @@ class Item {
     /**
      * @var string $code Is the code or reference of the items
      */
-    public $code
+    public $code;
 
     /**
      * Construct
-     *
-     * As well as contrusting the item we can set any default attribute values
-     * we want to define.
+     * 
+     * @param array $parameters Pass any of the models attributes while 
+     * constructing.
      */
     public function __construct($parameters = array()) 
     {
@@ -97,6 +97,16 @@ class Item {
     }
 
     /**
+     * Get the name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set the description
      *
      * @param string $description
@@ -104,6 +114,16 @@ class Item {
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * Get the description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -118,6 +138,16 @@ class Item {
         $this->price = round($price, 2);
     }
 
+        /**
+     * Get the price
+     *
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
     /**
      * Set the quantity
      *
@@ -126,6 +156,16 @@ class Item {
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+    }
+
+        /**
+     * Get the quantity
+     *
+     * @return string
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 
     /**
@@ -151,46 +191,6 @@ class Item {
     public function setDiscountFromPercentage($percentage)
     {
         $this->discount = round(($this->getPriceTotal()/100) * $percentage, 2);
-    }
-
-    /**
-     * Get the name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get the description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Get the price
-     *
-     * @return string
-     */
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    /**
-     * Get the quantity
-     *
-     * @return string
-     */
-    public function getQuantity()
-    {
-        return $this->quantity;
     }
 
     /**

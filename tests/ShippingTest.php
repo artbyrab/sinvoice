@@ -93,7 +93,7 @@ class ShippingTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Add and Get recipient functions
      */
     public function testAddGetRecipient()
     {
@@ -118,7 +118,7 @@ class ShippingTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get price functions
      */
     public function testSetGetPrice()
     {
@@ -129,7 +129,7 @@ class ShippingTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get delivery date functions
      */
     public function testSetGetDeliveryDate()
     {
@@ -143,7 +143,7 @@ class ShippingTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get handler functions
      */
     public function testSetGetHandler()
     {
@@ -154,7 +154,7 @@ class ShippingTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get reference functions
      */
     public function testSetGetReference()
     {

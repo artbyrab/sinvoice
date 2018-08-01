@@ -37,8 +37,6 @@ class TotalsTest extends TestCase
     {
         $this->invoice = New Invoice();
 
-        
-
         $itemA = new Item(
             array(
                 'name' => 'Tunic',
@@ -62,8 +60,14 @@ class TotalsTest extends TestCase
         $this->invoice->addItem($itemA);
         $this->invoice->addItem($itemB);
 
+        
+
         // // $this->totals = new Totals();
         $this->invoice->totals->calculateTotals($this->invoice);
+
+        print_r($this->invoice->getItems());
+        print_r($this->invoice->totals);
+        exit;
     }
 
     /**
@@ -81,9 +85,9 @@ class TotalsTest extends TestCase
      */
     public function testConstruct()
     {
-        $item = new Totals();
-        $this->assertTrue(is_object($item));
-        unset($item);
+        $totals = new Totals();
+        $this->assertTrue(is_object($totals));
+        unset($totals);
     }
 
     /**
@@ -91,6 +95,112 @@ class TotalsTest extends TestCase
      */
     public function testGetItemNetTotal()
     {
-        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 21.99);    
+        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 31.99);    
+    }
+
+    /**
+     * Test the getDiscount function
+     */
+    public function testGetDiscount()
+    {
+        $this->assertEquals($this->invoice->totals->getDiscount(), 0.00);    
+    }
+
+    /**
+     * Test the getItemDiscountTotal function
+     */
+    public function testGetItemDiscountTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getItemDiscountTotal(), 0.00);    
+    }
+
+    /**
+     * Test the getDiscountTotal function
+     */
+    public function testGetDiscountTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getDiscountTotal(), 0.00);    
+    }
+
+    /**
+     * Test the getShippingHandlingTotal function
+     */
+    public function testGetShippingHandlingTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 0.00);    
+    }
+
+    /**
+     * Test the getOtherChargesTotal function
+     */
+    public function testGetOtherChargesTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getOtherChargesTotal(), 0.00);    
+    }
+
+    /**
+     * Test the getNetTotal function
+     */
+    public function testGetNetTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getNetTotal(), 21.99);    
+    }
+
+    /**
+     * Test the getTaxTotal function
+     */
+    public function testGetTaxTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getTaxTotal(), 21.99);    
+    }
+
+    /**
+     * Test the getGrossTotal function
+     */
+    public function testGetGrossTotal()
+    {
+        $this->assertEquals($this->invoice->totals->getGrossTotal(), 21.99);    
+    }
+
+    /**
+     * Test the setDiscount function
+     */
+    public function testSetDiscount()
+    {
+   
+    }
+
+    /**
+     * Test the setDiscountFromPercentage function
+     */
+    public function testSetDiscountFromPercentage()
+    {    
+
+    }
+
+    /**
+     * Test the setDefaultTotals function
+     */
+    public function testSetDefaultTotals()
+    {  
+        $totals = new Totals();
+        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getDiscount(), 0.00);
+        $this->assertEquals($this->invoice->totals->getItemDiscountTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getDiscountTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getOtherChargesTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getNetTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getTaxTotal(), 0.00);
+        $this->assertEquals($this->invoice->totals->getGrossTotal(), 0.00);
+        unset($totals);
+    }
+
+    /**
+     * Test the calculateTotals function
+     */
+    public function testCalculateTotals()
+    {
+    
     }
 }

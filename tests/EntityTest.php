@@ -42,7 +42,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the ... function
+     * Test the construct function
      */
     public function testConstruct()
     {
@@ -52,7 +52,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the ... function
+     * Test the construct function
      */
     public function testConstructWithParams()
     {
@@ -76,7 +76,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get name functions
      */
     public function testSetGetName()
     {
@@ -87,7 +87,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get address functions
      */
     public function testSetGetAddress()
     {
@@ -98,7 +98,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get phone functions
      */
     public function testSetGetPhone()
     {
@@ -109,7 +109,7 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the Set and Get ... function
+     * Test the Set and Get email functions
      */
     public function testSetGetEmail()
     {
