@@ -101,6 +101,12 @@ class Invoice
     public $shipping = null;
 
     /**
+     * @var object $discount is an object that adheres to the discount 
+     * interface.
+     */
+    public $discount;
+    
+    /**
      * @var object $totals is an instance of the Totals model.
      */
     public $totals;
@@ -117,21 +123,27 @@ class Invoice
      * 
      * @param integer $taxPercentage Is the default tax percentage you wish 
      * to use in your invoice.
+     * @return object $this An instance of the Invoice for the fluid interface.
      */
     public function __construct()
     { 
         $this->setDefaultDates();
         $this->totals = new Totals();
+
+        return $this;
     }
 
     /**
      * Add supplier
      * 
      * @param integer $customer is an instance of the Entity model.
+     * @return object $this An instance of the Invoice.
      */
     public function addSupplier(Entity $supplier)
     {
         $this->supplier = $supplier;
+
+        return $this;
     }
 
     /**
@@ -152,10 +164,13 @@ class Invoice
      * Add customer
      * 
      * @param integer $customer is an instance of the Entity model.
+     * @return object $this An instance of the Invoice.
      */
     public function addCustomer(Entity $customer)
     {
         $this->customer = $customer;
+
+        return $this;
     }
 
     /**
@@ -175,10 +190,13 @@ class Invoice
      * Add shipping
      * 
      * @param integer $shipping is an instance of the Shipping model.
+     * @return object $this An instance of the Invoice.
      */
     public function addShipping(Shipping $shipping)
     {
         $this->shipping = $shipping;
+
+        return $this;
     }
 
     /**
@@ -197,10 +215,13 @@ class Invoice
      * Set number
      * 
      * @param integer $number Is the Invoice number
+     * @return object $this An instance of the Invoice.
      */
     public function setNumber($number)
     {
         $this->number = $number;
+
+        return $this;
     }
 
     /**
@@ -218,12 +239,15 @@ class Invoice
      * 
      * @param integer $date is the date in php DateTime format, for example, 
      * 'Today'
+     * @return object $this An instance of the Invoice.
      */
     public function setCreatedDate($date)
     {
         $date = new DateTime($date);
 
         $this->createdDate = $date->format('Y-m-d');
+
+        return $this;
     }
 
     /**
@@ -241,12 +265,15 @@ class Invoice
      * 
      * @param integer $date is the date in php DateTime format, for example, 
      * 'Today'
+     * @return object $this An instance of the Invoice.
      */
     public function setIssuedDate($date)
     {
         $date = new DateTime($date);
 
         $this->issuedDate = $date->format('Y-m-d');
+
+        return $this;
     }
 
      /**
@@ -264,12 +291,15 @@ class Invoice
      * 
      * @param integer $date is the date in php DateTime format, for example, 
      * '+14 days'
+     * @return object $this An instance of the Invoice.
      */
     public function setDueDate($date)
     {
         $date = new DateTime($date);
 
         $this->dueDate = $date->format('Y-m-d');
+
+        return $this;
     }
 
     /**
@@ -286,10 +316,13 @@ class Invoice
      * Set reference
      * 
      * @param string $reference 
+     * @return object $this An instance of the Invoice.
      */
     public function setReference($reference)
     {
         $this->reference = $reference;
+
+        return $this;
     }
 
     /**
@@ -310,10 +343,13 @@ class Invoice
      * @param integer $percentage Is the tax percentage on the invoice, it 
      * should be an integer or decimal format. For example for 20% you would 
      * pass '20' or '20.00'.
+     * @return object $this An instance of the Invoice.
      */
     public function setTaxPercentage($percentage)
     {
         $this->taxPercentage = round($percentage, 2);
+
+        return $this;
     }
 
     /**

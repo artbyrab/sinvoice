@@ -72,12 +72,12 @@ class TotalsTest extends TestCase
 
     /**
      * Tear down
-     *
+     *s
      * Performed after every test.
      */
     protected function tearDown()
     {  
-        unset($this->items);
+        unset($this->items);s
     }
 
     /**

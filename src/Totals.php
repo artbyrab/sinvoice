@@ -73,10 +73,14 @@ class Totals {
 
     /**
      * Construct
+     * 
+     * @return object $this Is the instance of the Total for the fluid 
+     * interface.
      */
     public function __construct()
     {
         $this->setDefaultTotals();
+        return $this;
     }
 
     /**
@@ -155,20 +159,26 @@ class Totals {
      * Set Discount
      * 
      * @param integer $integer
+     * @return object $this 
      */
     public function setDiscount($integer)
     {
         $this->discount = round($integer, 2);
+
+        return $this;
     }
 
     /**
      * Set the discount percentage from a percentage
      *
      * @param integer $percentage
+     * @return object $this 
      */
     public function setDiscountFromPercentage($percentage)
     {
         $this->discount = round(($this->getNetTotal()/100) * $percentage, 2);
+
+        return $this;
     }
 
     /**

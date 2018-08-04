@@ -58,6 +58,7 @@ class Entity {
         foreach($parameters as $key => $value) {
             $this->$key = $value;
         }
+        return $this;
     }
 
     /**
@@ -83,10 +84,13 @@ class Entity {
      * Set the name
      * 
      * @param string $name
+     * @return object $this Is the instance of the Entity.
      */
     public function setName(string $name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -107,6 +111,8 @@ class Entity {
     public function setAddress(string $address)
     {
         $this->address = $address;
+
+        return $this;
     }
 
     /**
@@ -127,6 +133,8 @@ class Entity {
     public function setPhone(string $phone)
     {
         $this->phone = $phone;
+
+        return $this;
     }
 
     /**
@@ -147,6 +155,8 @@ class Entity {
     public function setEmail(string $email)
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -167,6 +177,8 @@ class Entity {
     public function setReference($reference)
     {
         $this->reference = $reference;
+
+        return $this;
     }
 
     /**

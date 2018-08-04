@@ -76,12 +76,16 @@ class Shipping {
      * 
      * @param array $parameters is an array of the attributes you wish to 
      * populate on construction.
+     * @return object $this Is the instance of the Total for the fluid 
+     * interface.
      */
     public function __construct($parameters = array()) 
     {
         foreach($parameters as $key => $value) {
             $this->$key = $value;
         }
+
+        return $this;
     }
 
     /**
@@ -92,6 +96,8 @@ class Shipping {
     public function addRecipient(Entity $recipient)
     {
         $this->recipient = $recipient;
+
+        return $this;
     }
 
     /**
@@ -112,6 +118,8 @@ class Shipping {
     public function setPrice(string $price)
     {
         $this->price = $price;
+
+        return $this;
     }
 
     /**
@@ -134,6 +142,8 @@ class Shipping {
         $date = new DateTime($date);
 
         $this->deliveryDate = $date->format('Y-m-d');
+
+        return $this;
     }
 
     /**
@@ -154,6 +164,8 @@ class Shipping {
     public function setHandler(string $handler)
     {
         $this->handler = $handler;
+
+        return $this;
     }
 
     /**
@@ -174,6 +186,8 @@ class Shipping {
     public function setReference(string $reference)
     {
         $this->reference = $reference;
+
+        return $this;
     }
 
     /**

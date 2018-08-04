@@ -76,6 +76,30 @@ class EntityTest extends TestCase
     }
 
     /**
+     * Test the ... function
+     */
+    public function testConstructWithFluidInterface()
+    {
+        $date = new DateTime('+14 days');
+
+        $entity = (new Entity())
+            ->setName('Emperor Nero')
+            ->setAddress('Via Cavour, Rome, Italy')
+            ->setPhone('01234 567891')
+            ->setEmail('nero@rome.com')
+            ->setReference('nero123');
+
+        $this->assertTrue(is_object($entity));
+        $this->assertEquals($entity->getName(), 'Emperor Nero');
+        $this->assertEquals($entity->getAddress(), 'Via Cavour, Rome, Italy');
+        $this->assertEquals($entity->getPhone(), '01234 567891');
+        $this->assertEquals($entity->getEmail(), 'nero@rome.com');
+        $this->assertEquals($entity->getReference(), 'nero123');
+        unset($entity);
+    }
+
+
+    /**
      * Test the Set and Get name functions
      */
     public function testSetGetName()
