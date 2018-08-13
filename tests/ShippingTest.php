@@ -6,7 +6,7 @@ use Rabus\Sinvoice\Entity;
 use DateTime;
 
 /**
- * Sinvoice Invoice Model Test
+ * Sinvoice Shipping Model Test
  *
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/

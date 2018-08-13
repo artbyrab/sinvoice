@@ -21,6 +21,8 @@ use Rabus\Sinvoice\Totals;
 /**
  * Invoice 
  * 
+ * @TODO add the observer pattern for the items
+ * 
  * This is the primary model in the Sinvoice package, the invoice model.
  * 
  * The following are the various parts of the invoice model:
@@ -84,6 +86,12 @@ class Invoice
      * Kingdom as of 2018 this would be 20% VAT.
      */
     private $taxPercentage;
+
+    /**
+     * @var object $supplier is an instance of the Entity model. The supplier 
+     * is providing the invoice to the customer.
+     */
+    public $supplier;
     
     /**
      * @var object $customer is an instance of the Entity model. The customer
@@ -104,7 +112,7 @@ class Invoice
      * @var object $discount is an object that adheres to the discount 
      * interface.
      */
-    public $discount;
+    public $discount = null;
     
     /**
      * @var object $totals is an instance of the Totals model.
@@ -112,7 +120,7 @@ class Invoice
     public $totals;
 
     /**
-     * @var string $items Is an array if Item models.
+     * @var array $items Is an array if Item models.
      */
     private $items = array();
 
@@ -189,6 +197,8 @@ class Invoice
     /**
      * Add shipping
      * 
+     * After the shipping is added the totals need recalculating.
+     * 
      * @param integer $shipping is an instance of the Shipping model.
      * @return object $this An instance of the Invoice.
      */
@@ -196,11 +206,18 @@ class Invoice
     {
         $this->shipping = $shipping;
 
+        $this->calculateTotals();
+
         return $this;
     }
 
+    // @TODO do i need to add a remove shipping - RAB
+    // @TODO the totals will need recalculating too.
+
     /**
      * Set Default Dates
+     * 
+     * @TODO consider adding this in the InvoiceFactory model - RAB
      *
      * This will set some default dates that can be overridden if required.
      */
@@ -276,7 +293,7 @@ class Invoice
         return $this;
     }
 
-     /**
+    /**
      * Get the issuedDate
      *
      * @return integer
@@ -289,7 +306,7 @@ class Invoice
     /**
      * Set due date
      * 
-     * @param integer $date is the date in php DateTime format, for example, 
+     * @param string $date is the date in php DateTime format, for example, 
      * '+14 days'
      * @return object $this An instance of the Invoice.
      */
@@ -362,6 +379,55 @@ class Invoice
         return $this->taxPercentage;
     }
 
+    /**
+     * Add the discount
+     * 
+     * You set the discount by adding a model that implements the 
+     * DiscountInterface model.
+     * 
+     * This allows you to use various different discount models like flat 
+     * discount or a percentage discount.
+     * 
+     * After the discount is added the totals are always recalculated.
+     *
+     * @param object $discountModel Is a model that implements the 
+     * DiscountInterface model.
+     * @return object $this An instance of the Invoice.
+     */
+    public function addDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        $this->calculateTotals();
+
+        return $this;
+    }
+
+    /**
+     * Remove the discount
+     *
+     * @return integer
+     */
+    public function removeDiscount()
+    {
+        $this->discount = null;
+
+        $this->calculateTotals();
+    }
+
+    /**
+     * Get the discount
+     * 
+     * This will use the discount models calculate function to get the 
+     * discount total.
+     *
+     * @return string
+     */
+    public function getDiscount()
+    {
+        return $this->totals->getDiscount();
+    }
+
     public function calculateTotals()
     {
         $this->totals->calculateTotals($this);
@@ -411,5 +477,40 @@ class Invoice
     {
         $this->items = array();
         $this->totals->setDefaultTotals();
+    }
+
+    /**
+     * Has discount
+     * 
+     * Does the invoice have a discount? This will help when rendering the 
+     * invoice as you will need to know if you should disply a discount.
+     * 
+     * @return boolean
+     */
+    public function hasDiscount()
+    {
+        if ($this->discount !== null) {
+            return True;
+        }
+
+        return False;
+    }
+
+    /**
+     * Has item discount
+     * 
+     * Does the invoice have any items that have a discount. This will help 
+     * when rendering the invoice items as you will need to know if you should
+     * display a discount column.
+     * 
+     * @return boolean
+     */
+    public function hasItemDiscount()
+    {
+        if ($this->totals->getItemDiscountTotal()) {
+            return True;
+        }
+
+        return False;
     }
 }

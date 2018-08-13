@@ -49,4 +49,37 @@ class AbstractDiscountTest extends TestCase
         $this->assertTrue(is_object($abstractDiscount));
         unset($abstractDiscount);
     }
+
+    /**
+     * Test the calculate function.
+     */
+    public function testCalculate()
+    {  
+        $abstractDiscount = new AbstractDiscount();
+        $abstractDiscount->setFigure(12.50);
+        $this->assertEquals($abstractDiscount->calculate(), 12.50);
+        unset($abstractDiscount);
+    }
+
+    /**
+     * Test the setFigure and getFigure function.
+     */
+    public function testSetGetFigure()
+    {  
+        $abstractDiscount = new AbstractDiscount();
+        $abstractDiscount->setFigure(12.50);
+        $this->assertEquals($abstractDiscount->getFigure(), 12.50);
+        unset($abstractDiscount);
+    }
+
+    /**
+     * Test the setDescription and getDescription function.
+     */
+    public function testSetGetDescription()
+    {  
+        $abstractDiscount = new AbstractDiscount();
+        $abstractDiscount->setDescription('10% standard discount');
+        $this->assertEquals($abstractDiscount->getDescription(), '10% standard discount');
+        unset($abstractDiscount);
+    }
 }

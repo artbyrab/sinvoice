@@ -66,16 +66,16 @@ class Entity {
      * 
      * @param string $name
      */
-    public function formatToString(string $seperater = ", ")
+    public function formatToString(string $seperator = ", ")
     {
         $string = '';
 
         foreach ($this as $key => $value) {
             if (!empty($value)) {
-                $string = $string . $value . $seperater;
+                $string = $string . $value . $seperator;
             }
         }
-        $string = rtrim($string, $seperater);
+        $string = rtrim($string, $seperator);
         
         return $string;
     }

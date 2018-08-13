@@ -4,9 +4,10 @@ use PHPUnit\Framework\TestCase;
 use Rabus\Sinvoice\Totals;
 use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Invoice;
+use Rabus\Sinvoice\Shipping;
 
 /**
- * Sinvoice Invoice Model Test
+ * Sinvoice Totals Model Test
  *
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
@@ -36,14 +37,15 @@ class TotalsTest extends TestCase
     protected function setUp()
     {
         $this->invoice = New Invoice();
+        $this->invoice->setTaxPercentage(20.00);
+
 
         $itemA = new Item(
             array(
                 'name' => 'Tunic',
                 'description' => 'A fine cotton tunic, suitable for the discerning Roman.',
-                'price' => '12.50',
+                'price' => '10.50',
                 'quantity' => '2',
-                'discount' => '0',
             )
         );
 
@@ -51,23 +53,19 @@ class TotalsTest extends TestCase
             array(
                 'name' => 'Leather Sandals',
                 'description' => 'A beautiful set of leather sandals perfect for wearing to the market.',
-                'price' => '7.99',
+                'price' => '5.00',
                 'quantity' => '1',
-                'discount' => '1',
             )
         );
+
 
         $this->invoice->addItem($itemA);
         $this->invoice->addItem($itemB);
 
-        
-
-        // // $this->totals = new Totals();
-        $this->invoice->totals->calculateTotals($this->invoice);
-
-        print_r($this->invoice->getItems());
-        print_r($this->invoice->totals);
-        exit;
+        $this->invoice->addShipping((new Shipping)
+            ->setPrice(10.00)
+        );
+    
     }
 
     /**
@@ -77,7 +75,7 @@ class TotalsTest extends TestCase
      */
     protected function tearDown()
     {  
-        unset($this->items);s
+        unset($this->items);
     }
 
     /**
@@ -95,7 +93,7 @@ class TotalsTest extends TestCase
      */
     public function testGetItemNetTotal()
     {
-        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 31.99);    
+        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 26.00);    
     }
 
     /**
@@ -127,7 +125,7 @@ class TotalsTest extends TestCase
      */
     public function testGetShippingHandlingTotal()
     {
-        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 0.00);    
+        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 10.00);    
     }
 
     /**
@@ -143,7 +141,7 @@ class TotalsTest extends TestCase
      */
     public function testGetNetTotal()
     {
-        $this->assertEquals($this->invoice->totals->getNetTotal(), 21.99);    
+        $this->assertEquals($this->invoice->totals->getNetTotal(), 36.00);    
     }
 
     /**
@@ -151,7 +149,7 @@ class TotalsTest extends TestCase
      */
     public function testGetTaxTotal()
     {
-        $this->assertEquals($this->invoice->totals->getTaxTotal(), 21.99);    
+        $this->assertEquals($this->invoice->totals->getTaxTotal(), 7.20);    
     }
 
     /**
@@ -159,23 +157,7 @@ class TotalsTest extends TestCase
      */
     public function testGetGrossTotal()
     {
-        $this->assertEquals($this->invoice->totals->getGrossTotal(), 21.99);    
-    }
-
-    /**
-     * Test the setDiscount function
-     */
-    public function testSetDiscount()
-    {
-   
-    }
-
-    /**
-     * Test the setDiscountFromPercentage function
-     */
-    public function testSetDiscountFromPercentage()
-    {    
-
+        $this->assertEquals($this->invoice->totals->getGrossTotal(), 43.20);    
     }
 
     /**
@@ -184,15 +166,16 @@ class TotalsTest extends TestCase
     public function testSetDefaultTotals()
     {  
         $totals = new Totals();
-        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getDiscount(), 0.00);
-        $this->assertEquals($this->invoice->totals->getItemDiscountTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getDiscountTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getOtherChargesTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getNetTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getTaxTotal(), 0.00);
-        $this->assertEquals($this->invoice->totals->getGrossTotal(), 0.00);
+        $totals->setDefaultTotals();
+        $this->assertEquals($totals->getItemNetTotal(), 0.00);
+        $this->assertEquals($totals->getDiscount(), 0.00);
+        $this->assertEquals($totals->getItemDiscountTotal(), 0.00);
+        $this->assertEquals($totals->getDiscountTotal(), 0.00);
+        $this->assertEquals($totals->getShippingHandlingTotal(), 0.00);
+        $this->assertEquals($totals->getOtherChargesTotal(), 0.00);
+        $this->assertEquals($totals->getNetTotal(), 0.00);
+        $this->assertEquals($totals->getTaxTotal(), 0.00);
+        $this->assertEquals($totals->getGrossTotal(), 0.00);
         unset($totals);
     }
 
@@ -201,6 +184,28 @@ class TotalsTest extends TestCase
      */
     public function testCalculateTotals()
     {
-    
+        $invoice = New Invoice();
+        $invoice->setTaxPercentage(20.00);
+
+        $itemA = new Item(
+            array(
+                'name' => 'Roman Shield',
+                'description' => 'A solid Roman shield, perfect for battle.',
+                'price' => '89.99',
+                'quantity' => '1',
+            )
+        );
+
+        $itemB = new Item(
+            array(
+                'name' => 'Roman Gladius Sword',
+                'description' => 'A beautiful artisan sword, for the discerning Roman warrior.',
+                'price' => '149.99',
+                'quantity' => '1',
+            )
+        );
+
+        $invoice->addItem($itemA);
+        $invoice->addItem($itemB);
     }
 }

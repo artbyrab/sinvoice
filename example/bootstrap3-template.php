@@ -10,38 +10,46 @@ require ('../vendor/autoload.php');
 use Rabus\Sinvoice\Invoice;
 use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Entity;
+use Rabus\Sinvoice\FlatDiscount;
+use Rabus\Sinvoice\PercentageDiscount;
 
 // lets create our new invoice
 $invoice = new Invoice();
+$invoice->setTaxPercentage(20.00);
 $invoice->setNumber("54678");
 $supplier = new Entity();
 $supplier->setName('Mr Supplier');
 $invoice->addSupplier($supplier);
 
 // add an item
-$itemA = new Item();
-$itemA->setPrice(2);
-$itemA->setQuantity(10);
-$itemA->setName('Baseball Sticker Pack');
-$itemA->setDiscountFromPercentage(10);
+$itemA = (new Item())
+    ->setPrice(2)
+    ->setQuantity(10)
+    ->setName('Baseball Sticker Pack')
+    ->addDiscount(
+        (new FlatDiscount())
+            ->setFigure(10)
+            ->setDescription('Recurring Customer')
+    );
+
 $invoice->addItem($itemA);
 
-// add another item
-$itemB = new Item();
-$itemB->setPrice(20.0);
-$itemB->setQuantity(2);
-$itemB->setName('Baseball Sticker Book');
-$invoice->addItem($itemB);
-
-// add another item
-$itemC = new Item();
-$itemC->setName('Punisher Tshirt');
-$itemC->setPrice(19.99);
-$itemC->setQuantity(1);
-$invoice->addItem($itemC);
-
-// calculate the totals
-$invoice->calculateTotals();
+$invoice->addItem(
+    (new Item())
+        ->setPrice(100)
+        ->setQuantity(5)
+        ->setName('Baseball Bat(Premium)')
+        ->addDiscount(
+            (new PercentageDiscount())
+                ->setFigure(10)
+                ->setDescription('Order 5 or more for a 10% discount')
+        )
+);
+$invoice->addDiscount(
+    (new FlatDiscount())
+        ->setFigure(10)
+        ->setDescription('Frequent customer discount')
+);
 ?>
 
 <!doctype html>
@@ -109,7 +117,7 @@ $invoice->calculateTotals();
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Price Total</th>
-                            <?php if (!empty($invoice->totals->getItemDiscountTotal())) { ?>
+                            <?php if ($invoice->hasDiscount() == True) { ?>
                                 <th>Discount</th>
                             <?php } ?>
                             <th>Net Total</th>
@@ -120,7 +128,7 @@ $invoice->calculateTotals();
                             <td><?php echo $item->getPrice();?></td>
                             <td><?php echo $item->getQuantity();?></td>
                             <td><?php echo $item->getPriceTotal();?></td>
-                            <?php if (!empty($invoice->totals->getItemDiscountTotal())) { ?>
+                            <?php if ($invoice->hasDiscount() == True) { ?>
                                 <td><?php echo $item->getDiscount();?></td>
                             <?php } ?>
                             <td><strong><?php echo $item->getNetTotal();?></strong></td>
@@ -128,7 +136,7 @@ $invoice->calculateTotals();
                     <?php }; ?>
                     </table>
                     <table class="table table-striped table-bordered pull-right" style="width:40%">
-                        <?php if (!empty($invoice->totals->getDiscountTotal())) { ?>
+                        <?php if ($invoice->hasItemDiscount() == True) { ?>
                             <tr>
                                 <th>Item Net Total:</th>
                                 <td><?php echo $invoice->totals->getItemNetTotal(); ?></td>

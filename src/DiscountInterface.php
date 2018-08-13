@@ -25,44 +25,35 @@ namespace Rabus\Sinvoice;
 interface DiscountInterface 
 {
     /**
-     * Construct the discount
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Calculate the discount total depending on the method you will implement
+     * 
+     * @param $total is the total of whatever you are calculating, either
+     * an item or an invoice.
      */
-    public function calculate($total=null)
-    {
-    }
+    public function calculate($total=null);
 
     /**
      * Set the discount figure
+     * 
+     * @param integer $figure can be the flat or discount figure depending on
+     * which implementation of the DiscountInteface you are using.
      */
-    public function setFigure($figure)
-    {
-    }
+    public function setFigure($figure);
 
     /**
      * Get the discount figure
      */
-    public function getFigure()
-    {
-    }
+    public function getFigure();
 
     /**
      * Set the description
+     * 
+     * @param string $description Is the text description of the discount.
      */
-    public function setDescription($description)
-    {
-    }
+    public function setDescription($description);
 
     /**
      * Get the description 
      */
-    public function getDescription()
-    {
-    }
+    public function getDescription();
 }

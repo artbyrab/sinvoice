@@ -127,6 +127,15 @@ class InvoiceTest extends TestCase
     }
 
     /**
+     * Test the fluid interface for the invoice
+     *
+     */
+    public function testFluidInterface()
+    {
+
+    }
+
+    /**
      * Test the setNumber function.
      */
     public function testSetNumber()

@@ -156,32 +156,6 @@ class Totals {
     }
 
     /**
-     * Set Discount
-     * 
-     * @param integer $integer
-     * @return object $this 
-     */
-    public function setDiscount($integer)
-    {
-        $this->discount = round($integer, 2);
-
-        return $this;
-    }
-
-    /**
-     * Set the discount percentage from a percentage
-     *
-     * @param integer $percentage
-     * @return object $this 
-     */
-    public function setDiscountFromPercentage($percentage)
-    {
-        $this->discount = round(($this->getNetTotal()/100) * $percentage, 2);
-
-        return $this;
-    }
-
-    /**
      * Set Default Totals
      */
     public function setDefaultTotals()
@@ -199,6 +173,8 @@ class Totals {
 
     /**
      * Calculate totals
+     * 
+     * @TODO needs refactoring - RAB
      * 
      * @param object $invoice Is an instance of the Invoice model.
      */
@@ -219,8 +195,13 @@ class Totals {
 
             $this->itemDiscountTotal = round($this->itemDiscountTotal, 2);
             $this->itemNetTotal = round($this->itemNetTotal, 2);
-            $this->discountTotal = round($this->discount + $this->itemDiscountTotal, 2);
-            $this->netTotal = round($this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal, 2);
+
+            if ($invoice->discount !== null or !empty($invoice->discount)) {
+                $this->discount = $invoice->discount->calculate($this->itemNetTotal);
+            }
+
+            $this->discountTotal = $this->itemDiscountTotal + $this->discount;
+            $this->netTotal = round($this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal + $this->discount, 2);
             $this->taxTotal = round(($this->netTotal/100) * $invoice->getTaxPercentage(), 2);
             $this->grossTotal = $this->netTotal + $this->taxTotal;
         }

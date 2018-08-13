@@ -2,9 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 use Rabus\Sinvoice\Item;
+use Rabus\Sinvoice\FlatDiscount;
 
 /**
- * Sinvoice Invoice Model Test
+ * Sinvoice Item Model Test
  *
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
@@ -52,26 +53,21 @@ class ItemTest extends TestCase
     }
 
     /**
-     * Test the construct function with paramater values.
+     * Test the construct with a fluid interface.
      */
-    public function testConstructWithParams()
+    public function testConstructFluidInterface()
     {
-        $item = new Item(
-            array(
-                'name' => 'Gladius Sword',
-                'description' => 'Very fine looking Gladius sword, suitable for decapitation or stabbing.',
-                'price' => 120.00,
-                'quantity' => 1,
-                'discount' => 0,
-            )
-        );
+        $item = (new Item())
+            ->setName('Gladius Sword')
+            ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
+            ->setPrice(120.00)
+            ->setQuantity(1);
 
         $this->assertTrue(is_object($item));
         $this->assertEquals($item->getName(), 'Gladius Sword');
         $this->assertEquals($item->getDescription(), 'Very fine looking Gladius sword, suitable for decapitation or stabbing.');
         $this->assertEquals($item->getPrice(), 120.00);
         $this->assertEquals($item->getQuantity(), 1);
-        $this->assertEquals($item->getDiscount(), 0);
         unset($item);
     }
 
@@ -125,8 +121,15 @@ class ItemTest extends TestCase
     public function testSetGetDiscount()
     {
         $item = new Item();
-        $item->setDiscount(10.00);
-        $this->assertEquals($item->getDiscount(), 10.00);
-        unset($item);
+        $item->setPrice(85.00);
+        $item->setQuantity(1);
+        $item->addDiscount(
+            (new FlatDiscount())
+                ->setFigure(15.00)
+        );
+
+        $this->assertEquals($item->getPriceTotal(), 85.00);
+        $this->assertEquals($item->getNetTotal(), 70.00);
+        $this->assertEquals($item->getDiscount(), 15.00);
     }
 }

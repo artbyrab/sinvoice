@@ -27,12 +27,12 @@ class AbstractDiscount implements DiscountInterface
     /**
      * @var integer The percentage figure.
      */
-    private $figure;
+    protected $figure;
 
     /**
      * @var string A description of the discount.
      */
-    private $description;
+    protected $description;
 
     /**
      * {@inheritDoc}
@@ -55,7 +55,8 @@ class AbstractDiscount implements DiscountInterface
      */
     public function setFigure($figure)
     {
-        $this->figure = $figure;
+        $this->figure = round($figure, 2);
+
         return $this;
     }
 
@@ -64,7 +65,7 @@ class AbstractDiscount implements DiscountInterface
      */
     public function getFigure()
     {
-        return $this;
+        return $this->figure;
     }
 
     /**
@@ -73,6 +74,7 @@ class AbstractDiscount implements DiscountInterface
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -81,6 +83,6 @@ class AbstractDiscount implements DiscountInterface
      */
     public function getDescription()
     {
-        return $this->description
+        return $this->description;
     }
 }

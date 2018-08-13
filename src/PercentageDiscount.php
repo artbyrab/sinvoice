@@ -30,8 +30,8 @@ class PercentageDiscount extends AbstractDiscount
     /**
      * Calculate the percentage discount total
      */
-    public function calculate($total)
+    public function calculate($total=null)
     {
-        return ($total / 100) * $this->figure;
+        return round(($total / 100) * $this->figure, 2);
     }
 }

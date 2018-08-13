@@ -50,3 +50,37 @@ class PercentageDiscountTest extends TestCase
         $this->assertTrue(is_object($percentageDiscount));
         unset($percentageDiscount);
     }
+
+    /**
+     * Test the calculate function.
+     */
+    public function testCalculate()
+    {  
+        $percentageDiscount = new PercentageDiscount();
+        $percentageDiscount->setFigure(10);
+        $this->assertEquals($percentageDiscount->calculate(200.00), 20.00);
+        unset($percentageDiscount);
+    }
+
+    /**
+     * Test the setFigure and getFigure function.
+     */
+    public function testSetGetFigure()
+    {  
+        $percentageDiscount = new PercentageDiscount();
+        $percentageDiscount->setFigure(10.00);
+        $this->assertEquals($percentageDiscount->getFigure(), 10.00);
+        unset($percentageDiscount);
+    }
+
+    /**
+     * Test the setDescription and getDescription function.
+     */
+    public function testSetGetDescription()
+    {  
+        $percentageDiscount = new PercentageDiscount();
+        $percentageDiscount->setDescription('10% discount');
+        $this->assertEquals($percentageDiscount->getDescription(), '10% discount');
+        unset($percentageDiscount);
+    }
+}

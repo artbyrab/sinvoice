@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Rabus\Sinvoice\Entity;
 
 /**
- * Sinvoice Invoice Model Test
+ * Sinvoice Entity Model Test
  *
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
@@ -95,6 +95,38 @@ class EntityTest extends TestCase
         $this->assertEquals($entity->getPhone(), '01234 567891');
         $this->assertEquals($entity->getEmail(), 'nero@rome.com');
         $this->assertEquals($entity->getReference(), 'nero123');
+        unset($entity);
+    }
+
+    /**
+     * Test the formatToString function
+     */
+    public function testformatToString()
+    {
+        $entity = (new Entity())
+            ->setName('Emperor Nero')
+            ->setAddress('Via Cavour, Rome, Italy')
+            ->setPhone('01234 567891')
+            ->setEmail('nero@rome.com')
+            ->setReference('nero123');
+
+        $this->assertEquals($entity->formatToString(), 'Emperor Nero, Via Cavour, Rome, Italy, 01234 567891, nero@rome.com, nero123');
+        unset($entity);
+    }
+
+    /**
+     * Test the formatToString function
+     */
+    public function testformatToStringWithSeperator()
+    {
+        $entity = (new Entity())
+            ->setName('Emperor Nero')
+            ->setAddress('Via Cavour, Rome, Italy')
+            ->setPhone('01234 567891')
+            ->setEmail('nero@rome.com')
+            ->setReference('nero123');
+
+        $this->assertEquals($entity->formatToString('*'), 'Emperor Nero*Via Cavour, Rome, Italy*01234 567891*nero@rome.com*nero123');
         unset($entity);
     }
 

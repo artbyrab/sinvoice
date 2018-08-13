@@ -20,17 +20,6 @@ namespace Rabus\Sinvoice;
  * 
  * This is a Sinvoice Item. All Invoices are created and then items are 
  * attached to the invoice.
- * 
- * To add an item you should:
- *
- *  $invoice = new Invoice();
- * 
- *  $basketball = new Item();
- *  $basketball->name = "Defacto Basketball";
- *  $basketball->price = "29.99";
- *  $basketball->quantity = 1;
- * 
- *  $invoice->addItem($basketball);
  *  
  * @author RABUS
  */
@@ -59,12 +48,8 @@ class Item {
     private $quantity;
 
     /**
-     * @var integer $discount Is the discount as an integer value, for example
-     * '5.00' or '10.00'. 
-     * 
-     * You can set the discount as a integer value using the setDiscount() 
-     * function. Or, you can set the discount from a percentage value using the 
-     * setDiscountFromPercentage() function. Both populate this field.
+     * @var object $discount is a object that implements the 
+     * DiscountInterface model.
      */
     public $discount;
 
@@ -76,24 +61,25 @@ class Item {
     /**
      * Construct
      * 
-     * @param array $parameters Pass any of the models attributes while 
-     * constructing.
+
+     * @return object $this An instance of the Item for the fluid interface.
      */
-    public function __construct($parameters = array()) 
+    public function __construct() 
     {
-        foreach($parameters as $key => $value) {
-            $this->$key = $value;
-        }
+        return $this;
     }
 
     /**
      * Set the name
      *
      * @param string $name
+     * @return object $this An instance of the Item.
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -110,10 +96,13 @@ class Item {
      * Set the description
      *
      * @param string $description
+     * @return object $this An instance of the Item.
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -132,10 +121,13 @@ class Item {
      * We will ensure the price is rounded
      *
      * @param integer $price
+     * @return object $this An instance of the Item.
      */
     public function setPrice($price)
     {
         $this->price = round($price, 2);
+
+        return $this;
     }
 
         /**
@@ -152,10 +144,13 @@ class Item {
      * Set the quantity
      *
      * @param integer $quantity
+     * @return object $this An instance of the Item.
      */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+
+        return $this;
     }
 
         /**
@@ -169,38 +164,39 @@ class Item {
     }
 
     /**
-     * Set the discount percentage
+     * Add the discount
      * 
-     * If you just want to set fixed value discount then use this function.
+     * You set the discount by adding a model that implements the 
+     * DiscountInterface model.
+     * 
+     * This allows you to use various different discount models like flat 
+     * discount or a percentage discount.
      *
-     * @param integer $integer
+     * @param object $discountModel Is a model that implements the 
+     * DiscountInterface model.
+     * @return object $this An instance of the Item.
      */
-    public function setDiscount($integer)
+    public function addDiscount($discount)
     {
-        $this->discount = round($integer, 2);
-    }
+        $this->discount = $discount;
 
-    /**
-     * Set the discount percentage from a percentage
-     * 
-     * If you want to calculate your discount figure from a percentage then
-     * simply utilise this function.
-     *
-     * @param integer $percentage
-     */
-    public function setDiscountFromPercentage($percentage)
-    {
-        $this->discount = round(($this->getPriceTotal()/100) * $percentage, 2);
+        return $this;
     }
 
     /**
      * Get the discount
+     * 
+     * This will use the discount models calculate function to get the 
+     * discount total.
      *
      * @return string
      */
     public function getDiscount()
     {
-        return $this->discount;
+        if (!empty($this->discount)){
+            return $this->discount->calculate($this->getPriceTotal());
+        }
+        
     }
 
     /**
