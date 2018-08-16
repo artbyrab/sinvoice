@@ -79,7 +79,7 @@ $sinvoice = (new Invoice())
             ->setName('Julies Ceaser')
             ->setAddress('Todo')
     )
-    ->addShipping(
+    ->addShipping(php implement observer what is the obserer object updates
         (new Shipping())
     )
     ->addItem(

@@ -13,6 +13,7 @@
 namespace Rabus\Sinvoice;
 
 use \DateTime;
+use Rabus\Sinvoice\Observer;
 use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Entity;
 use Rabus\Sinvoice\Shipping;
@@ -22,6 +23,12 @@ use Rabus\Sinvoice\Totals;
  * Invoice 
  * 
  * @TODO add the observer pattern for the items
+ *  - Look at the example here:
+ *      - http://php.net/manual/en/class.splobserver.php
+ * 
+ * So invoice is the reader of the notification
+ * Basket is the sender/newspaper of the notificaiton
+ *  - When basket gets updated it triggers ss
  * 
  * This is the primary model in the Sinvoice package, the invoice model.
  * 
@@ -48,7 +55,7 @@ use Rabus\Sinvoice\Totals;
  *
  * @author RABUS rabus@art-by-rab.com
  */
-class Invoice 
+class Invoice implements Observer 
 {
     /**
      * @var string $number Is the invoice number.
