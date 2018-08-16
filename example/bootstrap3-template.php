@@ -32,9 +32,9 @@ $itemA = (new Item())
             ->setDescription('Recurring Customer')
     );
 
-$invoice->addItem($itemA);
+$invoice->items->addItem($itemA);
 
-$invoice->addItem(
+$invoice->items->addItem(
     (new Item())
         ->setPrice(100)
         ->setQuantity(5)
@@ -122,7 +122,7 @@ $invoice->addDiscount(
                             <?php } ?>
                             <th>Net Total</th>
                         </tr>
-                    <?php foreach ($invoice->getItems() as $item) { ?>
+                    <?php foreach ($invoice->items->getItems() as $item) { ?>
                         <tr>
                             <td><?php echo $item->getName();?></td>
                             <td><?php echo $item->getPrice();?></td>

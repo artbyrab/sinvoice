@@ -61,11 +61,10 @@ class Item {
     /**
      * Construct
      * 
-
      * @return object $this An instance of the Item for the fluid interface.
      */
     public function __construct() 
-    {
+    {    
         return $this;
     }
 

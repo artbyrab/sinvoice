@@ -29,6 +29,8 @@ class FlatDiscount extends AbstractDiscount
 {
     /**
      * Calculte the flat discount total
+     * 
+     * @return integer
      */
     public function calculate($total=null)
     {

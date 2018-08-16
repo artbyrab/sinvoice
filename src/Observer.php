@@ -23,6 +23,8 @@ namespace Rabus\Sinvoice;
 interface Observer {
 
     /**
+     * Update
+     * 
      * Receive update from subject
      */
     public function update ();

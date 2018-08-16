@@ -52,30 +52,6 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test the construct function
-     */
-    public function testConstructWithParams()
-    {
-        $entity = new Entity(
-            array(
-                'name' => 'Emperor Nero',
-                'address' => 'Via Cavour, Rome, Italy',
-                'phone' => '01234 567891',
-                'email' => 'nero@rome.com',
-                'reference' => 'nero123',
-            )
-        );
-
-        $this->assertTrue(is_object($entity));
-        $this->assertEquals($entity->getName(), 'Emperor Nero');
-        $this->assertEquals($entity->getAddress(), 'Via Cavour, Rome, Italy');
-        $this->assertEquals($entity->getPhone(), '01234 567891');
-        $this->assertEquals($entity->getEmail(), 'nero@rome.com');
-        $this->assertEquals($entity->getReference(), 'nero123');
-        unset($entity);
-    }
-
-    /**
      * Test the ... function
      */
     public function testConstructWithFluidInterface()
@@ -129,7 +105,6 @@ class EntityTest extends TestCase
         $this->assertEquals($entity->formatToString('*'), 'Emperor Nero*Via Cavour, Rome, Italy*01234 567891*nero@rome.com*nero123');
         unset($entity);
     }
-
 
     /**
      * Test the Set and Get name functions

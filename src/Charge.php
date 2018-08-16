@@ -7,7 +7,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -46,17 +46,11 @@ class Charge {
     /**
      * Construct
      * 
-     * @param array $parameters is an array of the attributes you wish to 
-     * populate on construction.
      * @return object $this Is the instance of the Total for the fluid 
      * interface.
      */
-    public function __construct($parameters = array()) 
+    public function __construct() 
     {
-        foreach($parameters as $key => $value) {
-            $this->$key = $value;
-        }
-
         return $this;
     }
 
@@ -99,6 +93,4 @@ class Charge {
     {
         return $this->description;
     }
-
-    
 }

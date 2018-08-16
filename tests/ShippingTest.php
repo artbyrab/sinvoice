@@ -55,46 +55,6 @@ class ShippingTest extends TestCase
     /**
      * Test the ... function
      */
-    public function testConstructWithParams()
-    {
-        $date = new DateTime('+14 days');
-
-        $shipping = new Shipping(
-            array(
-                'recipient' => new Entity(
-                    array(
-                        'name' => 'Ceasar',
-                        'address' => '1 High Street, Rome, Italy',
-                        'phone' => '01245 678910',
-                        'email' => 'ceasar@rome.com',
-                        'reference' => 'a145',
-                    )
-                ),
-                'price' => 10.99,
-                'deliveryDate' => $date->format('Y-m-d'),
-                'handler' => 'Rome Road Mail',
-                'reference' => '8547124',
-            )
-        );
-
-        $date = new DateTime('+14 days');
-
-        $this->assertTrue(is_object($shipping));
-        $this->assertEquals($shipping->recipient->getName(), 'Ceasar');
-        $this->assertEquals($shipping->recipient->getAddress(), '1 High Street, Rome, Italy');
-        $this->assertEquals($shipping->recipient->getPhone(), '01245 678910');
-        $this->assertEquals($shipping->recipient->getEmail(), 'ceasar@rome.com');
-        $this->assertEquals($shipping->recipient->getReference(), 'a145');
-        $this->assertEquals($shipping->getPrice(), 10.99);
-        $this->assertEquals($shipping->getDeliveryDate(), $date->format('Y-m-d'));
-        $this->assertEquals($shipping->getHandler(), 'Rome Road Mail');
-        $this->assertEquals($shipping->getReference(), '8547124');
-        unset($shipping);
-    }
-
-    /**
-     * Test the ... function
-     */
     public function testConstructWithFluidInterface()
     { 
         $shipping = (new Shipping())

@@ -35,11 +35,7 @@ class Shipping {
     public $recipient = null;
 
     /**
-     * Price
-     * 
-     * The net cost of the shipping.
-     * 
-     * @var string
+     * @var integer Price is the net cost of the shipping.
      */
     private $price;
 
@@ -74,17 +70,11 @@ class Shipping {
     /**
      * Construct
      * 
-     * @param array $parameters is an array of the attributes you wish to 
-     * populate on construction.
      * @return object $this Is the instance of the Total for the fluid 
      * interface.
      */
     public function __construct($parameters = array()) 
     {
-        foreach($parameters as $key => $value) {
-            $this->$key = $value;
-        }
-
         return $this;
     }
 

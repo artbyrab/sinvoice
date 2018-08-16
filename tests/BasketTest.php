@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Rabus\Sinvoice\Invoice;
 use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Basket;
+use Rabus\Sinvoice\ObserverSubjects;
 
 /**
  * Sinvoice Basket Model Test
@@ -35,8 +36,8 @@ class BasketTest extends TestCase
      */
     protected function setUp()
     {
-        $this->basket = new Basket();
         $this->invoice = new Invoice();
+        $this->basket = new Basket($this->invoice);
         $this->itemA = (new Item())
             ->setName('Gladius Sword')
             ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
@@ -57,34 +58,17 @@ class BasketTest extends TestCase
     }
 
     /**
-     * Test the attachInvoice function.
+     * Test the __construct function.
      */
-    public function testAttachInvoice()
+    public function testConstruct()
     {
-        $this->basket->attachInvoice($this->invoice);
+        
+        $invoice = new Invoice();
+        $observerKey = spl_object_hash($invoice);
+        $basket = new Basket($invoice);
 
-        $this->assertInstanceOf(Invoice::class, $this->basket->invoice);
-    }
-
-    /**
-     * Test the detachInvoice function.
-     */
-    public function testDetachInvoice()
-    {
-        $this->basket->attachInvoice($this->invoice);
-        $this->basket->detachInvoice();
-
-        $this->assertNull($this->basket->invoice);
-    }
-
-    /**
-     * Test the notifyInvoice function.
-     */
-    public function testNotifyInvoice()
-    {
-        // $this->basket->notifyInvoice();
-
-        // @TODO add in test
+        $this->assertInstanceOf(ObserverSubjects::class, $basket->subjects);
+        $this->assertInstanceOf(Invoice::class, $basket->subjects->observers[$observerKey]);
     }
 
     /**
@@ -107,7 +91,7 @@ class BasketTest extends TestCase
     {
         $this->basket->addItem($this->itemA);
         $this->basket->removeItem(0);
-        
+        $this->assertEquals(count($this->basket->getItems()), 0);
     }
 
     /**

@@ -22,6 +22,8 @@ use Rabus\Sinvoice\PercentageDiscount;
  */
 class PercentageDiscountTest extends TestCase
 {
+    public $percentageDiscount;
+
     /**
      * Set up
      *
@@ -29,7 +31,7 @@ class PercentageDiscountTest extends TestCase
      */
     protected function setUp()
     {
-    
+        $this->percentageDiscount = new PercentageDiscount();
     }
 
     /**
@@ -39,6 +41,7 @@ class PercentageDiscountTest extends TestCase
      */
     protected function tearDown()
     {  
+        unset($this->percentageDiscount);
     }
 
     /**
@@ -46,9 +49,7 @@ class PercentageDiscountTest extends TestCase
      */
     public function testConstruct()
     {
-        $percentageDiscount = new PercentageDiscount();
-        $this->assertTrue(is_object($percentageDiscount));
-        unset($percentageDiscount);
+        $this->assertTrue(is_object($this->percentageDiscount));
     }
 
     /**
@@ -56,10 +57,8 @@ class PercentageDiscountTest extends TestCase
      */
     public function testCalculate()
     {  
-        $percentageDiscount = new PercentageDiscount();
-        $percentageDiscount->setFigure(10);
-        $this->assertEquals($percentageDiscount->calculate(200.00), 20.00);
-        unset($percentageDiscount);
+        $this->percentageDiscount->setFigure(10);
+        $this->assertEquals($this->percentageDiscount->calculate(200.00), 20.00);
     }
 
     /**
@@ -67,10 +66,8 @@ class PercentageDiscountTest extends TestCase
      */
     public function testSetGetFigure()
     {  
-        $percentageDiscount = new PercentageDiscount();
-        $percentageDiscount->setFigure(10.00);
-        $this->assertEquals($percentageDiscount->getFigure(), 10.00);
-        unset($percentageDiscount);
+        $this->percentageDiscount->setFigure(10.00);
+        $this->assertEquals($this->percentageDiscount->getFigure(), 10.00);
     }
 
     /**
@@ -78,9 +75,7 @@ class PercentageDiscountTest extends TestCase
      */
     public function testSetGetDescription()
     {  
-        $percentageDiscount = new PercentageDiscount();
-        $percentageDiscount->setDescription('10% discount');
-        $this->assertEquals($percentageDiscount->getDescription(), '10% discount');
-        unset($percentageDiscount);
+        $this->percentageDiscount->setDescription('10% discount');
+        $this->assertEquals($this->percentageDiscount->getDescription(), '10% discount');
     }
 }

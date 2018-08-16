@@ -28,7 +28,9 @@ use Rabus\Sinvoice\AbstractDiscount;
 class PercentageDiscount extends AbstractDiscount 
 {
     /**
-     * Calculate the percentage discount total
+     * Calculate 
+     * 
+     * Calculate the percentage discount total.
      */
     public function calculate($total=null)
     {

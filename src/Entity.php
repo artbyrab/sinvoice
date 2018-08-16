@@ -50,14 +50,10 @@ class Entity {
     /**
      * Construct
      * 
-     * @param array $parameters Pass any of the models attributes while 
-     * constructing.
+     * @return object An instance of this model.
      */
-    public function __construct($parameters = array()) 
+    public function __construct() 
     {
-        foreach($parameters as $key => $value) {
-            $this->$key = $value;
-        }
         return $this;
     }
 

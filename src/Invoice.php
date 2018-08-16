@@ -14,6 +14,7 @@ namespace Rabus\Sinvoice;
 
 use \DateTime;
 use Rabus\Sinvoice\Observer;
+use Rabus\Sinvoice\Basket;
 use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Entity;
 use Rabus\Sinvoice\Shipping;
@@ -22,17 +23,12 @@ use Rabus\Sinvoice\Totals;
 /**
  * Invoice 
  * 
- * @TODO add the observer pattern for the items
- *  - Look at the example here:
- *      - http://php.net/manual/en/class.splobserver.php
+ * This is the primary model in the Sinvoice package, the invoice model. It 
+ * implements the Observer model so we can add the invoice as an observer for
+ * various models that need to trigger back to the invoice to update information
+ * like totals.
  * 
- * So invoice is the reader of the notification
- * Basket is the sender/newspaper of the notificaiton
- *  - When basket gets updated it triggers ss
- * 
- * This is the primary model in the Sinvoice package, the invoice model.
- * 
- * The following are the various parts of the invoice model:
+ * The following are the main parts of the invoice model:
  *  - Number
  *      - The unique invoice number
  *  - Dates
@@ -49,9 +45,7 @@ use Rabus\Sinvoice\Totals;
  *          - Recipient
  *  - Totals
  *      - TODO needs editing
- *  - Item
- * All the entities are added to the invoice by their respective methods. The 
- * invoice also holds items, which are added by their respective method.
+ *  - Items
  *
  * @author RABUS rabus@art-by-rab.com
  */
@@ -127,25 +121,38 @@ class Invoice implements Observer
     public $totals;
 
     /**
-     * @var array $items Is an array if Item models.
+     * @var array $items Is an instance of the Basket model. You can add and 
+     * remove items.
      */
-    private $items = array();
+    public $items;
+
+    public $charges;
 
     /**
      * Construct
      *
      * Constructs the invoice and set some default values
      * 
-     * @param integer $taxPercentage Is the default tax percentage you wish 
-     * to use in your invoice.
      * @return object $this An instance of the Invoice for the fluid interface.
      */
     public function __construct()
     { 
         $this->setDefaultDates();
         $this->totals = new Totals();
+        $this->items = new Basket($this);
 
         return $this;
+    }
+
+    /**
+     * Update
+     * 
+     * This is run everytime the items basket and the charge baskets get 
+     * updated via the obsever subject pattern.
+     */
+    public function update()
+    {
+        $this->calculateTotals();
     }
 
     /**
@@ -435,55 +442,16 @@ class Invoice implements Observer
         return $this->totals->getDiscount();
     }
 
+
     public function calculateTotals()
     {
         $this->totals->calculateTotals($this);
     }
 
+
     public function getTotals()
     {
         return $this->totals;
-    }
-
-    /**
-     * Add an item to the basket
-     *
-     * @param object $item is an Item object being added to the items array.
-     */
-    public function addItem(Item $item)
-    {
-        array_push($this->items, $item);
-        $this->calculateTotals();
-    }
-
-    /**
-     * Remove an item from the basket by its key.
-     *
-     * @param int $key is the invoice items key
-     */
-    public function removeItem($key)
-    {
-        unset($this->items[$key]);
-        $this->calculateTotals();
-    }
-
-    /**
-     * Get the current items in the basket
-     *
-     * @return array An array of Item models.
-     */
-    public function getItems()
-    {
-        return $this->items;
-    }
-
-    /**
-     * Clear all the current items
-     */
-    public function clearItems()
-    {
-        $this->items = array();
-        $this->totals->setDefaultTotals();
     }
 
     /**

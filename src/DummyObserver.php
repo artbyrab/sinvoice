@@ -7,7 +7,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -17,7 +17,9 @@ use Rabus\Sinvoice\Observer;
 /**
  * Dummy Observer
  * 
- * This is a dummy observer implementation to assist in testing.
+ * This is a dummy observer implementation to assist in testing. It simply 
+ * allows you to set the status attribute to active or inactive to ensure the 
+ * notify > update function works as expected.
  *  
  * @author RABUS
  */
@@ -26,6 +28,9 @@ class DummyObserver implements Observer {
     CONST STATUS_ACTIVE = 1;
     CONST STATUS_INACTIVE = 0;
 
+    /**
+     * @var integer
+     */
     public $status = self::STATUS_INACTIVE;
 
     /**

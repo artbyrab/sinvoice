@@ -18,14 +18,15 @@ namespace Rabus\Sinvoice;
  * The observer subjects allows you to add multiple observers to another object
  * and the observers get notified when the object gets updated.
  * 
- * Resources
- * - https://codeburst.io/observer-pattern-object-oriented-php-4e669431bcb9?gi=ff9384165a14
- * - https://secure.php.net/manual/en/function.spl-object-hash.php
  *  
  * @author RABUS
  */
 class ObserverSubjects {
 
+    /**
+     * @var array $observers is an array of objects that implement the 
+     * Observer interface.
+     */
     public $observers=array();
 
     /**
@@ -34,7 +35,8 @@ class ObserverSubjects {
      * We will add the observer to the array and set its key as a hash of 
      * the object.
      * 
-     * @param object $observer is whatever object you are attaching.
+     * @param object $observer is whatever object you are attaching that 
+     * implements the Observer interface.
      */
     public function attach($observer)
     {
@@ -47,6 +49,9 @@ class ObserverSubjects {
      * 
      * Detaching is as simple as just passing the object which gets removed 
      * by its hash.
+     * 
+     * @param object $observer is whatever object you are detaching that 
+     * implements the Observer interface.
      */
     public function detach($observer)
     {
@@ -57,7 +62,7 @@ class ObserverSubjects {
     /**
      * Notify 
      * 
-     * @return void 
+     * For each observer we will trigger their update function.
      */
     public function notify()
     {
@@ -65,5 +70,4 @@ class ObserverSubjects {
            $observer->update();
         }
     }
-
 }

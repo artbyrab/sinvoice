@@ -40,24 +40,17 @@ class TotalsTest extends TestCase
         $this->invoice->setTaxPercentage(20.00);
 
 
-        $itemA = new Item(
-            array(
-                'name' => 'Tunic',
-                'description' => 'A fine cotton tunic, suitable for the discerning Roman.',
-                'price' => '10.50',
-                'quantity' => '2',
-            )
-        );
+        $itemA = (new Item())
+            ->setName('Tunic')
+            ->setDescription('A fine cotton tunic, suitable for the discerning Roman.')
+            ->setPrice(10.50)
+            ->setQuantity(2);
 
-        $itemB = new Item(
-            array(
-                'name' => 'Leather Sandals',
-                'description' => 'A beautiful set of leather sandals perfect for wearing to the market.',
-                'price' => '5.00',
-                'quantity' => '1',
-            )
-        );
-
+        $itemB = (new Item())
+            ->setName('Leather Sandals')
+            ->setDescription('A beautiful set of leather sandals perfect for wearing to the market.')
+            ->setPrice(5.00)
+            ->setQuantity(1);
 
         $this->invoice->addItem($itemA);
         $this->invoice->addItem($itemB);
@@ -187,23 +180,17 @@ class TotalsTest extends TestCase
         $invoice = New Invoice();
         $invoice->setTaxPercentage(20.00);
 
-        $itemA = new Item(
-            array(
-                'name' => 'Roman Shield',
-                'description' => 'A solid Roman shield, perfect for battle.',
-                'price' => '89.99',
-                'quantity' => '1',
-            )
-        );
+        $itemA = (new Item())
+            ->setName('Roman Shield')
+            ->setDescription('A solid Roman shield, perfect for battle.')
+            ->setPrice(89.99)
+            ->setQuantity(1);
 
-        $itemB = new Item(
-            array(
-                'name' => 'Roman Gladius Sword',
-                'description' => 'A beautiful artisan sword, for the discerning Roman warrior.',
-                'price' => '149.99',
-                'quantity' => '1',
-            )
-        );
+        $itemB = (new Item())
+            ->setName('Roman Gladius Sword')
+            ->setDescription('A beautiful artisan sword, for the discerning Roman warrior.')
+            ->setPrice(149.99)
+            ->setQuantity(1);
 
         $invoice->addItem($itemA);
         $invoice->addItem($itemB);

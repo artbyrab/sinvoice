@@ -13,50 +13,44 @@
 namespace Rabus\Sinvoice;
 
 /**
- * Basket
+ * Basket 
  * 
- * @TODO add description
+ * The basket is way for us to share functionality between invoice attributes 
+ * like the invoice items and invoice charges. Both items and charges have 
+ * similar functionality and therefore can both easily utilise the basket.
  * 
- * https://codeburst.io/observer-pattern-object-oriented-php-4e669431bcb9?gi=ff9384165a14
- *  
+ * The basket allows you to add, remove, and delete items by their key.
+ * 
  * @author RABUS
  */
 class Basket {
 
-    public $invoice = Null;
+    /**
+     * @var object An instance of the ObserverSubjects model.
+     */
+    public $subjects;
 
+    /**
+     * @var array An array of items that get added to the basket
+     */
     public $items = array();
 
     /**
-     * Attach an Invoice
+     * Construct
      * 
-     * An invoice needs to be attached so that the total of the invoice can 
-     * be updated when items are added and removed from the basket.
+     * This will set up the ObserverSubject and attach the observer to it, in 
+     * this case the invoice. When the Basket is updated, with add, remove 
+     * or clear the ObserverSubject will notify the invoice to update it's 
+     * totals.
      * 
-     * @param object $invoice Is an instance of the Invoice model.
+     * @param object $invoice An instance of the invoice model.
+     * @return object 
      */
-    public function attachInvoice(Invoice $invoice)
+    public function __construct(Invoice $invoice) 
     {
-        $this->invoice = $invoice;
-    }
-
-    /**
-     * Detach an Invoice
-     * 
-     * @param object $invoice Is an instance of the Invoice model.
-     */
-    public function detachInvoice()
-    {
-        $this->invoice=Null;
-    }
-
-    /**
-     * Notify the invoice
-     * @return void 
-     */
-    public function notify()
-    {
-        //$this->invoice->update();
+        $this->subjects = new ObserverSubjects();
+        $this->subjects->attach($invoice);
+        return $this;
     }
 
     /**
@@ -67,7 +61,7 @@ class Basket {
     public function addItem(Item $item)
     {
         array_push($this->items, $item);
-        $this->notify();
+        $this->subjects->notify();
     }
 
     /**
@@ -80,7 +74,7 @@ class Basket {
     public function removeItem($key)
     {
         unset($this->items[$key]);
-        $this->notify();
+        $this->subjects->notify();
     }
 
     /**
@@ -99,7 +93,6 @@ class Basket {
     public function clearItems()
     {
         $this->items = array();
-        $this->notify();
+        $this->subjects->notify();
     }
-
 }

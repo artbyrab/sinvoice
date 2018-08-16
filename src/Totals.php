@@ -182,8 +182,8 @@ class Totals {
     {
         $this->setDefaultTotals();
 
-        if (!empty($invoice->getItems())) {
-            foreach ($invoice->getItems() as $item){
+        if (!empty($invoice->items->getItems())) {
+            foreach ($invoice->items->getItems() as $item){
                 $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscount(); 
                 $this->itemNetTotal = $this->itemNetTotal + $item->getNetTotal(); 
                 $this->netTotal = $this->netTotal + $item->getNetTotal();
@@ -201,7 +201,7 @@ class Totals {
             }
 
             $this->discountTotal = $this->itemDiscountTotal + $this->discount;
-            $this->netTotal = round($this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal + $this->discount, 2);
+            $this->netTotal = round($this->netTotal + $this->shippingHandlingTotal + $this->otherChargesTotal - $this->discount, 2);
             $this->taxTotal = round(($this->netTotal/100) * $invoice->getTaxPercentage(), 2);
             $this->grossTotal = $this->netTotal + $this->taxTotal;
         }
