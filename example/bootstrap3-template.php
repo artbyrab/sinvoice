@@ -14,42 +14,56 @@ use Rabus\Sinvoice\FlatDiscount;
 use Rabus\Sinvoice\PercentageDiscount;
 
 // lets create our new invoice
-$invoice = new Invoice();
-$invoice->setTaxPercentage(20.00);
-$invoice->setNumber("54678");
-$supplier = new Entity();
-$supplier->setName('Mr Supplier');
-$invoice->addSupplier($supplier);
+// $invoice = new Invoice();
+// $invoice->setTaxPercentage(20.00);
+// $invoice->setNumber("54678");
+// $supplier = new Entity();
+// $supplier->setName('Mr Supplier');
+// $invoice->addSupplier($supplier);
 
-// add an item
-$itemA = (new Item())
-    ->setPrice(2)
-    ->setQuantity(10)
-    ->setName('Baseball Sticker Pack')
-    ->addDiscount(
-        (new FlatDiscount())
-            ->setFigure(10)
-            ->setDescription('Recurring Customer')
+$invoice = (new Invoice())
+    ->setNumber('123')
+    ->addItem(
+        (new Item)
+        ->setPrice(2.99)
+        ->setQuantity(10)
+        ->setName('Baseball Sticker Pack')
+        ->addDiscount(
+            (new FlatDiscount())
+                ->setFigure(10)
+                ->setDescription('Recurring Customer')
+        )
     );
 
-$invoice->items->addItem($itemA);
+// // add an item
+// $itemA = (new Item())
+//     ->setPrice(2.99)
+//     ->setQuantity(10)
+//     ->setName('Baseball Sticker Pack')
+//     ->addDiscount(
+//         (new FlatDiscount())
+//             ->setFigure(10)
+//             ->setDescription('Recurring Customer')
+//     );
 
-$invoice->items->addItem(
-    (new Item())
-        ->setPrice(100)
-        ->setQuantity(5)
-        ->setName('Baseball Bat(Premium)')
-        ->addDiscount(
-            (new PercentageDiscount())
-                ->setFigure(10)
-                ->setDescription('Order 5 or more for a 10% discount')
-        )
-);
-$invoice->addDiscount(
-    (new FlatDiscount())
-        ->setFigure(10)
-        ->setDescription('Frequent customer discount')
-);
+//$invoice->items->addItem($itemA);
+
+// $invoice->items->addItem(
+//     (new Item())
+//         ->setPrice(100)
+//         ->setQuantity(5)
+//         ->setName('Baseball Bat(Premium)')
+//         ->addDiscount(
+//             (new PercentageDiscount())
+//                 ->setFigure(100)
+//                 ->setDescription('Order 5 or more for a 10% discount')
+//         )
+// );
+// $invoice->addDiscount(
+//     (new FlatDiscount())
+//         ->setFigure(10)
+//         ->setDescription('Frequent customer discount')
+// );
 ?>
 
 <!doctype html>
@@ -139,11 +153,11 @@ $invoice->addDiscount(
                         <?php if ($invoice->hasItemDiscount() == True) { ?>
                             <tr>
                                 <th>Item Net Total:</th>
-                                <td><?php echo $invoice->totals->getItemNetTotal(); ?></td>
+                                <td>$<?php echo $invoice->totals->getItemNetTotal(); ?></td>
                             </tr>
                             <tr>
                                 <th>Discount:</th>
-                                <td><?php echo $invoice->totals->getDiscount(); ?></td>
+                                <td>$<?php echo $invoice->totals->getDiscount(); ?></td>
                             </tr>
                         <?php } ?>
                         <tr>

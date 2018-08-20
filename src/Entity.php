@@ -71,8 +71,9 @@ class Entity {
                 $string = $string . $value . $seperator;
             }
         }
-        $string = rtrim($string, $seperator);
         
+        $string = rtrim($string, $seperator);
+
         return $string;
     }
 
@@ -85,7 +86,6 @@ class Entity {
     public function setName(string $name)
     {
         $this->name = $name;
-
         return $this;
     }
 

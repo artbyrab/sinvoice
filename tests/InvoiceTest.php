@@ -1,7 +1,14 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
+use Rabus\Sinvoice\Invoice;
 use Rabus\Sinvoice\Entity;
+use Rabus\Sinvoice\Item;
+use Rabus\Sinvoice\Totals;
+use Rabus\Sinvoice\Basket;
+use Rabus\Sinvoice\FlatDiscount;
+use Rabus\Sinvoice\PercentageDiscount;
+use Rabus\Sinvoice\Shipping;
 use \Datetime;
 
 /**
@@ -39,383 +46,483 @@ class InvoiceTest extends TestCase
     private $itemB;
 
     /**
+     * @var object An instance of the Entity model.
+     */
+    private $supplier;
+
+    /**
+     * @var object An instance of the Entity model.
+     */
+    private $customer;
+
+    /**
+     * @var object An instance of the Shipping model.
+     */
+    private $shipping;
+
+    /**
      * Set up
      *
      * Performed before every test.
      * 
-     * For the invoice tests we will set up a dummy invoice and two invoice
-     * items that we can use in the invoice tests. This stops us having to 
-     * instantitate and unset in each individual test. However for readability
-     * i will likely only use this in large tests.
+     * We will set up some seperate test items to use in the various tests here
+     * by keeping them seperate here, we can easily attach and detach as 
+     * needed.
      */
     protected function setUp()
     {
-        $this->invoice = new Rabus\Sinvoice\Invoice();
-        $this->invoice->setNumber('1');
-        $this->invoice->setCreatedDate('today');
-        $this->invoice->setIssuedDate('today');
-        $this->invoice->setDueDate('+14 days');
-        $this->invoice->setReference('fc_1');
-        $this->invoice->setCustomerAccountNumber('45983');
-        $this->invoice->setCustomer('Billy Russo, 1 Lowland Avenue, New York');
-        $this->invoice->setTaxPercentage(21);
-        $this->invoice->setShippingHandlingTotal(9.00);
-        $this->invoice->setOtherChargesDescription('Additional packing');
-        $this->invoice->setOtherChargesTotal(7);
+        $this->invoice = (new Invoice())
+            ->setNumber('1')
+            ->setCreatedDate('today')
+            ->setIssuedDate('today')
+            ->setDueDate('+14 days')
+            ->setReference('rome_1')
+            ->setTaxPercentage(20);
+ 
+        $this->itemA = (new Item())
+            ->setName('Black Tunic')
+            ->setDescription('A wonderful black tunic to mark you out from the plebians.')
+            ->setPrice(20.00)
+            ->setQuantity(2);
 
-        $this->itemA = new Rabus\Sinvoice\Item();
-        $this->itemA->setName('Black T-shirt');
-        $this->itemA->setDescription('A wonderful black t-shirt in a washed out style.');
-        $this->itemA->setPrice(20.00);
-        $this->itemA->setQuantity(2);
-        $this->itemA->setDiscountPercentage(5);
+        $this->itemB = (new Item())
+            ->setName('Leather Sandals(Tan)')
+            ->setDescription('A beautiful pair of leather sandals.')
+            ->setPrice(25.00)
+            ->setQuantity(1);
 
-        $this->itemB = new Rabus\Sinvoice\Item();
-        $this->itemB->setName('Black Cargo Pants');
-        $this->itemB->setDescription('A beautiful pair of cargo pants.');
-        $this->itemB->setPrice(25.00);
-        $this->itemB->setQuantity(1);
-        $this->itemB->setDiscountPercentage(0);
-    }
+        $this->supplier = (new Entity())
+            ->setName('Rome Suppliers')
+            ->setAddress('1 Main Street, Industrial District, Rome, Italy')
+            ->setPhone('01234 567899')
+            ->setEmail('rsuppliers@rome.com')
+            ->setReference('rsa');
+        
+        $this->customer = (new Entity())
+            ->setName('Emperor Nero')
+            ->setAddress('Via Cavour, Rome, Italy')
+            ->setPhone('01234 567891')
+            ->setEmail('nero@rome.com')
+            ->setReference('nero123');
+
+        $this->flatDiscount = (new FlatDiscount())
+            ->setFigure(5)
+            ->setDescription('5 flat discount');
+
+        $this->shipping = (new Shipping())
+            ->addRecipient(
+                (new Entity())
+                    ->setName('Ceasar')
+                    ->setAddress('1 High Street, Rome, Italy')
+                    ->setPhone('01245 678910')
+                    ->setEmail('ceasar@rome.com')
+                    ->setReference('a145')
+            )
+            ->setPrice(10.99)
+            ->setDeliveryDate('+7 days')
+            ->setHandler('Rome Road Mail')
+            ->setReference('8547124');
+    }   
 
     /**
-     * Tear down
-     *
-     * Performed after every test.
-     */
-    protected function tearDown()
-    {
-        unset($this->invoice);
-        unset($this->itemA);
-        unset($this->itemB);   
-    }
-    /**
-     * Test the Invoice creation
-     *
-     * This will simply test the invoice gets created correctly and the 
-     * attributes are assigned correctly. 
-     *
-     */
-    public function testIsThereAnySyntaxError()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $this->assertTrue(is_object($invoice));
-        unset($invoice);
-    }
-
-    /**
-     * Test the construction of the model
-     *
-     * This will ensure that any additional attributes get set
-     * when the invoice is created.
-     *
+     * Test the __construct function
      */
     public function testConstruct()
     {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $this->assertNotEmpty($invoice->getCreatedDate());
-        $this->assertNotEmpty($invoice->getIssuedDate());
-        $this->assertNotEmpty($invoice->getDueDate());
-        $this->assertEquals($invoice->getItemSubTotal(), 0.00);
-        $this->assertEquals($invoice->getItemDiscountTotal(), 0.00);
-        $this->assertEquals($invoice->getTaxTotal(), 0.00);
-        $this->assertEquals($invoice->getShippingHandlingTotal(), 0.00);
-        $this->assertEquals($invoice->getOtherChargesTotal(), 0.00);
-        $this->assertEquals($invoice->getTotal(), 0.00);
-        $this->assertEquals($invoice->getTaxPercentage(), 20.00);
+        $invoice = new Invoice();
+
+        $this->assertInstanceOf(Invoice::class, $invoice);
+        $this->assertInstanceOf(Totals::class, $invoice->totals);
+        $this->assertInstanceOf(Basket::class, $invoice->items);
+        $this->assertInstanceOf(Basket::class, $invoice->charges);
+
         unset($invoice);
     }
 
     /**
-     * Test the fluid interface for the invoice
+     * Test the __construct function with a fluid interface
      *
      */
-    public function testFluidInterface()
+    public function testConstructWithFluidInterface()
     {
+        $createdIssuedDate = new DateTime('today');
+        $dueDate = new DateTime('+21 days');
 
-    }
+        $invoice = (new Invoice())
+            ->setNumber(1)
+            ->setCreatedDate('Today')
+            ->setIssuedDate('Today')
+            ->setDueDate('+21 days')
+            ->setReference('rome_1')
+            ->setTaxPercentage(15.00);
 
-    /**
-     * Test the setNumber function.
-     */
-    public function testSetNumber()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber('1');
         $this->assertEquals($invoice->getNumber(), '1');
+        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getReference(), 'rome_1');
+        $this->assertEquals($invoice->getTaxPercentage(), 15.00);
+
         unset($invoice);
     }
 
     /**
-     * Test the setCreatedDate function.
-     */
-    public function testSetCreatedDate()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $date = new DateTime('today');
-        $invoice->setCreatedDate('today');
-        $this->assertEquals($invoice->getCreatedDate(), $date->format('Y-m-d'));
-        unset($invoice);
-    }
-
-    /**
-     * Test the setIssuedDate function.
-     */
-    public function testSetIssuedDate()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $date = new DateTime('today');
-        $invoice->setIssuedDate('today');
-        $this->assertEquals($invoice->getIssuedDate(), $date->format('Y-m-d'));
-        unset($invoice);
-    }
-
-    /**
-     * Test the setDueDate function.
-     */
-    public function testSetDueDate()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $date = new DateTime('today');
-        $invoice->setDueDate('today');
-        $this->assertEquals($invoice->getDueDate(), $date->format('Y-m-d'));
-        unset($invoice);
-    }
-
-    /**
-     * Test the setShippingDate function.
-     */
-    public function testSetShippingDate()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $date = new DateTime('today');
-        $invoice->setShippingDate('today');
-        $this->assertEquals($invoice->getShippingDate(), $date->format('Y-m-d'));
-        unset($invoice);
-    }
-
-    /**
-     * Test the setReference function.
-     */
-    public function testSetReference()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setReference('customer:123');
-        $this->assertEquals($invoice->getReference(), 'customer:123');
-        unset($invoice);
-    }
-
-    /**
-     * Test the setSupplier function.
-     */
-    public function testSetSupplier()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setSupplier('Frank Castle, 1 Park Street, New York.');
-        $this->assertEquals($invoice->getSupplier(), 'Frank Castle, 1 Park Street, New York.');
-        unset($invoice);
-    }
-
-    /**
-     * Test the setCustomerAccountNumber function.
-     */
-    public function testSetCustomerAccountNumber()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setCustomerAccountNumber('Cust:123');
-        $this->assertEquals($invoice->getCustomerAccountNumber(), 'Cust:123');
-        unset($invoice);
-    }
-
-    /**
-     * Test the setCustomer function.
-     */
-    public function testSetCustomer()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setCustomer('Billy Russo, 1 Lowland Avenue, New York');
-        $this->assertEquals($invoice->getCustomer(), 'Billy Russo, 1 Lowland Avenue, New York');
-        unset($invoice);
-    }
-
-    /**
-     * Test the setTaxPercentage function.
-     */
-    public function testSetTaxPercentage()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setTaxPercentage(21);
-        $this->assertEquals($invoice->getTaxPercentage(), 21.00);
-        unset($invoice);
-    }
-
-    /**
-     * Test the setShippingHandlingTotal function.
-     */
-    public function testSetShippingHandlingTotal()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setShippingHandlingTotal(9.00);
-        $this->assertEquals($invoice->getShippingHandlingTotal(), 9.00);
-        unset($invoice);
-    }
-
-    /**
-     * Test the setOtherChargesDescription function.
-     */
-    public function testSetOtherChargesDescription()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setOtherChargesDescription('Additional packing');
-        $this->assertEquals($invoice->getOtherChargesDescription(), 'Additional packing');
-        unset($invoice);
-    }
-
-    /**
-     * Test the setOtherChargesTotal function.
-     */
-    public function testSetOtherChargesTotal()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setOtherChargesTotal(7);
-        $this->assertEquals($invoice->getOtherChargesTotal(), 7.00);
-        unset($invoice);
-    }
-
-    /**
-     * Test the addItem function.
-     * 
-     * Please note this test uses the setUp models.
-     */
-    public function testAddItem()
-    {
-        $this->invoice->addItem($this->itemA);
-        $this->assertEquals(count($this->invoice->getItems()), 1);
-        $this->assertEquals($this->invoice->getItems()[0]->getName(), 'Black T-shirt');
-        $this->assertEquals($this->invoice->getItems()[0]->getDescription(), 'A wonderful black t-shirt in a washed out style.');
-        $this->assertEquals($this->invoice->getItems()[0]->getPrice(), 20.00);
-        $this->assertEquals($this->invoice->getItems()[0]->getQuantity(), 2);
-    }
-
-    /**
-     * Test the removeItem function.
-     * 
-     * Please note this test uses the setUp models.
-     */
-    public function testremoveItem()
-    {
-        $this->invoice->addItem($this->itemA);
-        $this->assertEquals(count($this->invoice->getItems()), 1);
-        $this->invoice->removeItem(0);
-        $this->assertEquals(count($this->invoice->getItems()), 0);
-    }
-
-    /**
-     * Test the getItems function.
+     * Test the __construct function with a fluid interface
      *
-     * Please note this test uses the setUp models.
      */
-    public function testgetItems()
+    public function testConstructWithFluidInterfaceItems()
     {
-        $this->invoice->addItem($this->itemA);
-        $this->assertEquals(count($this->invoice->getItems()), 1);
+        $createdIssuedDate = new DateTime('today');
+        $dueDate = new DateTime('+21 days');
+
+        $invoice = (new Invoice())
+            ->setNumber(1)
+            ->setCreatedDate('Today')
+            ->setIssuedDate('Today')
+            ->setDueDate('+21 days')
+            ->setReference('rome_1')
+            ->setTaxPercentage(15.00)
+            ->addItem((new Item())
+                ->setName('Gladius Sword')
+                ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
+                ->setPrice(120.00)
+                ->setQuantity(1)
+            )
+            ->addItem((new Item())
+                ->setName('Shield')
+                ->setDescription('A shield, very useful in the tortoise.')
+                ->setPrice(49.99)
+                ->setQuantity(1)
+                ->addDiscount(
+                    (new PercentageDiscount())
+                        ->setFigure(10.00)
+                        ->setDescription('10% discount')
+                )
+            );
+
+        $this->assertEquals($invoice->getNumber(), '1');
+        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getReference(), 'rome_1');
+        $this->assertEquals($invoice->getTaxPercentage(), 15.00);
+        $this->assertEquals(count($invoice->items->getItems()), 2);
+
+        unset($invoice);
     }
 
     /**
-     * Test the clearItems function.
-     * 
-     * Please note this test uses the setUp models.
+     * Test the __construct function with a fluid interface
+     *
      */
-    public function testclearItems()
+    public function testConstructWithFluidInterfaceEntities()
+    {
+        $createdIssuedDate = new DateTime('today');
+        $dueDate = new DateTime('+21 days');
+
+        $invoice = (new Invoice())
+            ->setNumber(1)
+            ->setCreatedDate('Today')
+            ->setIssuedDate('Today')
+            ->setDueDate('+21 days')
+            ->setReference('rome_1')
+            ->setTaxPercentage(15.00)
+            ->addSupplier((new Entity())
+                ->setName('Rome Suppliers')
+                ->setAddress('1 Main Street, Industrial District, Rome, Italy')
+                ->setPhone('01234 567899')
+                ->setEmail('rsuppliers@rome.com')
+                ->setReference('rsa')
+            )
+            ->addCustomer((new Entity())
+                ->setName('Emperor Nero')
+                ->setAddress('Via Cavour, Rome, Italy')
+                ->setPhone('01234 567891')
+                ->setEmail('nero@rome.com')
+                ->setReference('nero123')
+        );
+
+        $this->assertEquals($invoice->getNumber(), '1');
+        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getReference(), 'rome_1');
+        $this->assertEquals($invoice->getTaxPercentage(), 15.00);
+        $this->assertInstanceOf(Entity::class, $invoice->supplier);
+        $this->assertEquals($invoice->supplier->getName(), 'Rome Suppliers');
+        $this->assertInstanceOf(Entity::class, $invoice->customer);
+        $this->assertEquals($invoice->customer->getName(), 'Emperor Nero');
+
+        unset($invoice);
+    }
+
+    /**
+     * Test the set and get number functions
+     *
+     */
+    public function testSetGetNumber()
+    {
+        $this->invoice->setNumber('#4145');
+        $this->assertEquals($this->invoice->getNumber(), '#4145');
+    }
+
+    /**
+     * Test the set and get created date functions
+     *
+     */
+    public function testSetGetCreatedDate()
+    {
+        $createdIssuedDate = new DateTime('today');
+        $this->invoice->setCreatedDate('Today');
+        $this->assertEquals($this->invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
+    }
+
+    /**
+     * Test the set and get issued date functions 
+     *
+     */
+    public function testSetGetIssuedDate()
+    {
+        $createdIssuedDate = new DateTime('today');
+        $this->invoice->setIssuedDate('Today');
+        $this->assertEquals($this->invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
+    }
+
+    /**
+     * Test the ... function
+     *
+     */
+    public function testSetGetDueDate()
+    {
+        $dueDate = new DateTime('+14 days');
+        $this->invoice->setIssuedDate('+14 days');
+        $this->assertEquals($this->invoice->getDueDate(), $dueDate->format('Y-m-d'));
+    }
+
+    /**
+     * Test the ... function
+     *
+     */
+    public function testSetGetReference()
+    {
+        $this->invoice->setReference('rome_1');
+        $this->assertEquals($this->invoice->getReference(), 'rome_1');
+    }
+
+    /**
+     * Test the ... function
+     *
+     */
+    public function testSetGetTaxPercentage()
+    {
+        $this->invoice->setTaxPercentage(20.00);
+        $this->assertEquals($this->invoice->getTaxPercentage(), 20.00);
+    }
+
+    /**
+     * Test the addSupplier function
+     *
+     */
+    public function testAddSupplier()
+    {
+        $this->invoice->addSupplier($this->supplier);
+        $this->assertInstanceOf(Entity::class, $this->invoice->supplier);
+        $this->assertEquals($this->invoice->supplier->getName(), 'Rome Suppliers');
+    }
+
+    /**
+     * Test the getSupplier function
+     *
+     */
+    public function testGetSupplier()
+    {
+        $this->invoice->addSupplier($this->supplier);
+        $this->assertEquals(
+            $this->invoice->getSupplier(), 
+            'Rome Suppliers, 1 Main Street, Industrial District, Rome, Italy, 01234 567899, rsuppliers@rome.com, rsa'
+        );
+    }
+
+    /**
+     * Test the removeSupplier function
+     *
+     */
+    public function testRemoveSupplier()
+    {
+        $this->invoice->addSupplier($this->supplier);
+        $this->invoice->removeSupplier();
+        $this->assertNull($this->invoice->supplier);
+    }
+
+    /**
+     * Test the addCustomer function
+     *
+     */
+    public function testAddCustomer()
+    {
+        $this->invoice->addCustomer($this->customer);
+        $this->assertInstanceOf(Entity::class, $this->invoice->customer);
+        $this->assertEquals($this->invoice->customer->getName(), 'Emperor Nero');
+    }
+
+    /**
+     * Test the getCustomer function
+     *
+     */
+    public function testGetCustomer()
+    {
+        $this->invoice->addCustomer($this->customer);
+        $this->assertEquals(
+            $this->invoice->getCustomer(), 
+            'Emperor Nero, Via Cavour, Rome, Italy, 01234 567891, nero@rome.com, nero123'
+        );
+    }
+
+    /**
+     * Test the removeCustomer function
+     *
+     */
+    public function testRemoveCustomer()
+    {
+        $this->invoice->addCustomer($this->customer);
+        $this->invoice->removeCustomer();
+        $this->assertNull($this->invoice->customer);
+    }
+
+    /**
+     * Test the addShipping function
+     *
+     */
+    public function testAddShipping()
+    {
+        $this->invoice->addShipping($this->shipping);
+        $this->assertInstanceOf(Shipping::class, $this->invoice->shipping);
+        $this->assertEquals($this->invoice->shipping->getPrice(), 10.99);
+    }
+
+    /**
+     * Test the removeShipping function
+     *
+     */
+    public function testRemoveShipping()
+    {
+        $this->invoice->addShipping($this->shipping);
+        $this->invoice->removeShipping();
+        $this->assertNull($this->invoice->shipping);
+    }
+
+    /**
+     * Test the addDiscount function
+     *
+     */
+    public function testAddDiscount()
+    {
+        $this->invoice->addDiscount($this->flatDiscount);
+        $this->assertInstanceOf(FlatDiscount::class, $this->invoice->discount);
+    }
+
+    /**
+     * Test the ... function
+     *
+     */
+    public function testRemoveDiscount()
+    {
+        $this->invoice->addDiscount($this->flatDiscount);
+        $this->assertInstanceOf(FlatDiscount::class, $this->invoice->discount);
+    }
+
+    /**
+     * Test the getDiscount function
+     *
+     */
+    public function testGetDiscount()
+    {
+        $this->invoice->addDiscount($this->flatDiscount);
+        $this->assertEquals($this->invoice->getDiscount(), 0.0);
+    }
+
+    /**
+     * Test the getDiscount function with an item attached to the invoice first.
+     *
+     */
+    public function testGetDiscountWithDiscount()
+    {
+        $this->invoice->addDiscount($this->flatDiscount);
+        $this->assertEquals($this->invoice->getDiscount(), 0.0);
+    }
+
+    /**
+     * Test the calculateTotals function
+     *
+     */
+    public function testCalculateTotals()
     {
         $this->invoice->addItem($this->itemA);
         $this->invoice->addItem($this->itemB);
-        $this->assertEquals(count($this->invoice->getItems()), 2);
-        $this->invoice->clearItems();
-        $this->assertEquals(count($this->invoice->getItems()), 0);
+        $this->invoice->calculateTotals();
+
+        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 65.0);
+        $this->assertEquals($this->invoice->totals->getDiscount(), 0.0);
+        $this->assertEquals($this->invoice->totals->getItemDiscountTotal(), 0.0);
+        $this->assertEquals($this->invoice->totals->getDiscountTotal(), 0.0);
+        $this->assertEquals($this->invoice->totals->getShippingHandlingTotal(), 0.0);
+        $this->assertEquals($this->invoice->totals->getOtherChargesTotal(), 0.0);
+        $this->assertEquals($this->invoice->totals->getNetTotal(), 65.0);
+        $this->assertEquals($this->invoice->totals->getTaxTotal(), 13.0);
+        $this->assertEquals($this->invoice->totals->getGrossTotal(), 78.0);
     }
 
     /**
-     * Test the calculateTotals function.
-     * 
-     * Please note this test uses the setUp models.
+     * Test the update function
+     *
      */
-    public function testcalculateTotals()
+    public function testUpdate()
     {
         $this->invoice->addItem($this->itemA);
-        $this->invoice->calculateTotals();
-        $this->assertEquals($this->invoice->getItemPriceTotal(), 40.00);
-        $this->assertEquals($this->invoice->getItemDiscountTotal(), 2.00);
-        $this->assertEquals($this->invoice->getItemSubTotal(), 38.00);
-        $this->assertEquals($this->invoice->getTaxTotal(), 7.98);
-        $this->assertEquals($this->invoice->getShippingHandlingTotal(), 0.00);
-        $this->assertEquals($this->invoice->getOtherChargesTotal(), 0.00);
-        $this->assertEquals($this->invoice->getTotal(), 45.98);
+        $this->invoice->addItem($this->itemB);
+        $this->invoice->update();
+
+        $this->assertEquals($this->invoice->totals->getItemNetTotal(), 65.0);
     }
 
     /**
-     * Test the getItemSubTotal function.
+     * Test the hasDiscount function
+     *
      */
-    public function testGetItemSubTotal()
+    public function testHasDiscountTrue()
     {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
+        $this->invoice->addDiscount($this->flatDiscount);
+        $this->assertTrue($this->invoice->hasDiscount());
     }
 
     /**
-     * Test the getItemDiscountTotal function.
+     * Test the hasDiscount function
+     *
      */
-    public function testgetItemDiscountTotal()
+    public function testHasDiscountFalse()
     {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
+        $this->assertFalse($this->invoice->hasDiscount());
     }
 
     /**
-     * Test the getTaxTotal function.
+     * Test the hasItemDiscount function
+     *
      */
-    public function testgetTaxTotal()
+    public function testHasItemDiscountTrue()
     {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
+        $this->itemA->addDiscount($this->flatDiscount);
+        $this->invoice->addItem($this->itemA);
+
+        $this->assertTrue($this->invoice->hasItemDiscount());
     }
 
     /**
-     * Test the getShippingHandlingTotal function.
+     * Test the hasItemDiscount function
+     *
      */
-    public function testgetShippingHandlingTotal()
+    public function testHasItemDiscountFalse()
     {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
-    }
-
-    /**
-     * Test the getOtherChargesTotal function.
-     */
-    public function testgetOtherChargesTotal()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
-    }
-    /**
-     * Test the getTotal function.
-     */
-    public function testgetTotal()
-    {
-        $invoice = new Rabus\Sinvoice\Invoice();
-        $invoice->setNumber(7);
-        $this->assertEquals($invoice->getNumber(), 7.00);
-        unset($invoice);
+        $this->assertFalse($this->invoice->hasItemDiscount());
     }
 
 }

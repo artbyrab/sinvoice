@@ -24,8 +24,5 @@ Below is a breakdown of all the totals in the total model.
 * Gross Total
     * Gross total is the net total with tax added on
 
- ## Adding the other charges total
- ```
- ```
-
- ## ?
+ ## How are totals calculated?
+ Totals are calculated automatically. When the invoice is created a new Totals object is instantiated and is then updated whenever an item or charge gets added to the invoice.

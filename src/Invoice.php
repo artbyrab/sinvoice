@@ -28,24 +28,7 @@ use Rabus\Sinvoice\Totals;
  * various models that need to trigger back to the invoice to update information
  * like totals.
  * 
- * The following are the main parts of the invoice model:
- *  - Number
- *      - The unique invoice number
- *  - Dates
- *      - The invoice can hold created, issued and due dates
- *  - Reference
- *      - Set a unique reference for the invoice. This might be a department
- *      code for the invoice
- *  - Tax
- *      - The tax is set via a percentage
- *  - Entities
- *      - The invoice holds the entities associatted with the invoice:
- *          - Supplier
- *          - Customer
- *          - Recipient
- *  - Totals
- *      - TODO needs editing
- *  - Items
+ * 
  *
  * @author RABUS rabus@art-by-rab.com
  */
@@ -92,13 +75,13 @@ class Invoice implements Observer
      * @var object $supplier is an instance of the Entity model. The supplier 
      * is providing the invoice to the customer.
      */
-    public $supplier;
+    public $supplier = Null;
     
     /**
      * @var object $customer is an instance of the Entity model. The customer
      * is receiving the invoice from the supplier.
      */
-    public $customer;
+    public $customer = Null;
 
     /**
      * @var object $shipping is an instance of the Shipping model. if the 
@@ -107,13 +90,13 @@ class Invoice implements Observer
      * The shipping default is null. If there is no delivery then you do not 
      * need to fill in the shipping.
      */
-    public $shipping = null;
+    public $shipping = Null;
 
     /**
      * @var object $discount is an object that adheres to the discount 
      * interface.
      */
-    public $discount = null;
+    public $discount = Null;
     
     /**
      * @var object $totals is an instance of the Totals model.
@@ -121,11 +104,15 @@ class Invoice implements Observer
     public $totals;
 
     /**
-     * @var array $items Is an instance of the Basket model. You can add and 
-     * remove items.
+     * @var array $items Is an instance of the Basket model. Items are the 
+     * items that are being sold to your customer
      */
     public $items;
 
+    /**
+     * @var array $charges is an instance of the Basket model. Charges can be
+     * an charge you need to make to a customer that are not an item.
+     */
     public $charges;
 
     /**
@@ -137,109 +124,11 @@ class Invoice implements Observer
      */
     public function __construct()
     { 
-        $this->setDefaultDates();
         $this->totals = new Totals();
         $this->items = new Basket($this);
-
+        $this->charges = new Basket($this);
+        
         return $this;
-    }
-
-    /**
-     * Update
-     * 
-     * This is run everytime the items basket and the charge baskets get 
-     * updated via the obsever subject pattern.
-     */
-    public function update()
-    {
-        $this->calculateTotals();
-    }
-
-    /**
-     * Add supplier
-     * 
-     * @param integer $customer is an instance of the Entity model.
-     * @return object $this An instance of the Invoice.
-     */
-    public function addSupplier(Entity $supplier)
-    {
-        $this->supplier = $supplier;
-
-        return $this;
-    }
-
-    /**
-     * Get the supplier
-     *
-     * @return string
-     */
-    public function getSupplier()
-    {
-        if (empty($this->supplier)) {
-            return 'No supplier set';
-        }
-        return $this->supplier->formatToString();
-    }
-
-
-    /**
-     * Add customer
-     * 
-     * @param integer $customer is an instance of the Entity model.
-     * @return object $this An instance of the Invoice.
-     */
-    public function addCustomer(Entity $customer)
-    {
-        $this->customer = $customer;
-
-        return $this;
-    }
-
-    /**
-     * Get the customer
-     *
-     * @return string
-     */
-    public function getCustomer()
-    {
-        if (empty($this->customer)) {
-            return 'No customer set';
-        }
-        return $this->customer->formatToString();
-    }
-
-    /**
-     * Add shipping
-     * 
-     * After the shipping is added the totals need recalculating.
-     * 
-     * @param integer $shipping is an instance of the Shipping model.
-     * @return object $this An instance of the Invoice.
-     */
-    public function addShipping(Shipping $shipping)
-    {
-        $this->shipping = $shipping;
-
-        $this->calculateTotals();
-
-        return $this;
-    }
-
-    // @TODO do i need to add a remove shipping - RAB
-    // @TODO the totals will need recalculating too.
-
-    /**
-     * Set Default Dates
-     * 
-     * @TODO consider adding this in the InvoiceFactory model - RAB
-     *
-     * This will set some default dates that can be overridden if required.
-     */
-    private function setDefaultDates()
-    {
-        $this->setCreatedDate('today');
-        $this->setIssuedDate('today');
-        $this->setDueDate('+ 14 days');
     }
 
     /**
@@ -275,7 +164,6 @@ class Invoice implements Observer
     public function setCreatedDate($date)
     {
         $date = new DateTime($date);
-
         $this->createdDate = $date->format('Y-m-d');
 
         return $this;
@@ -301,7 +189,6 @@ class Invoice implements Observer
     public function setIssuedDate($date)
     {
         $date = new DateTime($date);
-
         $this->issuedDate = $date->format('Y-m-d');
 
         return $this;
@@ -327,7 +214,6 @@ class Invoice implements Observer
     public function setDueDate($date)
     {
         $date = new DateTime($date);
-
         $this->dueDate = $date->format('Y-m-d');
 
         return $this;
@@ -394,6 +280,110 @@ class Invoice implements Observer
     }
 
     /**
+     * Add supplier
+     * 
+     * @param integer $customer is an instance of the Entity model.
+     * @return object $this An instance of the Invoice.
+     */
+    public function addSupplier(Entity $supplier)
+    {
+        $this->supplier = $supplier;
+
+        return $this;
+    }
+
+    /**
+     * Get the supplier
+     *
+     * @return string
+     */
+    public function getSupplier()
+    {
+        if (empty($this->supplier)) {
+            return 'No supplier set';
+        }
+        return $this->supplier->formatToString();
+    }
+
+    /**
+     * Remove the supplier
+     *
+     * @return object $this An instance of the Invoice.
+     */
+    public function removeSupplier()
+    {
+        $this->supplier = Null;
+
+        return $this;
+    }
+
+    /**
+     * Add customer
+     * 
+     * @param integer $customer is an instance of the Entity model.
+     * @return object $this An instance of the Invoice.
+     */
+    public function addCustomer(Entity $customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get the customer
+     *
+     * @return string
+     */
+    public function getCustomer()
+    {
+        if ($this->customer == Null) {
+            return 'No customer set';
+        }
+        return $this->customer->formatToString();
+    }
+
+    /**
+     * Remove the customer
+     *
+     * @return object $this An instance of the Invoice.
+     */
+    public function removeCustomer()
+    {
+        $this->customer = Null;
+
+        return $this;
+    }
+
+    /**
+     * Add shipping
+     * 
+     * After the shipping is added the totals need recalculating.
+     * 
+     * @param integer $shipping is an instance of the Shipping model.
+     * @return object $this An instance of the Invoice.
+     */
+    public function addShipping(Shipping $shipping)
+    {
+        $this->shipping = $shipping;
+        $this->calculateTotals();
+        
+        return $this;
+    }
+
+    /**
+     * Remove the shipping
+     *
+     * @return object $this An instance of the Invoice.
+     */
+    public function removeShipping()
+    {
+        $this->shipping = Null;
+
+        return $this;
+    }
+
+    /**
      * Add the discount
      * 
      * You set the discount by adding a model that implements the 
@@ -411,7 +401,6 @@ class Invoice implements Observer
     public function addDiscount($discount)
     {
         $this->discount = $discount;
-
         $this->calculateTotals();
 
         return $this;
@@ -425,7 +414,6 @@ class Invoice implements Observer
     public function removeDiscount()
     {
         $this->discount = null;
-
         $this->calculateTotals();
     }
 
@@ -442,16 +430,46 @@ class Invoice implements Observer
         return $this->totals->getDiscount();
     }
 
-
+    /**
+     * Calculate the totals
+     * 
+     * This will calculate the totals via the total model.
+     */
     public function calculateTotals()
     {
         $this->totals->calculateTotals($this);
     }
 
-
+    /**
+     * Get the totals
+     */
     public function getTotals()
     {
         return $this->totals;
+    }
+
+    /**
+     * Add an item
+     * 
+     * @param object $item An instance of the Item model.
+     * @return object $this.
+     */
+    public function addItem(Item $item)
+    {
+        $this->items->addItem($item);
+
+        return $this;
+    }
+
+    /**
+     * Update
+     * 
+     * This is run everytime the items basket and the charge baskets get 
+     * updated via the obsever subject pattern.
+     */
+    public function update()
+    {
+        $this->calculateTotals();
     }
 
     /**
@@ -467,7 +485,6 @@ class Invoice implements Observer
         if ($this->discount !== null) {
             return True;
         }
-
         return False;
     }
 
@@ -485,7 +502,6 @@ class Invoice implements Observer
         if ($this->totals->getItemDiscountTotal()) {
             return True;
         }
-
         return False;
     }
 }

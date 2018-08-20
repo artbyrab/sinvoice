@@ -7,6 +7,8 @@ Sinvoice is a PHP invoicing library that allows you to easily and quickly create
 Sinvoice Terminology:
 * Sinvoice
     * The best kind of invoice
+* Invoice
+    * The invoice
 * Entities
     * A person/group/company, in the case of Sinvoice it refers to customers, suppliers and recipients
 * Supplier
@@ -17,19 +19,18 @@ Sinvoice Terminology:
     * The entity receiving a delivery
 * Shipping
     * The details pertaining to a delivery
-* Invoice
-    * The invoice
 * Items
     * Items are what is being sold to the customer
     * They are added per item * quantity
 * Discounts
     * Discounts are percentage or flat based and can be applied to items and invoices
+* Charges
+    * Charges are a way to add costs to invoices that are not items
 * Totals
     * Totals are the invoice totals
 * Invoice Factory
     * A method to build invoices with various attributes built in, like supplier and tax percentages
     
-
 ###  Features
 
 * PSR-4 autoloading compliant structure
@@ -76,7 +77,7 @@ $sinvoice = (new Invoice())
     )
     ->addCustomer(
         (new Entity())
-            ->setName('Julies Ceaser')
+            ->setName('Julius Ceaser')
             ->setAddress('Todo')
     )
     ->addShipping(php implement observer what is the obserer object updates
@@ -95,10 +96,10 @@ Learn more about the other parts of Sinvoice:
 * [Entities(suppliers/customers) guide](documents/entities.md)
 * [Discounts guide](documents/discounts.md)
 * [Totals guide](documents/totals.md)
+* [Full Examples](documents/full-examples.md)
 * [Rendering guide](documents/rendering.md)
+* [Rendering Examples guide](documents/rendering-examples.md)
 * [Invoice Factory guide](documents/invoice-factory.md)
-
-Learn about using a fluid interface or a traditional construction method:
-* [Rendering guide](documents/rendering.md) 
+* [Fluid Interface guide](documents/fluid-interface.md) 
 
 

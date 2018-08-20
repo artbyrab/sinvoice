@@ -24,6 +24,8 @@ use DateTime;
  */
 class ShippingTest extends TestCase
 {
+    public $shipping;
+
     /**
      * Set up
      *
@@ -31,6 +33,7 @@ class ShippingTest extends TestCase
      */
     protected function setUp()
     {
+        $this->shipping = new Shipping();
     }
 
     /**
@@ -40,6 +43,7 @@ class ShippingTest extends TestCase
      */
     protected function tearDown()
     {  
+        unset($this->shipping);
     }
 
     /**
@@ -91,24 +95,19 @@ class ShippingTest extends TestCase
      */
     public function testAddGetRecipient()
     {
-        $shipping = new Shipping();
-        $shipping->addRecipient(
-            new Entity(
-                array(
-                    'name' => 'Ceasar',
-                    'address' => '1 High Street, Rome, Italy',
-                    'phone' => '01245 678910',
-                    'email' => 'ceasar@rome.com',
-                    'reference' => 'a145',
-                )
-            )
+        $this->shipping->addRecipient(
+            (new Entity())
+            ->setName('Ceasar')
+            ->setAddress('1 High Street, Rome, Italy')
+            ->setPhone('01245 678910')
+            ->setEmail('ceasar@rome.com')
+            ->setReference('a145')
         );
-        $this->assertEquals($shipping->recipient->getName(), 'Ceasar');
-        $this->assertEquals($shipping->recipient->getAddress(), '1 High Street, Rome, Italy');
-        $this->assertEquals($shipping->recipient->getPhone(), '01245 678910');
-        $this->assertEquals($shipping->recipient->getEmail(), 'ceasar@rome.com');
-        $this->assertEquals($shipping->recipient->getReference(), 'a145');
-        unset($shipping);
+        $this->assertEquals($this->shipping->recipient->getName(), 'Ceasar');
+        $this->assertEquals($this->shipping->recipient->getAddress(), '1 High Street, Rome, Italy');
+        $this->assertEquals($this->shipping->recipient->getPhone(), '01245 678910');
+        $this->assertEquals($this->shipping->recipient->getEmail(), 'ceasar@rome.com');
+        $this->assertEquals($this->shipping->recipient->getReference(), 'a145');
     }
 
     /**
@@ -116,10 +115,8 @@ class ShippingTest extends TestCase
      */
     public function testSetGetPrice()
     {
-        $shipping = new Shipping();
-        $shipping->setPrice(7.99);
-        $this->assertEquals($shipping->getPrice(), 7.99);
-        unset($shipping);
+        $this->shipping->setPrice(7.99);
+        $this->assertEquals($this->shipping->getPrice(), 7.99);
     }
 
     /**
@@ -127,13 +124,9 @@ class ShippingTest extends TestCase
      */
     public function testSetGetDeliveryDate()
     {
-        $shipping = new Shipping();
-
         $date = new DateTime('+14 days');
-
-        $shipping->setDeliveryDate('+14 days');
-        $this->assertEquals($shipping->getDeliveryDate(), $date->format('Y-m-d'));
-        unset($shipping);
+        $this->shipping->setDeliveryDate('+14 days');
+        $this->assertEquals($this->shipping->getDeliveryDate(), $date->format('Y-m-d'));
     }
 
     /**
@@ -141,10 +134,8 @@ class ShippingTest extends TestCase
      */
     public function testSetGetHandler()
     {
-        $shipping = new Shipping();
-        $shipping->setHandler('Rome Horse Mail');
-        $this->assertEquals($shipping->getHandler(), 'Rome Horse Mail');
-        unset($shipping);
+        $this->shipping->setHandler('Rome Horse Mail');
+        $this->assertEquals($this->shipping->getHandler(), 'Rome Horse Mail');
     }
 
     /**
@@ -152,9 +143,7 @@ class ShippingTest extends TestCase
      */
     public function testSetGetReference()
     {
-        $shipping = new Shipping();
-        $shipping->setReference('4578541878');
-        $this->assertEquals($shipping->getReference(), '4578541878');
-        unset($shipping);
+        $this->shipping->setReference('4578541878');
+        $this->assertEquals($this->shipping->getReference(), '4578541878');
     }
 }

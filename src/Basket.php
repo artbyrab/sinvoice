@@ -15,23 +15,30 @@ namespace Rabus\Sinvoice;
 /**
  * Basket 
  * 
- * The basket is way for us to share functionality between invoice attributes 
- * like the invoice items and invoice charges. Both items and charges have 
- * similar functionality and therefore can both easily utilise the basket.
+ * A basket holds items. The basket allows you to add, remove, and clear items.
  * 
- * The basket allows you to add, remove, and delete items by their key.
+ * The basket can be extended and allows us to share the functionality between
+ * simliar attributes in the invoice mode.
+ * 
+ * The basket subjects hold an array of observer models that are notified 
+ * when the basket gets updated. This functionality is important to trigger
+ * things like total recalculations when an item is added or removed.
  * 
  * @author RABUS
  */
 class Basket {
 
     /**
-     * @var object An instance of the ObserverSubjects model.
+     * @var object An instance of the ObserverSubjects model, the subject in 
+     * typically an Invoice model. the subjects are watching the basket and will 
+     * be notified by the notify function if the basket gets updated. By updated
+     * we mean having an item added, removed or cleared.
      */
     public $subjects;
 
     /**
-     * @var array An array of items that get added to the basket
+     * @var array An array of items that get added to the basket All items
+     * should be an instance of the Item model.
      */
     public $items = array();
 
@@ -50,6 +57,7 @@ class Basket {
     {
         $this->subjects = new ObserverSubjects();
         $this->subjects->attach($invoice);
+        
         return $this;
     }
 
@@ -60,7 +68,9 @@ class Basket {
      */
     public function addItem(Item $item)
     {
-        array_push($this->items, $item);
+        $itemKey = spl_object_hash($item);
+        $this->items[$itemKey] = $item;
+
         $this->subjects->notify();
     }
 
@@ -71,9 +81,11 @@ class Basket {
      *
      * @param int $key is the invoice items key
      */
-    public function removeItem($key)
+    public function removeItem($item)
     {
-        unset($this->items[$key]);
+        $itemKey = spl_object_hash($item);
+        unset($this->items[$itemKey]);
+
         $this->subjects->notify();
     }
 
@@ -92,7 +104,9 @@ class Basket {
      */
     public function clearItems()
     {
+        unset($this->items);
         $this->items = array();
+
         $this->subjects->notify();
     }
 }

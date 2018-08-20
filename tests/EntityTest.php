@@ -22,6 +22,8 @@ use Rabus\Sinvoice\Entity;
  */
 class EntityTest extends TestCase
 {
+    public $entity;
+
     /**
      * Set up
      *
@@ -29,7 +31,7 @@ class EntityTest extends TestCase
      */
     protected function setUp()
     {
-    
+        $this->entity = new Entity();
     }
 
     /**
@@ -39,6 +41,7 @@ class EntityTest extends TestCase
      */
     protected function tearDown()
     {  
+        unset($this->entity);
     }
 
     /**
@@ -111,10 +114,8 @@ class EntityTest extends TestCase
      */
     public function testSetGetName()
     {
-        $entity = new Entity();
-        $entity->setName('Commodus');
-        $this->assertEquals($entity->getName(), 'Commodus');
-        unset($entity);
+        $this->entity->setName('Commodus');
+        $this->assertEquals($this->entity->getName(), 'Commodus');
     }
 
     /**
@@ -122,10 +123,8 @@ class EntityTest extends TestCase
      */
     public function testSetGetAddress()
     {
-        $entity = new Entity();
-        $entity->setAddress('Via della Conciliazione');
-        $this->assertEquals($entity->getAddress(), 'Via della Conciliazione');
-        unset($entity);
+        $this->entity->setAddress('Via della Conciliazione');
+        $this->assertEquals($this->entity->getAddress(), 'Via della Conciliazione');
     }
 
     /**
@@ -133,10 +132,8 @@ class EntityTest extends TestCase
      */
     public function testSetGetPhone()
     {
-        $entity = new Entity();
-        $entity->setPhone('04789 247541');
-        $this->assertEquals($entity->getPhone(), '04789 247541');
-        unset($entity);
+        $this->entity->setPhone('04789 247541');
+        $this->assertEquals($this->entity->getPhone(), '04789 247541');
     }
 
     /**
@@ -144,10 +141,8 @@ class EntityTest extends TestCase
      */
     public function testSetGetEmail()
     {
-        $entity = new Entity();
-        $entity->setEmail('commodus@rome.com');
-        $this->assertEquals($entity->getEmail(), 'commodus@rome.com');
-        unset($entity);
+        $this->entity->setEmail('commodus@rome.com');
+        $this->assertEquals($this->entity->getEmail(), 'commodus@rome.com');
     }
 
     /**
@@ -155,9 +150,7 @@ class EntityTest extends TestCase
      */
     public function testSetGetReference()
     {
-        $entity = new Entity();
-        $entity->setReference('commodus123');
-        $this->assertEquals($entity->getReference(), 'commodus123');
-        unset($entity);
+        $this->entity->setReference('commodus123');
+        $this->assertEquals($this->entity->getReference(), 'commodus123');
     }
 }

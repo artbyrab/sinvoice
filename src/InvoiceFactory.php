@@ -100,18 +100,17 @@ class InvoiceFactory
         if (empty($this->supplier) or empty($this->taxPercentage)) {
             throw new \Exception('The supplier and taxPercentage attributes need to be populated before you can build an invoice.');
         }
+
         $invoice = new Invoice();
         $invoice->addSupplier($this->supplier);
         $invoice->setTaxPercentage($this->taxPercentage);
-
         if (!empty($this->dueDate)) {
             $invoice->setDueDate($this->dueDate);
         }
-
         if (!empty($this->issuedDate)) {
             $invoice->setIssuedDate($this->issuedDate);
         }
-
+        
         return $invoice;
     }
 

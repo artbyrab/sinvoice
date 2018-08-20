@@ -42,7 +42,7 @@ class BasketTest extends TestCase
             ->setName('Gladius Sword')
             ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
             ->setPrice(120.00)
-            ->setQuantity(1);
+            ->setQuantity(4);
     }
 
     /**
@@ -77,11 +77,12 @@ class BasketTest extends TestCase
     public function testAddItem()
     {
         $this->basket->addItem($this->itemA);
+        $key = spl_object_hash($this->itemA);
         $this->assertEquals(count($this->basket->getItems()), 1);
-        $this->assertEquals($this->basket->getItems()[0]->getName(), 'Gladius Sword');
-        $this->assertEquals($this->basket->getItems()[0]->getDescription(), 'Very fine looking Gladius sword, suitable for decapitation or stabbing.');
-        $this->assertEquals($this->basket->getItems()[0]->getPrice(), 120.00);
-        $this->assertEquals($this->basket->getItems()[0]->getQuantity(), 1);
+        $this->assertEquals($this->basket->getItems()[$key]->getName(), 'Gladius Sword');
+        $this->assertEquals($this->basket->getItems()[$key]->getDescription(), 'Very fine looking Gladius sword, suitable for decapitation or stabbing.');
+        $this->assertEquals($this->basket->getItems()[$key]->getPrice(), 120.00);
+        $this->assertEquals($this->basket->getItems()[$key]->getQuantity(), 1);
     }
 
     /**
@@ -90,7 +91,7 @@ class BasketTest extends TestCase
     public function testRemoveItem()
     {
         $this->basket->addItem($this->itemA);
-        $this->basket->removeItem(0);
+        $this->basket->removeItem($this->itemA);
         $this->assertEquals(count($this->basket->getItems()), 0);
     }
 

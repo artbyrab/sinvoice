@@ -23,6 +23,8 @@ use Rabus\Sinvoice\FlatDiscount;
  */
 class ItemTest extends TestCase
 {
+    public $item;
+
     /**
      * Set up
      *
@@ -30,7 +32,7 @@ class ItemTest extends TestCase
      */
     protected function setUp()
     {
-    
+        $this->item = new Item();
     }
 
     /**
@@ -40,8 +42,9 @@ class ItemTest extends TestCase
      */
     protected function tearDown()
     {  
+        unset($this->item);
     }
-
+    
     /**
      * Test the construct function
      */
@@ -76,10 +79,8 @@ class ItemTest extends TestCase
      */
     public function testSetGetName()
     {
-        $item = new Item();
-        $item->setName('Pilum Javelin');
-        $this->assertEquals($item->getName(), 'Pilum Javelin');
-        unset($item);
+        $this->item->setName('Pilum Javelin');
+        $this->assertEquals($this->item->getName(), 'Pilum Javelin');
     }
 
     /**
@@ -87,10 +88,8 @@ class ItemTest extends TestCase
      */
     public function testSetGetPrice()
     {
-        $item = new Item();
-        $item->setPrice(85.00);
-        $this->assertEquals($item->getPrice(), 85.00);
-        unset($item);
+        $this->item->setPrice(85.00);
+        $this->assertEquals($this->item->getPrice(), 85.00);
     }
 
     /**
@@ -98,10 +97,8 @@ class ItemTest extends TestCase
      */
     public function testSetGetDescription()
     {
-        $item = new Item();
-        $item->setDescription('A fine javelin, suitable for throwing at retreating enemies.');
-        $this->assertEquals($item->getDescription(), 'A fine javelin, suitable for throwing at retreating enemies.');
-        unset($item);
+        $this->item->setDescription('A fine javelin, suitable for throwing at retreating enemies.');
+        $this->assertEquals($this->item->getDescription(), 'A fine javelin, suitable for throwing at retreating enemies.');
     }
 
     /**
@@ -109,10 +106,8 @@ class ItemTest extends TestCase
      */
     public function testSetGetQuantity()
     {
-        $item = new Item();
-        $item->setQuantity(2);
-        $this->assertEquals($item->getQuantity(), 2);
-        unset($item);
+        $this->item->setQuantity(2);
+        $this->assertEquals($this->item->getQuantity(), 2);
     }
 
     /**
@@ -120,16 +115,15 @@ class ItemTest extends TestCase
      */
     public function testSetGetDiscount()
     {
-        $item = new Item();
-        $item->setPrice(85.00);
-        $item->setQuantity(1);
-        $item->addDiscount(
+        $this->item->setPrice(85.00);
+        $this->item->setQuantity(1);
+        $this->item->addDiscount(
             (new FlatDiscount())
                 ->setFigure(15.00)
         );
 
-        $this->assertEquals($item->getPriceTotal(), 85.00);
-        $this->assertEquals($item->getNetTotal(), 70.00);
-        $this->assertEquals($item->getDiscount(), 15.00);
+        $this->assertEquals($this->item->getPriceTotal(), 85.00);
+        $this->assertEquals($this->item->getNetTotal(), 70.00);
+        $this->assertEquals($this->item->getDiscount(), 15.00);
     }
 }

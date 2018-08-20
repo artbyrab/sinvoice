@@ -178,7 +178,7 @@ class Item {
     public function addDiscount($discount)
     {
         $this->discount = $discount;
-
+        
         return $this;
     }
 
@@ -188,14 +188,15 @@ class Item {
      * This will use the discount models calculate function to get the 
      * discount total.
      *
-     * @return string
+     * @return mixed
      */
     public function getDiscount()
     {
         if (!empty($this->discount)){
             return $this->discount->calculate($this->getPriceTotal());
         }
-        
+
+        return Null;
     }
 
     /**

@@ -62,7 +62,6 @@ class ObserverSubjectsTest extends TestCase
     {
         $this->observerSubjects->attach($this->invoice);
         $observerKey = spl_object_hash($this->invoice);
-
         $this->assertInstanceOf(Invoice::class, $this->observerSubjects->observers[$observerKey]);
     }
 
@@ -73,7 +72,6 @@ class ObserverSubjectsTest extends TestCase
     {
         $this->observerSubjects->attach($this->invoice);
         $this->observerSubjects->detach($this->invoice);
-
         $this->assertEmpty($this->observerSubjects->observers);
     }
 
@@ -86,10 +84,6 @@ class ObserverSubjectsTest extends TestCase
     {
         $this->observerSubjects->attach($this->dummyObserver);
         $this->observerSubjects->notify();
-
         $this->assertEquals($this->dummyObserver->status, DummyObserver::STATUS_ACTIVE);
     }
-
-
-
 }

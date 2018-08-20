@@ -13,7 +13,15 @@
 namespace Rabus\Sinvoice;
 
 /**
- * Observer interface
+ * Observer Interface
+ * 
+ * This model utilises the observer pattern. It is the observer part of the 
+ * pattern.
+ * 
+ * This model should be extended and then they should be attached to an 
+ * instance of the ObserverSubject model. 
+ * 
+ * In this instance an observer will typically be an invoice. 
  * 
  * As the invoice model needs to be able to attach itself to an observer 
  * subject, we need to have a base interface to extend from.

@@ -16,6 +16,11 @@ use Rabus\Sinvoice\DiscountInterface;
 /**
  * Abstract Discount
  * 
+ * This is designed to be extended by a discount model. 
+ * 
+ * This model has already been extended by the FlatDiscount and the 
+ * PercentageDiscount models.
+ * 
  * If you want to create a new discount then you should extend this model. this 
  * model implements the DiscountInterface and adds some attributes to it to
  * allow for easier usage.
@@ -25,7 +30,8 @@ use Rabus\Sinvoice\DiscountInterface;
 class AbstractDiscount implements DiscountInterface 
 {
     /**
-     * @var integer The percentage figure.
+     * @var integer The discount figure, depending on the implementation this
+     * might be a percentage of a flat figure.
      */
     protected $figure;
 
@@ -74,7 +80,7 @@ class AbstractDiscount implements DiscountInterface
     public function setDescription($description)
     {
         $this->description = $description;
-
+        
         return $this;
     }
 

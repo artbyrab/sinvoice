@@ -64,6 +64,9 @@ class InvoiceFactoryTest extends TestCase
     {
         $invoice = $this->invoiceFactory->buildInvoice();
 
+        print_r($invoice);
+        exit;
+
         $this->assertTrue(is_object($invoice));
         $this->assertInstanceOf(Invoice::class, $invoice);
         $this->assertInstanceOf(Entity::class, $invoice->supplier);

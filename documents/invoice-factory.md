@@ -33,8 +33,5 @@ $invoice = $invoiceFactory->buildInvoice();
 
 ```
 
-Your invoice object will look as below:
-```
-@TODO add code - RAB
-```
+Now you can add your non stardard attributes to your invoice.
 

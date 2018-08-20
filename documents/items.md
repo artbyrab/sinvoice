@@ -21,7 +21,21 @@ $invoice->addItem($item);
 
 Your invoice will now show the items and have calculated your totals as below:
 ```
-@TODO add code - RAB
+print_r($invoice->getTotals());
+
+Rabus\Sinvoice\Totals Object
+(
+    [itemNetTotal:Rabus\Sinvoice\Totals:private] => 480
+    [discount:Rabus\Sinvoice\Totals:private] => 0
+    [itemDiscountTotal:Rabus\Sinvoice\Totals:private] => 0
+    [discountTotal:Rabus\Sinvoice\Totals:private] => 0
+    [shippingHandlingTotal:Rabus\Sinvoice\Totals:private] => 0
+    [otherChargesTotal:Rabus\Sinvoice\Totals:private] => 0
+    [netTotal:Rabus\Sinvoice\Totals:private] => 480
+    [taxTotal:Rabus\Sinvoice\Totals:private] => 0
+    [grossTotal:Rabus\Sinvoice\Totals:private] => 480
+)
+
 ```
 
 ## Removing an item

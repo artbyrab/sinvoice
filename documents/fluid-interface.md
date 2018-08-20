@@ -16,7 +16,7 @@ $item = (new Item())
     )
 
 ```
-If you were to do it in a more traditional way it would look as below:
+If you were to do it in a more traditional way it would look as below.
 ```
 
 $item = new Item();
@@ -32,4 +32,6 @@ $discount->setDescription('Regular customer discount');
 $item->addDiscount($discount);
 
 ```
+
+So the choice is yours when it comes to building your objects.
 

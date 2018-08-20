@@ -22,7 +22,7 @@ namespace Rabus\Sinvoice;
  * 
  * Examples:
  *  - Additional Shipping charge
- *  - Handling fee
+ *  - Additional handling fee
  *  - Other costs
  *  
  * @author RABUS
@@ -57,9 +57,10 @@ class Charge {
     /**
      * Set the price. 
      * 
-     * @param string $price
+     * @param integer $price Is the price of the charge.
+     * @return object $this
      */
-    public function setPrice(string $price)
+    public function setPrice($price)
     {
         $this->price = $price;
 
@@ -77,7 +78,10 @@ class Charge {
     }
 
     /**
-     * {@inheritDoc}
+     * Set the discount
+     * 
+     * @param string $description Is the charge description.
+     * @return object $this
      */
     public function setDescription($description)
     {
@@ -87,7 +91,9 @@ class Charge {
     }
 
     /**
-     * {@inheritDoc}
+     * Get the description
+     * 
+     * @return string 
      */
     public function getDescription()
     {
