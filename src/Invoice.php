@@ -23,13 +23,31 @@ use Rabus\Sinvoice\Totals;
 /**
  * Invoice 
  * 
- * This is the primary model in the Sinvoice package, the invoice model. It 
- * implements the Observer model so we can add the invoice as an observer for
- * various models that need to trigger back to the invoice to update information
- * like totals.
+ * It would be a sin not to use this library!
  * 
+ * This is the primary record in the library. All other models are developed
+ * around this model.
  * 
- *
+ * Below are the main elements of an invoice:
+ *  - Invoice
+ *      - Items
+ *          - The individual items the customer is purchasing
+ *      - Charges
+ *          - Additional charges you might with to apply to an invoice, 
+ *          essentialy anything that is not an item but you need to charge for
+ *      - Supplier
+ *          - The entity issuing the invoice
+ *      - Customer
+ *          - The entity paying for the invoice
+ *      - Shipping
+ *          - The shipping details if required for the invoice
+ *      - Recipient
+ *          - The entity receiving the items on the invoice
+ *      - Totals
+ *          - The automatically calculated totals for the invoice
+ * 
+ * This model can be an invoice or you can use it as a shopping basket as well.
+ * 
  * @author RABUS rabus@art-by-rab.com
  */
 class Invoice implements Observer 

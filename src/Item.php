@@ -18,8 +18,12 @@ namespace Rabus\Sinvoice;
  * What does a Sinvoice need more than oxygen and coffee? An item! So don't 
  * leave your Sinvoice all alone with 0 items, that would be just sinful!
  * 
- * This is a Sinvoice Item. All Invoices are created and then items are 
- * attached to the invoice.
+ * Items are the purchases your customers are making. The item could be a 
+ * digital item like a product license key or physical item like a pair of 
+ * shoes.
+ * 
+ * Items are attached/removed from invoice and this will trigger an update of 
+ * the totals via the Basket model which is used to hold the items.
  *  
  * @author RABUS
  */
@@ -129,7 +133,7 @@ class Item {
         return $this;
     }
 
-        /**
+    /**
      * Get the price
      *
      * @return string

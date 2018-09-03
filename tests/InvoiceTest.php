@@ -110,19 +110,34 @@ class InvoiceTest extends TestCase
             ->setDescription('5 flat discount');
 
         $this->shipping = (new Shipping())
-            ->addRecipient(
-                (new Entity())
-                    ->setName('Ceasar')
-                    ->setAddress('1 High Street, Rome, Italy')
-                    ->setPhone('01245 678910')
-                    ->setEmail('ceasar@rome.com')
-                    ->setReference('a145')
+            ->addRecipient((new Entity())
+                ->setName('Ceasar')
+                ->setAddress('1 High Street, Rome, Italy')
+                ->setPhone('01245 678910')
+                ->setEmail('ceasar@rome.com')
+                ->setReference('a145')
             )
             ->setPrice(10.99)
             ->setDeliveryDate('+7 days')
             ->setHandler('Rome Road Mail')
             ->setReference('8547124');
     }   
+
+    /**
+     * Tear down
+     *
+     * Performed after every test.
+     */
+    protected function tearDown()
+    {  
+        unset($this->invoice);
+        unset($this->itemA);
+        unset($this->itemB);
+        unset($this->supplier);
+        unset($this->customer);
+        unset($this->flatDiscount);
+        unset($this->shipping);
+    }
 
     /**
      * Test the __construct function

@@ -15,6 +15,9 @@ namespace Rabus\Sinvoice;
 /**
  * Entity 
  * 
+ * Don't leave your Sinvoices lonely. Why not make them happy by adding some
+ * entities to them.
+ * 
  * An entity can be a company/organisation or a person. When creating 
  * customers, suppliers and recipients you can use the entity model.
  *  

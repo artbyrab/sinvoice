@@ -12,6 +12,8 @@
 
 namespace Rabus\Sinvoice;
 
+use Rabus\Sinvoice\ObserverSubjects;
+
 /**
  * Basket 
  * 

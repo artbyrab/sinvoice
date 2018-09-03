@@ -1,12 +1,12 @@
 {
     "name": "Rabus/Sinvoice",
-    "description": "Boilerplate package for creating other packages.",
-    "keywords": ["template", "composer", "package"],
+    "description": "A PHP invoicing library.",
+    "keywords": ["sinvoice", "invoice", "invoicing", "yii2", "composer", "package"],
     "license": "DBAD",
     "authors": [
         {
-            "name": "Darwin Biler",
-            "email": "buonzz@gmail.com"
+            "name": "RABUS",
+            "email": "rabus@art-by-rab.com"
         }
     ],
     "type": "project",

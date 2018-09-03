@@ -22,7 +22,13 @@ use Rabus\Sinvoice\PercentageDiscount;
 // $invoice->addSupplier($supplier);
 
 $invoice = (new Invoice())
+    ->setSupplier()
     ->setNumber('123')
+    ->setTaxPercentage(10)
+    ->addDiscount(
+        (new PercentageDiscount())
+        ->setFigure(100)
+    )
     ->addItem(
         (new Item)
         ->setPrice(2.99)
@@ -33,6 +39,12 @@ $invoice = (new Invoice())
                 ->setFigure(10)
                 ->setDescription('Recurring Customer')
         )
+    )
+    ->addItem(
+        (new Item())
+        ->setName('Baseball sticker book')
+        ->setPrice(20.00)
+        ->setQuantity(3)
     );
 
 // // add an item
