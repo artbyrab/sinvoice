@@ -1,5 +1,5 @@
 {
-    "name": "Rabus/Sinvoice",
+    "name": "rabus/sinvoice",
     "description": "A PHP invoicing library.",
     "keywords": ["sinvoice", "invoice", "invoicing", "yii2", "composer", "package"],
     "license": "DBAD",
