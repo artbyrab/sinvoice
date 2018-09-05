@@ -17,10 +17,5 @@
         "psr-4": {
             "Rabus\\Sinvoice\\": "src/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Rabus\\Sinvoice\\": "src/"
-        }
-    },
+    }
 }
