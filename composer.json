@@ -1,7 +1,7 @@
 {
     "name": "rabus/sinvoice",
     "description": "A PHP invoicing library.",
-    "keywords": ["sinvoice", "invoice", "invoicing", "yii2", "composer", "package"],
+    "keywords": ["sinvoice", "invoice", "invoicing", "php", "shopping cart", "cart", "composer", "package"],
     "license": "DBAD",
     "authors": [
         {
@@ -9,10 +9,7 @@
             "email": "rabus@art-by-rab.com"
         }
     ],
-    "type": "project",
-    "require": {
-		"php": ">=7.1"
-    },
+    "type": "package",
     "require-dev": {
 		"phpunit/phpunit": "6.*"
     },
@@ -20,5 +17,10 @@
         "psr-4": {
             "Rabus\\Sinvoice\\": "src/"
         }
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rabus\\Sinvoice\\": "src/"
+        }
+    },
 }
