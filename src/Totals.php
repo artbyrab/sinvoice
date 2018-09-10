@@ -7,7 +7,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;

@@ -30,11 +30,7 @@ namespace Rabus\Sinvoice;
 class Charge {
     
     /**
-     * Price
-     * 
-     * The net cost of the charge.
-     * 
-     * @var string
+     * @var string $price The net cost of the charge.z
      */
     private $price;
 
@@ -58,7 +54,7 @@ class Charge {
      * Set the price. 
      * 
      * @param integer $price Is the price of the charge.
-     * @return object $this
+     * @return object $this An instance of the Charge item.
      */
     public function setPrice($price)
     {
@@ -81,7 +77,7 @@ class Charge {
      * Set the discount
      * 
      * @param string $description Is the charge description.
-     * @return object $this
+     * @return object $this An instance of the Charge item.
      */
     public function setDescription($description)
     {

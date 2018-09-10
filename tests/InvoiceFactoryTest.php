@@ -64,9 +64,6 @@ class InvoiceFactoryTest extends TestCase
     {
         $invoice = $this->invoiceFactory->buildInvoice();
 
-        print_r($invoice);
-        exit;
-
         $this->assertTrue(is_object($invoice));
         $this->assertInstanceOf(Invoice::class, $invoice);
         $this->assertInstanceOf(Entity::class, $invoice->supplier);
@@ -80,10 +77,10 @@ class InvoiceFactoryTest extends TestCase
         $this->assertEquals($invoice->supplier->getReference(), 'nero123');
 
         $issuedDate = new DateTime('today');
-        $this->assertEquals($invoice->getIssuedDate(), $issuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate()->format('Y-m-d'), $issuedDate->format('Y-m-d'));
 
         $dueDate = new DateTime('+21 days');
-        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
 
         unset($invoice);
     }
@@ -176,9 +173,12 @@ class InvoiceFactoryTest extends TestCase
      */
     public function testSetGetIssuedDate()
     {
+
+        $issuedDate = new DateTime('today');
+
         $invoiceFactory = new InvoiceFactory();
         $invoiceFactory->setIssuedDate('Today');
-        $this->assertEquals($invoiceFactory->getIssuedDate(), 'Today');
+        $this->assertEquals($invoiceFactory->getIssuedDate()->format('Y-m-d'), $issuedDate->format('Y-m-d'));
         unset($invoiceFactory);
     }
 
@@ -187,10 +187,11 @@ class InvoiceFactoryTest extends TestCase
      */
     public function testSetGetDueDate()
     {
+        $dueDate = new DateTime('+21 days');
+
         $invoiceFactory = new InvoiceFactory();
         $invoiceFactory->setDueDate('+21 days');
-        $this->assertEquals($invoiceFactory->getDueDate(), '+21 days');
+        $this->assertEquals($invoiceFactory->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
         unset($invoiceFactory);
     }
-
 }

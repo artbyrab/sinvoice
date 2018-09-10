@@ -14,17 +14,17 @@ use Rabus\Sinvoice\Entity;
 use Rabus\Sinvoice\InvoiceFactory;
 
 $invoiceFactory = (new InvoiceFactory())
-        ->addSupplier(
-            (new Entity())
-                ->setName('Emperor Nero')
-                ->setAddress('Via Cavour, Rome, Italy')
-                ->setPhone('01234 567891')
-                ->setEmail('nero@rome.com')
-                ->setReference('nero123')
-        )
-        ->setTaxPercentage(20);
-        ->setIssuedDate('Today')
-        ->setDueDate('+21 days');
+    ->addSupplier(
+        (new Entity())
+        ->setName('Emperor Nero')
+        ->setAddress('Via Cavour, Rome, Italy')
+        ->setPhone('01234 567891')
+        ->setEmail('nero@rome.com')
+        ->setReference('nero123')
+    )
+    ->setTaxPercentage(20)
+    ->setIssuedDate('Today')
+    ->setDueDate('+21 days');
 ```
 
 Now, to build an invoice you simply do the following:
@@ -33,5 +33,14 @@ $invoice = $invoiceFactory->buildInvoice();
 
 ```
 
-Now you can add your non stardard attributes to your invoice.
+Now you can add your non standard attributes to your invoice as normal. 
+```
+$invoice->setNumber(1)
+    ->setReference()
+    ->addCustomer(
+        (new Entity())
+        ->setName('Ceaser')
+    ...
+    )
+```
 

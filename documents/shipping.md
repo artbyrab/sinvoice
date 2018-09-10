@@ -16,14 +16,15 @@ use Rabus\Sinvoice\Entity;
 
 $invoice = new Invoice();
 
-$shipping = (new Shipping())
+$shipping = 
+    (new Shipping())
     ->addRecipient(
         (new Entity())
-            ->setName('Ceasar')
-            ->setAddress('1 High Street, Rome, Italy')
-            ->setPhone('01245 678910')
-            ->setEmail('ceasar@rome.com')
-            ->setReference('a145')
+        ->setName('Ceasar')
+        ->setAddress('1 High Street, Rome, Italy')
+        ->setPhone('01245 678910')
+        ->setEmail('ceasar@rome.com')
+        ->setReference('a145')
     )
     ->setPrice(10.99)
     ->setDeliveryDate('+7 days')
@@ -43,17 +44,17 @@ use Rabus\Sinvoice\Entity;
 $invoice = (new Invoice())
     ->addShipping(
         (new Shipping())
-            ->addRecipient(
-                (new Entity())
-                    ->setName('Ceasar')
-                    ->setAddress('1 High Street, Rome, Italy')
-                    ->setPhone('01245 678910')
-                    ->setEmail('ceasar@rome.com')
-                    ->setReference('a145')
-            )
-            ->setPrice(10.99)
-            ->setDeliveryDate('+7 days')
-            ->setHandler('Rome Road Mail')
-            ->setReference('8547124');
-    )
+        ->addRecipient(
+            (new Entity())
+                ->setName('Ceasar')
+                ->setAddress('1 High Street, Rome, Italy')
+                ->setPhone('01245 678910')
+                ->setEmail('ceasar@rome.com')
+                ->setReference('a145')
+        )
+        ->setPrice(10.99)
+        ->setDeliveryDate('+7 days')
+        ->setHandler('Rome Road Mail')
+        ->setReference('8547124')
+    );
 ```

@@ -4,7 +4,7 @@ Entities relate to a person/group/company, in the case of Sinvoice it refers to 
 
 ## Adding a supplier to an invoice
 ```
-$invoice = new Invoice()
+$invoice = new Invoice();
 
 $invoice->addSupplier(
     (new Entity())
@@ -13,13 +13,13 @@ $invoice->addSupplier(
         ->setPhone('01234 567891')
         ->setEmail('nero@rome.com')
         ->setReference('nero123')
-)
+);
 ```
 
 ## Adding a customer
 Essentially adding a customer is essentially the same except this time we use the addCustomer function.
 ```
-$invoice = new Invoice()
+$invoice = new Invoice();
 
 $invoice->addCustomer(
     (new Entity())
@@ -28,8 +28,18 @@ $invoice->addCustomer(
         ->setPhone('01234 567891')
         ->setEmail('nero@rome.com')
         ->setReference('nero123')
-)
+);
 ```
 
-## Adding a recipient
+## Removing a customer/supplier
+To remove a customer/supplier is just as simple, presuming you already have a suplier
+```
+$invoice->removeSupplier();
+```
+
+```
+$invoice->removeCustomer();
+```
+
+## Adding/removing a recipient
 Adding a recipient is slightly different as you would set it when adding the shipping. For this you should refer to the shipping guide.

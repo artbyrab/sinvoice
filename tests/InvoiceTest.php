@@ -9,7 +9,6 @@ use Rabus\Sinvoice\Basket;
 use Rabus\Sinvoice\FlatDiscount;
 use Rabus\Sinvoice\PercentageDiscount;
 use Rabus\Sinvoice\Shipping;
-use \Datetime;
 
 /**
  * Sinvoice Invoice Model Test
@@ -172,9 +171,9 @@ class InvoiceTest extends TestCase
             ->setTaxPercentage(15.00);
 
         $this->assertEquals($invoice->getNumber(), '1');
-        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getCreatedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
         $this->assertEquals($invoice->getReference(), 'rome_1');
         $this->assertEquals($invoice->getTaxPercentage(), 15.00);
 
@@ -216,9 +215,9 @@ class InvoiceTest extends TestCase
             );
 
         $this->assertEquals($invoice->getNumber(), '1');
-        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getCreatedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
         $this->assertEquals($invoice->getReference(), 'rome_1');
         $this->assertEquals($invoice->getTaxPercentage(), 15.00);
         $this->assertEquals(count($invoice->items->getItems()), 2);
@@ -258,9 +257,9 @@ class InvoiceTest extends TestCase
         );
 
         $this->assertEquals($invoice->getNumber(), '1');
-        $this->assertEquals($invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
-        $this->assertEquals($invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getCreatedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getIssuedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($invoice->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
         $this->assertEquals($invoice->getReference(), 'rome_1');
         $this->assertEquals($invoice->getTaxPercentage(), 15.00);
         $this->assertInstanceOf(Entity::class, $invoice->supplier);
@@ -289,7 +288,7 @@ class InvoiceTest extends TestCase
     {
         $createdIssuedDate = new DateTime('today');
         $this->invoice->setCreatedDate('Today');
-        $this->assertEquals($this->invoice->getCreatedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($this->invoice->getCreatedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
     }
 
     /**
@@ -300,7 +299,7 @@ class InvoiceTest extends TestCase
     {
         $createdIssuedDate = new DateTime('today');
         $this->invoice->setIssuedDate('Today');
-        $this->assertEquals($this->invoice->getIssuedDate(), $createdIssuedDate->format('Y-m-d'));
+        $this->assertEquals($this->invoice->getIssuedDate()->format('Y-m-d'), $createdIssuedDate->format('Y-m-d'));
     }
 
     /**
@@ -311,7 +310,7 @@ class InvoiceTest extends TestCase
     {
         $dueDate = new DateTime('+14 days');
         $this->invoice->setIssuedDate('+14 days');
-        $this->assertEquals($this->invoice->getDueDate(), $dueDate->format('Y-m-d'));
+        $this->assertEquals($this->invoice->getDueDate()->format('Y-m-d'), $dueDate->format('Y-m-d'));
     }
 
     /**
@@ -538,6 +537,25 @@ class InvoiceTest extends TestCase
     public function testHasItemDiscountFalse()
     {
         $this->assertFalse($this->invoice->hasItemDiscount());
+    }
+
+    /**
+     * Test the hasDiscount function
+     *
+     */
+    public function testHasShippingTrue()
+    {
+        $this->invoice->addShipping($this->shipping);
+        $this->assertTrue($this->invoice->hasShipping());
+    }
+
+    /**
+     * Test the hasDiscount function
+     *
+     */
+    public function testHasShippingFalse()
+    {
+        $this->assertFalse($this->invoice->hasShipping());
     }
 
 }

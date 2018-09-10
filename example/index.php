@@ -1,9 +1,11 @@
 <?php
 
+// Uncomment the below if you need to see errors
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+// manually include the autoload file so we can use the library here
 require ('../vendor/autoload.php');
 
 use Rabus\Sinvoice\Invoice;
@@ -35,7 +37,6 @@ use Rabus\Sinvoice\Item;
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </head>
-
 <body>
     <div class="container">
         <?php include "_nav.php"; ?> 
@@ -44,7 +45,10 @@ use Rabus\Sinvoice\Item;
                 <h1>Welcome to Sinvoice</h1>
                 <p>It would be a sin, not to use Sinvoice for your invoicing needs.</p>
                 <p>
-                    <a href="bootstrap3-template.php" class="btn btn-primary btn-lg">Bootstrap 3 Template</a>
+                    <a href="bootstrap3-invoice.php" class="btn btn-primary btn-lg">Bootstrap 3 Invoice Example</a>
+                </p>
+                <p>
+                    <a href="bootstrap3-invoice-factory.php" class="btn btn-primary btn-lg">Bootstrap 3 Invoice Factory Example</a>
                 </p>
             </div>
         </div>

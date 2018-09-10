@@ -19,6 +19,7 @@ use Rabus\Sinvoice\Item;
 use Rabus\Sinvoice\Entity;
 use Rabus\Sinvoice\Shipping;
 use Rabus\Sinvoice\Totals;
+use Rabus\Sinvoice\Status;
 
 /**
  * Invoice 
@@ -58,21 +59,28 @@ class Invoice implements Observer
     private $number;
 
     /**
-     * @var string $createdDate Is the date the invoice is created.
+     * @var string $createdDate Is the date the invoice is created as a php 
+     * DateTime object.
      */
     private $createdDate;
 
     /**
      * @var string $issuedDate Is the date the invoice is issued to the
-     * customer.
+     * customer as a php DateTime object.
      */
     private $issuedDate;
     
     /**
-     * @var string $dueDate Is the date the invoice is due. Typically a due
-     * date would be 14 or 21 days after the created date.
+     * @var string $dueDate Is the date the invoice is due as a php DateTime 
+     * object. Typically a due date would be 14 or 21 days after the created 
+     * date.
      */
     private $dueDate;
+
+    /**
+     * @var string $status Defines where the invoice is in its lifecycle. 
+     */
+    private $status;
 
     /**
      * @var string $reference Is a reference you can apply for a specific
@@ -145,6 +153,9 @@ class Invoice implements Observer
         $this->totals = new Totals();
         $this->items = new Basket($this);
         $this->charges = new Basket($this);
+        $this->status = new Status();
+
+        $this->setCreatedDate('today');
         
         return $this;
     }
@@ -181,8 +192,7 @@ class Invoice implements Observer
      */
     public function setCreatedDate($date)
     {
-        $date = new DateTime($date);
-        $this->createdDate = $date->format('Y-m-d');
+        $this->createdDate = new DateTime($date);
 
         return $this;
     }
@@ -206,8 +216,7 @@ class Invoice implements Observer
      */
     public function setIssuedDate($date)
     {
-        $date = new DateTime($date);
-        $this->issuedDate = $date->format('Y-m-d');
+        $this->issuedDate = new DateTime($date);
 
         return $this;
     }
@@ -231,8 +240,7 @@ class Invoice implements Observer
      */
     public function setDueDate($date)
     {
-        $date = new DateTime($date);
-        $this->dueDate = $date->format('Y-m-d');
+        $this->dueDate = new DateTime($date);
 
         return $this;
     }
@@ -351,12 +359,12 @@ class Invoice implements Observer
     /**
      * Get the customer
      *
-     * @return string
+     * @return mixed False
      */
     public function getCustomer()
     {
         if ($this->customer == Null) {
-            return 'No customer set';
+            return False;
         }
         return $this->customer->formatToString();
     }
@@ -518,6 +526,23 @@ class Invoice implements Observer
     public function hasItemDiscount()
     {
         if ($this->totals->getItemDiscountTotal()) {
+            return True;
+        }
+        return False;
+    }
+
+    /**
+     * Has shipping
+     * 
+     * Does the invoice have shipping? This will help when rendering your 
+     * invoice as you will be able to easily check if you need to display 
+     * shipping or not.
+     * 
+     * @return boolean
+     */
+    public function hasShipping()
+    {
+        if ($this->shipping !== null) {
             return True;
         }
         return False;

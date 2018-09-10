@@ -6,7 +6,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -16,10 +16,10 @@ use Rabus\Sinvoice\DiscountInterface;
 /**
  * Abstract Discount
  * 
- * This is designed to be extended by a discount model. 
+ * This provides a base class to build discounts upon.
  * 
- * This model has already been extended by the FlatDiscount and the 
- * PercentageDiscount models.
+ * This is designed to be extended by a discount model. For example with the 
+ * FlatDiscount and the PercentageDiscount models.
  * 
  * If you want to create a new discount then you should extend this model. this 
  * model implements the DiscountInterface and adds some attributes to it to

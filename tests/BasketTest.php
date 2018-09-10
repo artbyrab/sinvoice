@@ -82,7 +82,7 @@ class BasketTest extends TestCase
         $this->assertEquals($this->basket->getItems()[$key]->getName(), 'Gladius Sword');
         $this->assertEquals($this->basket->getItems()[$key]->getDescription(), 'Very fine looking Gladius sword, suitable for decapitation or stabbing.');
         $this->assertEquals($this->basket->getItems()[$key]->getPrice(), 120.00);
-        $this->assertEquals($this->basket->getItems()[$key]->getQuantity(), 1);
+        $this->assertEquals($this->basket->getItems()[$key]->getQuantity(), 4);
     }
 
     /**

@@ -7,7 +7,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -17,14 +17,19 @@ use Rabus\Sinvoice\ObserverSubjects;
 /**
  * Basket 
  * 
- * A basket holds items. The basket allows you to add, remove, and clear items.
+ * A basket allows you to add, remove, and clear items. When an Invoice model
+ * is instantiated some of its attributes like the items and charges will be
+ * instances of the Basket model. 
  * 
- * The basket can be extended and allows us to share the functionality between
- * simliar attributes in the invoice mode.
+ * We use the term item when adding items to the basket, but in Sinvoice terms
+ * the item is either an Item model or a Charge model.
  * 
- * The basket subjects hold an array of observer models that are notified 
- * when the basket gets updated. This functionality is important to trigger
- * things like total recalculations when an item is added or removed.
+ * The basket has a subject which is attached during its construction. The 
+ * subject is part of the observer pattern and is current Invoice model.
+ * 
+ * The basket notifies it's subject when the basket gets updated. This 
+ * functionality is important to trigger things like total re-calculations 
+ * whenever an item is added or removed.
  * 
  * @author RABUS
  */
@@ -40,7 +45,7 @@ class Basket {
 
     /**
      * @var array An array of items that get added to the basket All items
-     * should be an instance of the Item model.
+     * should be an instance of the Item model or Charge model.
      */
     public $items = array();
 
@@ -66,7 +71,8 @@ class Basket {
     /**
      * Add an item to the basket
      *
-     * @param object $item is an Item object being added to the items array.
+     * @param object $item is an Item/Charge model being added to the items 
+     * array.
      */
     public function addItem(Item $item)
     {
@@ -77,11 +83,10 @@ class Basket {
     }
 
     /**
-     * Remove an item from the basket by its key.
-     * 
-     * @TODO 
+     * Remove an item from the basket by its unique object hash.
      *
-     * @param int $key is the invoice items key
+     * @param object $item is an Item/Charge model being removed from the items 
+     * array.
      */
     public function removeItem($item)
     {
@@ -94,7 +99,7 @@ class Basket {
     /**
      * Get the current items in the basket
      *
-     * @return array An array of Item models.
+     * @return array An array of Item/Charge models.
      */
     public function getItems()
     {

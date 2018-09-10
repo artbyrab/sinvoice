@@ -6,7 +6,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -33,13 +33,9 @@ use Rabus\Sinvoice\Invoice;
  * 
  * $invoiceFactory = new Rabus\Sinvoice\InvoiceFactory();
  * $invoiceFactory->setSupplier(
- *      New Entity(
- *          array(
- *              'name' => 'My supplier',
- *              'address' => '1 High Street...',
- * 
- *          )
- *      )
+ *      (New Entity)
+ *      ->setName('Rome Suppliers')
+ *      ->setAddress
  * );
  * 
  * Now set your invoice factory's attributes so you don't have to keep adding
@@ -105,10 +101,10 @@ class InvoiceFactory
         $invoice->addSupplier($this->supplier);
         $invoice->setTaxPercentage($this->taxPercentage);
         if (!empty($this->dueDate)) {
-            $invoice->setDueDate($this->dueDate);
+            $invoice->setDueDate($this->GetDueDate()->format('Y-m-d'));
         }
         if (!empty($this->issuedDate)) {
-            $invoice->setIssuedDate($this->issuedDate);
+            $invoice->setIssuedDate($this->getIssuedDate()->format('Y-m-d'));
         }
         
         return $invoice;
@@ -122,6 +118,8 @@ class InvoiceFactory
     public function addSupplier(Entity $supplier)
     {
         $this->supplier = $supplier;
+
+        return $this;
     }
 
     /**
@@ -144,6 +142,8 @@ class InvoiceFactory
     public function setTaxPercentage($percentage)
     {
         $this->taxPercentage = round($percentage, 2);
+        
+        return $this;
     }
 
     /**
@@ -164,7 +164,9 @@ class InvoiceFactory
      */
     public function setIssuedDate($date)
     {
-        $this->issuedDate = $date;
+        $this->issuedDate = new DateTime($date);
+
+        return $this;
     }
 
     /**
@@ -185,7 +187,9 @@ class InvoiceFactory
      */
     public function setDueDate($date)
     {
-        $this->dueDate = $date;
+        $this->dueDate = new DateTime($date);
+
+        return $this;
     }
 
     /**

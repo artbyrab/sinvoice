@@ -29,7 +29,7 @@ class DummyObserver implements Observer {
     CONST STATUS_INACTIVE = 0;
 
     /**
-     * @var integer
+     * @var integer $status
      */
     public $status = self::STATUS_INACTIVE;
 

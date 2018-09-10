@@ -9,6 +9,10 @@ use Rabus\Sinvoice\Shipping;
 use Rabus\Sinvoice\Entity;
 
 $invoice = (new Invoice())
+    ->setNumber(1)
+    ->setIssuedDate('Today')
+    ->setDueDate('+21 Days)
+    ->addTaxPercentage(20.00)
     ->addSupplier(
         (new Entity())
         ->setName('Rome Gifts and Hardware')
@@ -46,6 +50,10 @@ $invoice = (new Invoice())
         ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
         ->setPrice(120.00)
         ->setQuantity(1);
+        ->addDiscount(
+            (new PercentageDiscount())
+            ->setFigure(10)
+        )
     )
     ->addItem(
         new Item())
@@ -53,5 +61,13 @@ $invoice = (new Invoice())
         ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
         ->setPrice(120.00)
         ->setQuantity(1);
+        ->addDiscount(
+            (new FlatDiscount())
+            ->setFigure(50)
+        )
     )
+    ->addDiscount(
+            (new FlatDiscount())
+            ->setFigure(10)
+        )
 ```

@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use Rabus\Sinvoice\Shipping;
 use Rabus\Sinvoice\Entity;
-use DateTime;
 
 /**
  * Sinvoice Shipping Model Test

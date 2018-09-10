@@ -80,6 +80,13 @@ Whilst you are iterating you might want to know if any of your items have a disc
 $invoice->hasItemDiscount();
 ```
 
+#### Example of using the has item discount in a view
+If you are rendering the items you might want to use the hasItemDiscount function.
+```
+
+```
+
+
 ### Invoice totals
 The invoice totals let you disply the final invoice calculations.
 ```
@@ -110,4 +117,6 @@ $invoice->totals->grossTotal();
 ```
 
 The item discount total and discount total are just easy metrics you might want to store in your database to understand the total item discounts you are giving.
+
+For a full example of rendering an invoice look at the example folders.
 

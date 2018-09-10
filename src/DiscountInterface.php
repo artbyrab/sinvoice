@@ -14,11 +14,15 @@ namespace Rabus\Sinvoice;
 /**
  * Discount Interface
  * 
- * We have 2 places where discount can be applied in the Sinvoice package, the 
- * invoice and the items. By allowing discounts at both levels we give the 
- * maximum flexibility to the end user.
+ * All discounts should implement this interface as the FlatDiscount model and
+ * PercentageDiscount model do.
  * 
- * To use the discount interface you should create a model that implements it.
+ * We have 2 places where discounts can be applied in the Sinvoice package, the 
+ * Invoice model and the Item model. By allowing discounts at both levels we 
+ * give maximum flexibility to the invoice creator.
+ * 
+ * If you want to create a new discount type model, you should create a model 
+ * that implements it.
  *
  * @author RABUS rabus@art-by-rab.com
  */

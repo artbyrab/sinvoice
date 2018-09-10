@@ -15,16 +15,16 @@ namespace Rabus\Sinvoice;
 /**
  * Observer Subjects
  * 
+ * The Basket model utilises the ObserverSubjects as it allows us to attach
+ * an invoice as an observer to the basket. When the baskets gets updated it 
+ * then notifies the invoice so it can perform actions like re-calculating 
+ * its totals.
+ * 
  * This model utilises the observer pattern. It is the subject part of the 
  * pattern.
  * 
  * This model allow you to add observers to it, and then when something 
  * happens they get notified.
- * 
- * In this case the observers are singular and are an invoice. And the 
- * observer subject is a basket which notifies the invoice whenever an item is 
- * added or removed. This is specifically to ensure the invoice totals get 
- * recalculated after an invoice item is added.
  * 
  * @author RABUS
  */

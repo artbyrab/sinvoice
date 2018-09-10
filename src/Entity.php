@@ -7,7 +7,7 @@
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in 
- * this paackage.
+ * this package.
  */
 
 namespace Rabus\Sinvoice;
@@ -20,7 +20,7 @@ namespace Rabus\Sinvoice;
  * 
  * An entity can be a company/organisation or a person. When creating 
  * customers, suppliers and recipients you can use the entity model.
- *  
+ * 
  * @author RABUS
  */
 class Entity {
@@ -46,14 +46,16 @@ class Entity {
     private $email;
 
     /**
-     * @var string
+     * @var string $reference If you have a customer ID, or any other ID or 
+     * reference you can add it here.
      */
     private $reference;
 
     /**
      * Construct
      * 
-     * @return object An instance of this model.
+     * @return object $this An instance of the Entity model for the fluid 
+     * interface.
      */
     public function __construct() 
     {
@@ -61,9 +63,13 @@ class Entity {
     }
 
     /**
-     * Get the entitys details formatted
+     * Format to string
+     * 
+     * This will return a string containing all the entities details. This is 
+     * useful if you only need a simple out
      * 
      * @param string $name
+     * @return string The entities details formatted as a string. 
      */
     public function formatToString(string $seperator = ", ")
     {
@@ -128,6 +134,7 @@ class Entity {
      * Set the phone
      *
      * @param string $phone
+     * @return object $this An instance of the Entity model.
      */
     public function setPhone(string $phone)
     {
@@ -150,6 +157,7 @@ class Entity {
      * Set the email
      *
      * @param string $email
+     * @return object $this An instance of the Entity model.
      */
     public function setEmail(string $email)
     {
@@ -172,6 +180,7 @@ class Entity {
      * Set the reference
      *
      * @param string|integer $reference
+     * @return object $this An instance of the Entity model.
      */
     public function setReference($reference)
     {

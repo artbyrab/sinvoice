@@ -1,6 +1,7 @@
 # Items
 
-Items are the products/services that your customer is getting billed for on your invoice. Items are added to your invoice and then the totals are automatically recalculated afterwards. The same for when an item is removed or the items are cleared out.
+Items are the products/services that your customer is getting billed for on your invoice. Items are added to your invoice and then the totals are automatically recalculated afterwards. The totals are also recalculated when items are 
+removed or the item basket is cleared.
 
 ## Adding an item to an invoice 
 ```
@@ -36,6 +37,26 @@ Rabus\Sinvoice\Totals Object
     [grossTotal:Rabus\Sinvoice\Totals:private] => 480
 )
 
+```
+
+## You can also add the items during the item creation using the fluid interface
+```
+$sinvoice = (new Invoice())
+    ->setNumber(1)
+    ->setIssuedDate('Today')
+    ->setDueDate('+21 Days)
+    ->addTaxPercentage(20.00)
+    ->addItem(
+        (new Item())
+        ->setName('Gladius Sword')
+            ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
+            ->setPrice(120.00)
+            ->setQuantity(2);
+        ->addDiscount(
+            (new PercentageDiscount())
+            ->setFigure(10)
+        )
+    );
 ```
 
 ## Removing an item

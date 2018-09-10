@@ -19,6 +19,9 @@ use \DateTime;
  * 
  * If an invoice/customer requires shipping you can simply add in a 
  * shipping model.
+ * 
+ * When you create the shipping you need to attach a recipient who is the entity
+ * receiving whatever is being shipped.
  *  
  * @author RABUS
  */
@@ -35,35 +38,24 @@ class Shipping {
     public $recipient = null;
 
     /**
-     * @var integer Price is the net cost of the shipping.
+     * @var integer $price is the net cost of the shipping.
      */
     private $price;
 
     /**
-     * Delivery date
-     * 
-     * The delivery date for the shipping. 
-     * 
-     * @var string
+     * @var string $deliveryDate is the delivery date for the shipping.
      */
     private $deliveryDate;
 
     /**
-     * Handler
-     * 
-     * The handler can be the shipping company who will deliver to your
+     * @var string $handler can be the shipping company who will deliver to your
      * customer/recipient.
-     * 
-     * @var string
      */
     private $handler;
 
     /**
-     * Reference
-     * 
-     * If you want to attach a unique reference to the shipping.
-     * 
-     * @var string
+     * @var string $reference If you want to attach a unique reference to the 
+     * shipping.
      */
     private $reference;
 
@@ -82,6 +74,8 @@ class Shipping {
      * Add recipient
      * 
      * @param integer $recipient is an instance of the Entity model.
+     * @return object $this An instance of the Shipping model.
+     * interface.
      */
     public function addRecipient(Entity $recipient)
     {
@@ -104,6 +98,7 @@ class Shipping {
      * Set the price. 
      * 
      * @param string $price
+     * @return object $this An instance of the Shipping model.
      */
     public function setPrice(string $price)
     {
@@ -126,6 +121,7 @@ class Shipping {
      * Set the deliveryDate
      *
      * @param string $deliveryDate
+     * @return object $this An instance of the Shipping model.
      */
     public function setDeliveryDate($date)
     {
@@ -150,6 +146,7 @@ class Shipping {
      * Set the handler
      *
      * @param string $handler
+     * @return object $this An instance of the Shipping model.
      */
     public function setHandler(string $handler)
     {
@@ -172,6 +169,7 @@ class Shipping {
      * Set the reference
      *      
      * @param string $reference
+     * @return object $this An instance of the Shipping model.
      */
     public function setReference(string $reference)
     {

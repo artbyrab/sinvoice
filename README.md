@@ -4,6 +4,8 @@
 
 Sinvoice is a PHP invoicing library that allows you to easily and quickly create invoices. It is a sin not to use Sinvoice.
 
+Sinvoice can also easily be used as a shopping basket.
+
 Sinvoice Terminology:
 * Sinvoice
     * The best kind of invoice
@@ -72,30 +74,50 @@ $sinvoice = (new Invoice())
     ->addTaxPercentage(20.00)
     ->addSupplier(
         (new Entity())
-            ->setName('Quality Roman Suppliers')
-            ->setAddress('1 Ampitheatre Road, Rome')
+        ->setName('Quality Roman Suppliers')
+        ->setAddress('1 Ampitheatre Road, Rome')
     )
     ->addCustomer(
         (new Entity())
-            ->setName('Julius Ceaser')
-            ->setAddress('Todo')
+        ->setName('Julius Ceaser')
+        ->setAddress('Todo')
     )
-    ->addShipping(php implement observer what is the obserer object updates
-        (new Shipping())
+    (new Shipping())
+        ->addRecipient(
+            (new Entity())
+            ->setName('Ceasar')
+            ->setAddress('1 High Street, Rome, Italy')
+            ->setPhone('01245 678910')
+            ->setEmail('ceasar@rome.com')
+            ->setReference('a145')
+        )
+        ->setPrice(10.99)
+        ->setDeliveryDate('+7 days')
+        ->setHandler('Rome Road Mail')
+        ->setReference('8547124')
+    )
+
     )
     ->addItem(
         (new Item())
-            ->setName('')
-            ->setPrice(4.99)
-            ->setQuantity(5)
+        ->setName('Gladius Sword')
+            ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
+            ->setPrice(120.00)
+            ->setQuantity(2);
+        ->addDiscount(
+            (new PercentageDiscount())
+            ->setFigure(10)
+        )
     )
 ```
 
 Learn more about the other parts of Sinvoice:
 * [Items guide](documents/items.md)
 * [Entities(suppliers/customers) guide](documents/entities.md)
+* [Shipping(recipient) guide](documents/shipping.md)
 * [Discounts guide](documents/discounts.md)
 * [Totals guide](documents/totals.md)
+* [Status guide](documents/status.md)
 * [Full Examples](documents/full-examples.md)
 * [Rendering guide](documents/rendering.md)
 * [Rendering Examples guide](documents/rendering-examples.md)
