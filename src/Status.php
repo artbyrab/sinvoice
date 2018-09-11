@@ -87,6 +87,29 @@ class Status {
     const STATUS_DELETED = 6;
 
     /**
+     * Gets the status constants and returns their names as an array
+     * 
+     * To get an invoice status from this you can do:
+     *  - echo Status::getStatusNames()[$invoice->status->getStatus()]
+     *  - or
+     *  - echo $invoice->status->getStatusNames()[$invoice->status->getStatus()]
+     *
+     *
+     * @return array
+     */
+    public static function getStatusNames()
+    {
+        return array(
+            self::STATUS_DRAFT => 'Draft',
+            self::STATUS_SUBMITTED => 'Submitted',
+            self::STATUS_AUTHORISED => 'Authorised',
+            self::STATUS_PAID => 'Paid',
+            self::STATUS_VOID => 'Void',
+            self::STATUS_DELETED => 'Deleted',
+        );
+    }
+
+    /**
      * Get the status
      * 
      * @return integer The status

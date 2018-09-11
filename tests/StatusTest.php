@@ -50,6 +50,41 @@ class StatusTest extends TestCase
     }
 
     /**
+     * Test the getStatusNames function
+     */
+    public function testgetStatusNames()
+    {
+        $this->assertEquals(Status::getStatusNames()[1], 'Draft');
+        $this->assertEquals(Status::getStatusNames()[2], 'Submitted');
+        $this->assertEquals(Status::getStatusNames()[3], 'Authorised');
+        $this->assertEquals(Status::getStatusNames()[4], 'Paid');
+        $this->assertEquals(Status::getStatusNames()[5], 'Void');
+        $this->assertEquals(Status::getStatusNames()[6], 'Deleted');  
+    }
+
+    /**
+     * Test the getStatusNames function to get a single status name.
+     */
+    public function testgetStatusNamesSingular()
+    {
+        $this->assertEquals(
+            Status::getStatusNames()[$this->status->getStatus()], 
+            'Draft'
+        );  
+    }
+
+    /**
+     * Test the getStatusNames function to get a single status name.
+     */
+    public function testgetStatusNamesSingularNonStatic()
+    {
+        $this->assertEquals(
+            $this->status->getStatusNames()[$this->status->getStatus()], 
+            'Draft'
+        );  
+    }
+
+    /**
      * Test the setDraft function
      */
     public function testSetDraft()
@@ -69,7 +104,10 @@ class StatusTest extends TestCase
         try {
             $this->status->setDraft();
         } catch (\Exception $e) { 
-            $this->assertEquals("You can only set an invoice to 'Draft' if it has a status of 'Draft' or 'Submitted'.", $e->getMessage());
+            $this->assertEquals(
+                "You can only set an invoice to 'Draft' if it has a status of 'Draft' or 'Submitted'.", 
+                $e->getMessage()
+            );
         }
     }
 
@@ -94,7 +132,10 @@ class StatusTest extends TestCase
         try {
             $this->status->setSubmitted();
         } catch (\Exception $e) { 
-            $this->assertEquals("You can only set an invoice to 'Submitted' if it has a status of 'Draft' or 'Submitted'.", $e->getMessage());
+            $this->assertEquals(
+                "You can only set an invoice to 'Submitted' if it has a status of 'Draft' or 'Submitted'.",
+                $e->getMessage()
+            );
         }
     }
 
@@ -119,7 +160,10 @@ class StatusTest extends TestCase
         try {
             $this->status->setAuthorised();
         } catch (\Exception $e) { 
-            $this->assertEquals("You can only set an invoice to 'Authorised' if it has a status of 'Draft', 'Submitted' or 'Authorised'.", $e->getMessage());
+            $this->assertEquals(
+                "You can only set an invoice to 'Authorised' if it has a status of 'Draft', 'Submitted' or 'Authorised'.",
+                $e->getMessage()
+            );
         }
     }
 
@@ -148,7 +192,10 @@ class StatusTest extends TestCase
         try {
             $this->status->setPaid();
         } catch (\Exception $e) { 
-            $this->assertEquals("You can only set an invoice to 'Paid' if it has a status of 'Authorised'.", $e->getMessage());
+            $this->assertEquals(
+                "You can only set an invoice to 'Paid' if it has a status of 'Authorised'.",
+                $e->getMessage()
+            );
         }
     }
 
@@ -177,7 +224,10 @@ class StatusTest extends TestCase
         try {
             $this->status->setVoid();
         } catch (\Exception $e) { 
-            $this->assertEquals("You can only set an invoice to 'Void' if it has a status of 'Authorised'.", $e->getMessage());
+            $this->assertEquals(
+                "You can only set an invoice to 'Void' if it has a status of 'Authorised'.",
+                $e->getMessage()
+            );
         }
     }
 
