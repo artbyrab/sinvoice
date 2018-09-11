@@ -120,6 +120,16 @@ class Status {
     }
 
     /**
+     * Set from an ID 
+     * 
+     * @param integer $id Is an ID relating to one of the status constants.
+     */
+    public function setFromId($id)
+    {
+        $this->status = $id;
+    }
+
+    /**
      * Set to draft.
      * 
      * @return True 
