@@ -41,9 +41,7 @@ Sinvoice Terminology:
 * Easy to use to any framework or even a plain php file
 
 ## Requirements
-PHP 7.0
-
-However i have not tested it with PHP 5+ so it may be compatible.
+PHP
 
 ## Installation
 Install via composer command line:
@@ -123,5 +121,7 @@ Learn more about the other parts of Sinvoice:
 * [Rendering Examples guide](documents/rendering-examples.md)
 * [Invoice Factory guide](documents/invoice-factory.md)
 * [Fluid Interface guide](documents/fluid-interface.md) 
+* [Code Checks guide](documents/code-checks.md)
+* [Running Tests guide](documents/running-tests.md)
 
 
