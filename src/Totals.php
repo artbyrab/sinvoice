@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
@@ -14,15 +14,16 @@ namespace Rabus\Sinvoice;
 
 /**
  * Invoice Totals
- * 
+ *
  * This will simply calculate the totals for an instance of the Invoice model.
- * 
+ *
  * The Total model will be automatically instantiated in the construct
  * for the Invoice model.
- *  
+ *
  * @author RABUS
  */
-class Totals {
+class Totals
+{
 
     /**
      * @var integer Is the total of all the items net totals.
@@ -30,7 +31,7 @@ class Totals {
     private $itemNetTotal;
 
     /**
-     * @var integer Is the invoice level discount. 
+     * @var integer Is the invoice level discount.
      */
     private $discount;
     
@@ -40,7 +41,7 @@ class Totals {
     private $itemDiscountTotal;
     
     /**
-     * @var integer Is the total of the item discount total and the invoice 
+     * @var integer Is the total of the item discount total and the invoice
      * level discount.
      */
     private $discountTotal;
@@ -73,8 +74,8 @@ class Totals {
 
     /**
      * Construct
-     * 
-     * @return object $this Is the instance of the Total for the fluid 
+     *
+     * @return object $this Is the instance of the Total for the fluid
      * interface.
      */
     public function __construct()
@@ -173,9 +174,9 @@ class Totals {
 
     /**
      * Calculate totals
-     * 
+     *
      * @TODO needs refactoring - RAB
-     * 
+     *
      * @param object $invoice Is an instance of the Invoice model.
      */
     public function calculateTotals($invoice)
@@ -183,9 +184,9 @@ class Totals {
         $this->setDefaultTotals();
 
         if (!empty($invoice->items->getItems())) {
-            foreach ($invoice->items->getItems() as $item){
-                $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscount(); 
-                $this->itemNetTotal = $this->itemNetTotal + $item->getNetTotal(); 
+            foreach ($invoice->items->getItems() as $item) {
+                $this->itemDiscountTotal = $this->itemDiscountTotal + $item->getDiscount();
+                $this->itemNetTotal = $this->itemNetTotal + $item->getNetTotal();
                 $this->netTotal = $this->netTotal + $item->getNetTotal();
             }
 

@@ -1,11 +1,11 @@
 <?php
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
@@ -15,19 +15,19 @@ use Rabus\Sinvoice\DiscountInterface;
 
 /**
  * Abstract Discount
- * 
+ *
  * This provides a base class to build discounts upon.
- * 
- * This is designed to be extended by a discount model. For example with the 
+ *
+ * This is designed to be extended by a discount model. For example with the
  * FlatDiscount and the PercentageDiscount models.
- * 
- * If you want to create a new discount then you should extend this model. this 
+ *
+ * If you want to create a new discount then you should extend this model. this
  * model implements the DiscountInterface and adds some attributes to it to
  * allow for easier usage.
- * 
+ *
  * @author RABUS rabus@art-by-rab.com
  */
-class AbstractDiscount implements DiscountInterface 
+class AbstractDiscount implements DiscountInterface
 {
     /**
      * @var integer The discount figure, depending on the implementation this

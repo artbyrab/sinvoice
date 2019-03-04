@@ -1,29 +1,30 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
 namespace Rabus\Sinvoice;
 
 /**
- * Entity 
- * 
+ * Entity
+ *
  * Don't leave your Sinvoices lonely. Why not make them happy by adding some
  * entities to them.
- * 
- * An entity can be a company/organisation or a person. When creating 
+ *
+ * An entity can be a company/organisation or a person. When creating
  * customers, suppliers and recipients you can use the entity model.
- * 
+ *
  * @author RABUS
  */
-class Entity {
+class Entity
+{
 
     /**
      * @var string
@@ -46,30 +47,30 @@ class Entity {
     private $email;
 
     /**
-     * @var string $reference If you have a customer ID, or any other ID or 
+     * @var string $reference If you have a customer ID, or any other ID or
      * reference you can add it here.
      */
     private $reference;
 
     /**
      * Construct
-     * 
-     * @return object $this An instance of the Entity model for the fluid 
+     *
+     * @return object $this An instance of the Entity model for the fluid
      * interface.
      */
-    public function __construct() 
+    public function __construct()
     {
         return $this;
     }
 
     /**
      * Format to string
-     * 
-     * This will return a string containing all the entities details. This is 
+     *
+     * This will return a string containing all the entities details. This is
      * useful if you only need a simple out
-     * 
+     *
      * @param string $name
-     * @return string The entities details formatted as a string. 
+     * @return string The entities details formatted as a string.
      */
     public function formatToString(string $seperator = ", ")
     {
@@ -88,7 +89,7 @@ class Entity {
 
     /**
      * Set the name
-     * 
+     *
      * @param string $name
      * @return object $this Is the instance of the Entity.
      */

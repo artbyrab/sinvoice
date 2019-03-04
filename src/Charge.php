@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
@@ -14,20 +14,21 @@ namespace Rabus\Sinvoice;
 
 /**
  * Charge
- * 
+ *
  * A charge is simply an object that allows you to add a price and description
- * which can then be added to an invoice or other items. For example if there 
- * are some additional fees for the invoice that you do not want to add as an 
+ * which can then be added to an invoice or other items. For example if there
+ * are some additional fees for the invoice that you do not want to add as an
  * invoice item then a charge is the way to go.
- * 
+ *
  * Examples:
  *  - Additional Shipping charge
  *  - Additional handling fee
  *  - Other costs
- *  
+ *
  * @author RABUS
  */
-class Charge {
+class Charge
+{
     
     /**
      * @var string $price The net cost of the charge.z
@@ -41,18 +42,18 @@ class Charge {
 
     /**
      * Construct
-     * 
-     * @return object $this Is the instance of the Total for the fluid 
+     *
+     * @return object $this Is the instance of the Total for the fluid
      * interface.
      */
-    public function __construct() 
+    public function __construct()
     {
         return $this;
     }
 
     /**
-     * Set the price. 
-     * 
+     * Set the price.
+     *
      * @param integer $price Is the price of the charge.
      * @return object $this An instance of the Charge item.
      */
@@ -75,7 +76,7 @@ class Charge {
 
     /**
      * Set the discount
-     * 
+     *
      * @param string $description Is the charge description.
      * @return object $this An instance of the Charge item.
      */
@@ -88,8 +89,8 @@ class Charge {
 
     /**
      * Get the description
-     * 
-     * @return string 
+     *
+     * @return string
      */
     public function getDescription()
     {

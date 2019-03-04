@@ -1,5 +1,5 @@
-<nav class="navbar navbar-inverse">
-    <a class="navbar-brand" href="index.php">Sinvoice</a>
+<img style="width:200px; padding:20px 0px;" src="../files/graphics/sinvoice-logo.png">
+<nav class="navbar navbar-default">
     <ul class="nav navbar-nav">
         <li>
             <a href="index.php">Home</a>

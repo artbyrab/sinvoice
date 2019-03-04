@@ -11,7 +11,8 @@
     ],
     "type": "package",
     "require-dev": {
-		"phpunit/phpunit": "6.*"
+        "phpunit/phpunit": "6.*",
+        "friendsofphp/php-cs-fixer": "*"
     },
     "autoload": {
         "psr-4": {

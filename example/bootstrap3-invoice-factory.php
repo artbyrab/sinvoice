@@ -92,6 +92,13 @@ $invoice->setNumber('2')
     <div class="container">
         <?php include "_nav.php"; ?> 
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12"> 
+                <h2>Bootstrap 3 Invoice Factory Example</h2>
+            </div><!--/.col-->
+        </div><!--/.row-->
+    </div><!--/.container--> 
     <?php include "_bootstrap-template.php"; ?>
     <div class="container">
         <div class="row">

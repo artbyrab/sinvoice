@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
@@ -16,17 +16,17 @@ use Rabus\Sinvoice\Observer;
 
 /**
  * Dummy Observer
- * 
- * This is a dummy observer implementation to assist in testing. It simply 
- * allows you to set the status attribute to active or inactive to ensure the 
+ *
+ * This is a dummy observer implementation to assist in testing. It simply
+ * allows you to set the status attribute to active or inactive to ensure the
  * notify > update function works as expected.
- *  
+ *
  * @author RABUS
  */
-class DummyObserver implements Observer {
-
-    CONST STATUS_ACTIVE = 1;
-    CONST STATUS_INACTIVE = 0;
+class DummyObserver implements Observer
+{
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 0;
 
     /**
      * @var integer $status
@@ -35,10 +35,10 @@ class DummyObserver implements Observer {
 
     /**
      * Update
-     * 
+     *
      * @return string
      */
-    public function update ()
+    public function update()
     {
         $this->status = self::STATUS_ACTIVE;
     }

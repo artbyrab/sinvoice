@@ -1,11 +1,4 @@
 <?php
-
-// Uncomment the below if you need to see errors
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// manually include the autoload file so we can use the library here
 require ('../vendor/autoload.php');
 
 use Rabus\Sinvoice\Invoice;
@@ -19,10 +12,8 @@ use Rabus\Sinvoice\Item;
     <meta charset="utf-8">
 
     <title>Sinvoice</title>
-    <meta name="description" content="Sinvoice - Sin Free Invoicing">
+    <meta name="description" content="Sinvoice">
     <meta name="author" content="RABUS">
-
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
 
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -39,20 +30,63 @@ use Rabus\Sinvoice\Item;
 </head>
 <body>
     <div class="container">
-        <?php include "_nav.php"; ?> 
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Welcome to Sinvoice</h1>
-                <p>It would be a sin, not to use Sinvoice for your invoicing needs.</p>
-                <p>
-                    <a href="bootstrap3-invoice.php" class="btn btn-primary btn-lg">Bootstrap 3 Invoice Example</a>
-                </p>
-                <p>
-                    <a href="bootstrap3-invoice-factory.php" class="btn btn-primary btn-lg">Bootstrap 3 Invoice Factory Example</a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <script src="js/scripts.js"></script>
+        <div class="row">
+            <div class="col-xs-12">
+                <?php include "_nav.php"; ?>
+                <h1>Sinvoice Example</h1>
+                <p>Learn how to use Sinvoice.</p>
+            </div><!--/.col-->
+            <div class="col-xs-12">
+                <h2>Create an invoice with items and shipping</h2>
+                <pre><code>use Rabus\Sinvoice\Invoice;
+use Rabus\Sinvoice\Entity;
+use Rabus\Sinvoice\Shipping;
+use Rabus\Sinvoice\item;
+
+$sinvoice = (new Invoice())
+    ->setNumber(1)
+    ->setIssuedDate('Today')
+    ->setDueDate('+21 Days)
+    ->addTaxPercentage(20.00)
+    ->addSupplier(
+        (new Entity())
+        ->setName('Quality Roman Suppliers')
+        ->setAddress('1 Ampitheatre Road, Rome')
+    )
+    ->addCustomer(
+        (new Entity())
+        ->setName('Julius Ceaser')
+        ->setAddress('Todo')
+    )
+    (new Shipping())
+        ->addRecipient(
+            (new Entity())
+            ->setName('Ceasar')
+            ->setAddress('1 High Street, Rome, Italy')
+            ->setPhone('01245 678910')
+            ->setEmail('ceasar@rome.com')
+            ->setReference('a145')
+        )
+        ->setPrice(10.99)
+        ->setDeliveryDate('+7 days')
+        ->setHandler('Rome Road Mail')
+        ->setReference('8547124')
+    )
+
+    )
+    ->addItem(
+        (new Item())
+        ->setName('Gladius Sword')
+            ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
+            ->setPrice(120.00)
+            ->setQuantity(2);
+        ->addDiscount(
+            (new PercentageDiscount())
+            ->setFigure(10)
+        )
+    )</code></pre>
+            <p>Look at the 2 other example pages for more.</p>
+        </div><!--/.col-->
+    </div><!--/.col-->
 </body>
 </html>

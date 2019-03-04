@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
@@ -16,22 +16,23 @@ use \DateTime;
 
 /**
  * Shipping
- * 
- * If an invoice/customer requires shipping you can simply add in a 
+ *
+ * If an invoice/customer requires shipping you can simply add in a
  * shipping model.
- * 
+ *
  * When you create the shipping you need to attach a recipient who is the entity
  * receiving whatever is being shipped.
- *  
+ *
  * @author RABUS
  */
-class Shipping {
+class Shipping
+{
 
     /**
-     * @var object $recipient is an instance of the Entity model. The 
+     * @var object $recipient is an instance of the Entity model. The
      * recipient may be the customer or another entity who is recieiving the
      * items sold in the invoice.
-     * 
+     *
      * The recipients default is null. If there is no delivery then you do not
      * need to fill in the recipient.
      */
@@ -54,25 +55,25 @@ class Shipping {
     private $handler;
 
     /**
-     * @var string $reference If you want to attach a unique reference to the 
+     * @var string $reference If you want to attach a unique reference to the
      * shipping.
      */
     private $reference;
 
     /**
      * Construct
-     * 
-     * @return object $this Is the instance of the Total for the fluid 
+     *
+     * @return object $this Is the instance of the Total for the fluid
      * interface.
      */
-    public function __construct($parameters = array()) 
+    public function __construct($parameters = array())
     {
         return $this;
     }
 
     /**
      * Add recipient
-     * 
+     *
      * @param integer $recipient is an instance of the Entity model.
      * @return object $this An instance of the Shipping model.
      * interface.
@@ -95,8 +96,8 @@ class Shipping {
     }
 
     /**
-     * Set the price. 
-     * 
+     * Set the price.
+     *
      * @param string $price
      * @return object $this An instance of the Shipping model.
      */
@@ -167,7 +168,7 @@ class Shipping {
 
     /**
      * Set the reference
-     *      
+     *
      * @param string $reference
      * @return object $this An instance of the Shipping model.
      */

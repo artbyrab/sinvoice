@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 /**
  * Sinvoice an invoicing model.
- * 
+ *
  * @package   Sinvoice
  * @author    RABUS <rabus@art-by-rab.com>
  * @link      @TODO add in link
- * For copyright and license please see LICENSE and README docs contained in 
+ * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
@@ -14,20 +14,21 @@ namespace Rabus\Sinvoice;
 
 /**
  * Item
- * 
- * What does a Sinvoice need more than oxygen and coffee? An item! So don't 
+ *
+ * What does a Sinvoice need more than oxygen and coffee? An item! So don't
  * leave your Sinvoice all alone with 0 items, that would be just sinful!
- * 
- * Items are the purchases your customers are making. The item could be a 
- * digital item like a product license key or physical item like a pair of 
+ *
+ * Items are the purchases your customers are making. The item could be a
+ * digital item like a product license key or physical item like a pair of
  * shoes.
- * 
- * Items are attached/removed from invoice and this will trigger an update of 
+ *
+ * Items are attached/removed from invoice and this will trigger an update of
  * the totals via the Basket model which is used to hold the items.
- *  
+ *
  * @author RABUS
  */
-class Item {
+class Item
+{
 
     /**
      * @var string $name Is the name of the item, 'Basketball' or 'Bitcoin Mug'.
@@ -35,13 +36,13 @@ class Item {
     private $name;
 
     /**
-     * @var string $description is the item description if needed. Default is 
+     * @var string $description is the item description if needed. Default is
      * automatically set.
      */
     private $description;
 
     /**
-     * @var integer $price Is the price of the item in integer or decimal 
+     * @var integer $price Is the price of the item in integer or decimal
      * format, '20', or '21.99'.
      */
     private $price;
@@ -52,7 +53,7 @@ class Item {
     private $quantity;
 
     /**
-     * @var object $discount is a object that implements the 
+     * @var object $discount is a object that implements the
      * DiscountInterface model.
      */
     public $discount;
@@ -64,11 +65,11 @@ class Item {
 
     /**
      * Construct
-     * 
+     *
      * @return object $this An instance of the Item for the fluid interface.
      */
-    public function __construct() 
-    {    
+    public function __construct()
+    {
         return $this;
     }
 
@@ -156,7 +157,7 @@ class Item {
         return $this;
     }
 
-        /**
+    /**
      * Get the quantity
      *
      * @return string
@@ -168,14 +169,14 @@ class Item {
 
     /**
      * Add the discount
-     * 
-     * You set the discount by adding a model that implements the 
+     *
+     * You set the discount by adding a model that implements the
      * DiscountInterface model.
-     * 
-     * This allows you to use various different discount models like flat 
+     *
+     * This allows you to use various different discount models like flat
      * discount or a percentage discount.
      *
-     * @param object $discountModel Is a model that implements the 
+     * @param object $discountModel Is a model that implements the
      * DiscountInterface model.
      * @return object $this An instance of the Item.
      */
@@ -188,25 +189,25 @@ class Item {
 
     /**
      * Get the discount
-     * 
-     * This will use the discount models calculate function to get the 
+     *
+     * This will use the discount models calculate function to get the
      * discount total.
      *
      * @return mixed
      */
     public function getDiscount()
     {
-        if (!empty($this->discount)){
+        if (!empty($this->discount)) {
             return $this->discount->calculate($this->getPriceTotal());
         }
 
-        return Null;
+        return null;
     }
 
     /**
      * Get the price total
      *
-     * This calculates the invoice item price total. This is the price 
+     * This calculates the invoice item price total. This is the price
      * multiplied by the item quantity.
      *
      * @param integer $reference
