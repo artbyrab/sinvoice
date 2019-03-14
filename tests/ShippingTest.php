@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Shipping;
@@ -10,11 +10,11 @@ use artbyrab\sinvoice\Entity;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter ShippingTest tests/ShippingTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct ShippingTest tests/ShippingTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -41,7 +41,7 @@ class ShippingTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->shipping);
     }
 
@@ -59,7 +59,7 @@ class ShippingTest extends TestCase
      * Test the ... function
      */
     public function testConstructWithFluidInterface()
-    { 
+    {
         $shipping = (new Shipping())
             ->addRecipient(
                 (new Entity())

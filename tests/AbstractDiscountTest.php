@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\AbstractDiscount;
@@ -9,11 +9,11 @@ use artbyrab\sinvoice\AbstractDiscount;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter AbstractDiscountTest tests/AbstractDiscountTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct AbstractDiscountTest tests/AbstractDiscountTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -36,7 +36,7 @@ class AbstractDiscountTest extends TestCase
      * Test the calculate function.
      */
     public function testCalculate()
-    {  
+    {
         $abstractDiscount = new AbstractDiscount();
         $abstractDiscount->setFigure(12.50);
         $this->assertEquals($abstractDiscount->calculate(), 12.50);
@@ -47,7 +47,7 @@ class AbstractDiscountTest extends TestCase
      * Test the setFigure and getFigure function.
      */
     public function testSetGetFigure()
-    {  
+    {
         $abstractDiscount = new AbstractDiscount();
         $abstractDiscount->setFigure(12.50);
         $this->assertEquals($abstractDiscount->getFigure(), 12.50);
@@ -58,7 +58,7 @@ class AbstractDiscountTest extends TestCase
      * Test the setDescription and getDescription function.
      */
     public function testSetGetDescription()
-    {  
+    {
         $abstractDiscount = new AbstractDiscount();
         $abstractDiscount->setDescription('10% standard discount');
         $this->assertEquals($abstractDiscount->getDescription(), '10% standard discount');

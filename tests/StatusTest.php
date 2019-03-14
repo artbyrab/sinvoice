@@ -1,9 +1,8 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Invoice;
 use artbyrab\sinvoice\Status;
-
 
 /**
  * Sinvoice Status Model Test
@@ -11,11 +10,11 @@ use artbyrab\sinvoice\Status;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter StatusTest tests/StatusTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct StatusTest tests/StatusTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -34,8 +33,8 @@ class StatusTest extends TestCase
      */
     protected function setUp()
     {
-        $this->invoice = New Invoice();
-        $this->status = New Status();
+        $this->invoice = new Invoice();
+        $this->status = new Status();
     }
 
     /**
@@ -44,7 +43,7 @@ class StatusTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->invoice);
         unset($this->status);
     }
@@ -59,7 +58,7 @@ class StatusTest extends TestCase
         $this->assertEquals(Status::getStatusNames()[3], 'Authorised');
         $this->assertEquals(Status::getStatusNames()[4], 'Paid');
         $this->assertEquals(Status::getStatusNames()[5], 'Void');
-        $this->assertEquals(Status::getStatusNames()[6], 'Deleted');  
+        $this->assertEquals(Status::getStatusNames()[6], 'Deleted');
     }
 
     /**
@@ -68,9 +67,9 @@ class StatusTest extends TestCase
     public function testgetStatusNamesSingular()
     {
         $this->assertEquals(
-            Status::getStatusNames()[$this->status->getStatus()], 
+            Status::getStatusNames()[$this->status->getStatus()],
             'Draft'
-        );  
+        );
     }
 
     /**
@@ -79,9 +78,9 @@ class StatusTest extends TestCase
     public function testgetStatusNamesSingularNonStatic()
     {
         $this->assertEquals(
-            $this->status->getStatusNames()[$this->status->getStatus()], 
+            $this->status->getStatusNames()[$this->status->getStatus()],
             'Draft'
-        );  
+        );
     }
 
     /**
@@ -90,7 +89,7 @@ class StatusTest extends TestCase
     public function testSetDraft()
     {
         $this->status->setDraft();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_DRAFT);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_DRAFT);
     }
 
     /**
@@ -103,9 +102,9 @@ class StatusTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $this->status->setDraft();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals(
-                "You can only set an invoice to 'Draft' if it has a status of 'Draft' or 'Submitted'.", 
+                "You can only set an invoice to 'Draft' if it has a status of 'Draft' or 'Submitted'.",
                 $e->getMessage()
             );
         }
@@ -117,7 +116,7 @@ class StatusTest extends TestCase
     public function testSetSubmitted()
     {
         $this->status->setSubmitted();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_SUBMITTED);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_SUBMITTED);
     }
 
     /**
@@ -131,7 +130,7 @@ class StatusTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $this->status->setSubmitted();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals(
                 "You can only set an invoice to 'Submitted' if it has a status of 'Draft' or 'Submitted'.",
                 $e->getMessage()
@@ -145,7 +144,7 @@ class StatusTest extends TestCase
     public function testSetAuthorised()
     {
         $this->status->setAuthorised();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_AUTHORISED);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_AUTHORISED);
     }
 
     /**
@@ -159,7 +158,7 @@ class StatusTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $this->status->setAuthorised();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals(
                 "You can only set an invoice to 'Authorised' if it has a status of 'Draft', 'Submitted' or 'Authorised'.",
                 $e->getMessage()
@@ -169,8 +168,8 @@ class StatusTest extends TestCase
 
     /**
      * Test the setPaid function
-     * 
-     * Please note as you cannot set any status to paid, we need to set the 
+     *
+     * Please note as you cannot set any status to paid, we need to set the
      * status to invoice before.
      */
     public function testSetPaid()
@@ -178,7 +177,7 @@ class StatusTest extends TestCase
         $this->status->setAuthorised();
 
         $this->status->setPaid();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_PAID);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_PAID);
     }
 
     /**
@@ -191,7 +190,7 @@ class StatusTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $this->status->setPaid();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals(
                 "You can only set an invoice to 'Paid' if it has a status of 'Authorised'.",
                 $e->getMessage()
@@ -201,8 +200,8 @@ class StatusTest extends TestCase
 
     /**
      * Test the setVoid function
-     * 
-     * Please note as you cannot set any status to paid, we need to set the 
+     *
+     * Please note as you cannot set any status to paid, we need to set the
      * status to invoice before.
      */
     public function testSetVoid()
@@ -210,7 +209,7 @@ class StatusTest extends TestCase
         $this->status->setAuthorised();
 
         $this->status->setVoid();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_VOID);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_VOID);
     }
 
     /**
@@ -223,7 +222,7 @@ class StatusTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $this->status->setVoid();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals(
                 "You can only set an invoice to 'Void' if it has a status of 'Authorised'.",
                 $e->getMessage()
@@ -237,7 +236,6 @@ class StatusTest extends TestCase
     public function testSetDeleted()
     {
         $this->status->setDeleted();
-        $this->assertEquals($this->status->getStatus(), Status::STATUS_DELETED);  
+        $this->assertEquals($this->status->getStatus(), Status::STATUS_DELETED);
     }
-
 }

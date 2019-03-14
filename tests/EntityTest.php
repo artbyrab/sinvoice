@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Entity;
@@ -9,11 +9,11 @@ use artbyrab\sinvoice\Entity;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter EntityTest tests/EntityTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct EntityTest tests/EntityTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -40,7 +40,7 @@ class EntityTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->entity);
     }
 

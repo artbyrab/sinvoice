@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Charge;
@@ -9,11 +9,11 @@ use artbyrab\sinvoice\Charge;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter ChargeTest tests/ChargeTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct ChargeTest tests/ChargeTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\ObserverSubjects;
@@ -11,16 +11,16 @@ use artbyrab\sinvoice\DummyObserver;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter ObserverSubjectsTest tests/ObserverSubjectsTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct ObserverSubjectsTest tests/ObserverSubjectsTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
- * 
- * Please note, this test uses a dummy observer object to make testing the 
+ *
+ * Please note, this test uses a dummy observer object to make testing the
  * notify and subsequent observer update functions.
  *
  * @author Rabus
@@ -49,7 +49,7 @@ class ObserverSubjectsTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->invoice);
         unset($this->dummyObserver);
         unset($this->observerSubjects);
@@ -77,7 +77,7 @@ class ObserverSubjectsTest extends TestCase
 
     /**
      * Test the notify function
-     * 
+     *
      * This makes use of the dummy observer object that makes testing easier.
      */
     public function testNotify()

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Invoice;
@@ -12,11 +12,11 @@ use artbyrab\sinvoice\ObserverSubjects;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter BasketTest tests/BasketTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct BasketTest tests/BasketTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -51,7 +51,7 @@ class BasketTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->basket);
         unset($this->invoice);
         unset($this->itemA);
@@ -62,7 +62,6 @@ class BasketTest extends TestCase
      */
     public function testConstruct()
     {
-        
         $invoice = new Invoice();
         $observerKey = spl_object_hash($invoice);
         $basket = new Basket($invoice);

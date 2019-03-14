@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\InvoiceFactory;
@@ -11,11 +11,11 @@ use artbyrab\sinvoice\Invoice;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter InvoiceFactoryTest tests/InvoiceFactoryTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct InvoiceFactoryTest tests/InvoiceFactoryTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -53,7 +53,7 @@ class InvoiceFactoryTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->invoiceFactory);
     }
 
@@ -98,7 +98,7 @@ class InvoiceFactoryTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $result = $invoiceFactory->buildInvoice();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals('The supplier and taxPercentage attributes need to be populated before you can build an invoice.', $e->getMessage());
         }
 
@@ -126,7 +126,7 @@ class InvoiceFactoryTest extends TestCase
         // lets catch the error and assert it matches
         try {
             $result = $invoiceFactory->buildInvoice();
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
             $this->assertEquals('The supplier and taxPercentage attributes need to be populated before you can build an invoice.', $e->getMessage());
         }
 
@@ -173,7 +173,6 @@ class InvoiceFactoryTest extends TestCase
      */
     public function testSetGetIssuedDate()
     {
-
         $issuedDate = new DateTime('today');
 
         $invoiceFactory = new InvoiceFactory();

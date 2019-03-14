@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\FlatDiscount;
@@ -9,11 +9,11 @@ use artbyrab\sinvoice\FlatDiscount;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter FlatDiscountTest tests/FlatDiscountTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct FlatDiscountTest tests/FlatDiscountTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -37,7 +37,7 @@ class FlatDiscountTest extends TestCase
      * Test the calculate function.
      */
     public function testCalculate()
-    {  
+    {
         $flatDiscount = new FlatDiscount();
         $flatDiscount->setFigure(5);
         $this->assertEquals($flatDiscount->calculate(), 5);
@@ -48,7 +48,7 @@ class FlatDiscountTest extends TestCase
      * Test the setFigure and getFigure function.
      */
     public function testSetGetFigure()
-    {  
+    {
         $flatDiscount = new FlatDiscount();
         $flatDiscount->setFigure(5);
         $this->assertEquals($flatDiscount->getFigure(), 5);
@@ -59,11 +59,10 @@ class FlatDiscountTest extends TestCase
      * Test the setDescription and getDescription function.
      */
     public function testSetGetDescription()
-    {  
+    {
         $flatDiscount = new FlatDiscount();
         $flatDiscount->setDescription('5 flat discount');
         $this->assertEquals($flatDiscount->getDescription(), '5 flat discount');
         unset($flatDiscount);
     }
-
 }

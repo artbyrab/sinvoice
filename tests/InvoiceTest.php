@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use PHPUnit\Framework\TestCase;
 use artbyrab\sinvoice\Invoice;
@@ -16,11 +16,11 @@ use artbyrab\sinvoice\Shipping;
  * To run this test class only:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter InvoiceTest tests/InvoiceTest.php
- * 
+ *
  * To run a single test class in this model:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: vendor/bin/phpunit --filter testConstruct InvoiceTest tests/InvoiceTest.php
- * 
+ *
  * To run all tests:
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
@@ -63,9 +63,9 @@ class InvoiceTest extends TestCase
      * Set up
      *
      * Performed before every test.
-     * 
+     *
      * We will set up some seperate test items to use in the various tests here
-     * by keeping them seperate here, we can easily attach and detach as 
+     * by keeping them seperate here, we can easily attach and detach as
      * needed.
      */
     protected function setUp()
@@ -109,7 +109,8 @@ class InvoiceTest extends TestCase
             ->setDescription('5 flat discount');
 
         $this->shipping = (new Shipping())
-            ->addRecipient((new Entity())
+            ->addRecipient(
+                (new Entity())
                 ->setName('Ceasar')
                 ->setAddress('1 High Street, Rome, Italy')
                 ->setPhone('01245 678910')
@@ -120,7 +121,7 @@ class InvoiceTest extends TestCase
             ->setDeliveryDate('+7 days')
             ->setHandler('Rome Road Mail')
             ->setReference('8547124');
-    }   
+    }
 
     /**
      * Tear down
@@ -128,7 +129,7 @@ class InvoiceTest extends TestCase
      * Performed after every test.
      */
     protected function tearDown()
-    {  
+    {
         unset($this->invoice);
         unset($this->itemA);
         unset($this->itemB);
@@ -196,13 +197,15 @@ class InvoiceTest extends TestCase
             ->setDueDate('+21 days')
             ->setReference('rome_1')
             ->setTaxPercentage(15.00)
-            ->addItem((new Item())
+            ->addItem(
+                (new Item())
                 ->setName('Gladius Sword')
                 ->setDescription('Very fine looking Gladius sword, suitable for decapitation or stabbing.')
                 ->setPrice(120.00)
                 ->setQuantity(1)
             )
-            ->addItem((new Item())
+            ->addItem(
+                (new Item())
                 ->setName('Shield')
                 ->setDescription('A shield, very useful in the tortoise.')
                 ->setPrice(49.99)
@@ -241,14 +244,16 @@ class InvoiceTest extends TestCase
             ->setDueDate('+21 days')
             ->setReference('rome_1')
             ->setTaxPercentage(15.00)
-            ->addSupplier((new Entity())
+            ->addSupplier(
+                (new Entity())
                 ->setName('Rome Suppliers')
                 ->setAddress('1 Main Street, Industrial District, Rome, Italy')
                 ->setPhone('01234 567899')
                 ->setEmail('rsuppliers@rome.com')
                 ->setReference('rsa')
             )
-            ->addCustomer((new Entity())
+            ->addCustomer(
+                (new Entity())
                 ->setName('Emperor Nero')
                 ->setAddress('Via Cavour, Rome, Italy')
                 ->setPhone('01234 567891')
@@ -292,7 +297,7 @@ class InvoiceTest extends TestCase
     }
 
     /**
-     * Test the set and get issued date functions 
+     * Test the set and get issued date functions
      *
      */
     public function testSetGetIssuedDate()
@@ -352,7 +357,7 @@ class InvoiceTest extends TestCase
     {
         $this->invoice->addSupplier($this->supplier);
         $this->assertEquals(
-            $this->invoice->getSupplier(), 
+            $this->invoice->getSupplier(),
             'Rome Suppliers, 1 Main Street, Industrial District, Rome, Italy, 01234 567899, rsuppliers@rome.com, rsa'
         );
     }
@@ -387,7 +392,7 @@ class InvoiceTest extends TestCase
     {
         $this->invoice->addCustomer($this->customer);
         $this->assertEquals(
-            $this->invoice->getCustomer(), 
+            $this->invoice->getCustomer(),
             'Emperor Nero, Via Cavour, Rome, Italy, 01234 567891, nero@rome.com, nero123'
         );
     }
@@ -557,5 +562,4 @@ class InvoiceTest extends TestCase
     {
         $this->assertFalse($this->invoice->hasShipping());
     }
-
 }
