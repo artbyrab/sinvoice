@@ -1,7 +1,7 @@
 {
     "name": "artbyrab/sinvoice",
     "description": "A PHP invoicing library.",
-    "keywords": ["sinvoice", "invoice", "invoicing", "php", "shopping cart", "cart", "composer", "package"],
+    "keywords": ["sinvoice", "invoice", "invoicing", "php", "composer", "package"],
     "license": "DBAD",
     "authors": [
         {
