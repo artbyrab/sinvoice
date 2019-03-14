@@ -4,13 +4,13 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 /**
  * Status
@@ -41,7 +41,7 @@ namespace Rabus\Sinvoice;
  * As the status of an invoice can be quite complex and could litter the
  * invoice model we will seperate out the logic here.
  *
- * @author RABUS
+ * @author artbyrab
  */
 class Status
 {

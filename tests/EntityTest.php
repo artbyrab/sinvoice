@@ -1,7 +1,7 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Entity;
+use artbyrab\sinvoice\Entity;
 
 /**
  * Sinvoice Entity Model Test

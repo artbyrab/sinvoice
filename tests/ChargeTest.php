@@ -1,7 +1,7 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Charge;
+use artbyrab\sinvoice\Charge;
 
 /**
  * Sinvoice Charge Model Test

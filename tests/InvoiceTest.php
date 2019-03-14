@@ -1,14 +1,14 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Totals;
-use Rabus\Sinvoice\Basket;
-use Rabus\Sinvoice\FlatDiscount;
-use Rabus\Sinvoice\PercentageDiscount;
-use Rabus\Sinvoice\Shipping;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Totals;
+use artbyrab\sinvoice\Basket;
+use artbyrab\sinvoice\FlatDiscount;
+use artbyrab\sinvoice\PercentageDiscount;
+use artbyrab\sinvoice\Shipping;
 
 /**
  * Sinvoice Invoice Model Test
@@ -25,7 +25,7 @@ use Rabus\Sinvoice\Shipping;
  *  - Navigate to: ~Rabus/Sinvoice/
  *  - Type: $ vendor/bin/phpunit
  *
- * @author RABUSH
+ * @author artbyrabH
  */
 class InvoiceTest extends TestCase
 {

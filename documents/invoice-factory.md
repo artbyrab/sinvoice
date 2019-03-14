@@ -9,9 +9,9 @@ The invoice factory will be responsible for generating your invoices.
 To set up your invoice factory do the following:
 
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\InvoiceFactory;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\InvoiceFactory;
 
 $invoiceFactory = (new InvoiceFactory())
     ->addSupplier(

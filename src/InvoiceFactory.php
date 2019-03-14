@@ -3,16 +3,16 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 use \DateTime;
-use Rabus\Sinvoice\Invoice;
+use artbyrab\sinvoice\Invoice;
 
 /**
  * Invoice Factory
@@ -31,7 +31,7 @@ use Rabus\Sinvoice\Invoice;
  * To use create your Factory in the file you are going to generate you invoices
  * from.
  *
- * $invoiceFactory = new Rabus\Sinvoice\InvoiceFactory();
+ * $invoiceFactory = new artbyrab\sinvoice\InvoiceFactory();
  * $invoiceFactory->setSupplier(
  *      (New Entity)
  *      ->setName('Rome Suppliers')
@@ -51,7 +51,7 @@ use Rabus\Sinvoice\Invoice;
  * Now you can continue to create multiple new invoices without having to always
  * add the supplier or tax rate.
  *
- * @author RABUS rabus@art-by-rab.com
+ * @author artbyrab contact@art-by-rab.com
  */
 class InvoiceFactory
 {

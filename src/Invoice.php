@@ -4,22 +4,22 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 use \DateTime;
-use Rabus\Sinvoice\Observer;
-use Rabus\Sinvoice\Basket;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\Totals;
-use Rabus\Sinvoice\Status;
+use artbyrab\sinvoice\Observer;
+use artbyrab\sinvoice\Basket;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\Totals;
+use artbyrab\sinvoice\Status;
 
 /**
  * Invoice
@@ -49,7 +49,7 @@ use Rabus\Sinvoice\Status;
  *
  * This model can be an invoice or you can use it as a shopping basket as well.
  *
- * @author RABUS rabus@art-by-rab.com
+ * @author artbyrab contact@art-by-rab.com
  */
 class Invoice implements Observer
 {

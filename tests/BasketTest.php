@@ -1,10 +1,10 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Basket;
-use Rabus\Sinvoice\ObserverSubjects;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Basket;
+use artbyrab\sinvoice\ObserverSubjects;
 
 /**
  * Sinvoice Basket Model Test

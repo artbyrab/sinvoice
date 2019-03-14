@@ -11,7 +11,7 @@ PHP CS Fixer by default formats to PSR1 and PSR2 standards.
 
 To run it navigate to the repo's main directory:
 ```
-$ cd .../rabus/Sinvoice
+$ cd .../artbyrab/sinvoice
 ```
 
 Then run the following commands:

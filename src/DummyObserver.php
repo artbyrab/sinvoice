@@ -4,15 +4,15 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
-use Rabus\Sinvoice\Observer;
+use artbyrab\sinvoice\Observer;
 
 /**
  * Dummy Observer
@@ -21,7 +21,7 @@ use Rabus\Sinvoice\Observer;
  * allows you to set the status attribute to active or inactive to ensure the
  * notify > update function works as expected.
  *
- * @author RABUS
+ * @author artbyrab
  */
 class DummyObserver implements Observer
 {

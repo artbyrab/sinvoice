@@ -3,15 +3,15 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
-use Rabus\Sinvoice\AbstractDiscount;
+use artbyrab\sinvoice\AbstractDiscount;
 
 /**
  * Flat Discount
@@ -23,7 +23,7 @@ use Rabus\Sinvoice\AbstractDiscount;
  * if we have an invoice with a netTotal of 100.00 and we apply a flat discount
  * of 20.00 the netTotal will now be 80.00.
  *
- * @author RABUS rabus@art-by-rab.com
+ * @author artbyrab contact@art-by-rab.com
  */
 class FlatDiscount extends AbstractDiscount
 {

@@ -1,9 +1,9 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\ObserverSubjects;
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\DummyObserver;
+use artbyrab\sinvoice\ObserverSubjects;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\DummyObserver;
 
 /**
  * Sinvoice ObserverSubjects Model Test

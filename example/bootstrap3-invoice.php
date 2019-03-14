@@ -8,11 +8,11 @@ error_reporting(E_ALL);
 // manually include the autoload file so we can use the library here
 require ('../vendor/autoload.php');
 
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\FlatDiscount;
-use Rabus\Sinvoice\PercentageDiscount;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\FlatDiscount;
+use artbyrab\sinvoice\PercentageDiscount;
 
 $invoice = (new Invoice())
     ->setNumber('1')
@@ -68,7 +68,7 @@ $invoice = (new Invoice())
 
   <title>Sinvoice - Bootstrap 3 Template</title>
   <meta name="description" content="Sinvoice - Bootstrap 3 Template">
-  <meta name="author" content="RABUS">
+  <meta name="author" content="artbyrab">
 
   <link rel="stylesheet" href="css/styles.css?v=1.0">
 
@@ -102,11 +102,11 @@ $invoice = (new Invoice())
             <div class="col-xs-12"> 
                 <h2>Code</h2>
 <pre>
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\FlatDiscount;
-use Rabus\Sinvoice\PercentageDiscount;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\FlatDiscount;
+use artbyrab\sinvoice\PercentageDiscount;
 
 $invoice = (new Invoice())
     ->setNumber('1')

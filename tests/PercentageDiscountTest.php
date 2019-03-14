@@ -1,7 +1,7 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\PercentageDiscount;
+use artbyrab\sinvoice\PercentageDiscount;
 
 /**
  * Sinvoice PercentageDiscount Model Test

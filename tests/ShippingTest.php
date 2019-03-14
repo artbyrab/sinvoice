@@ -1,8 +1,8 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\Entity;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\Entity;
 
 /**
  * Sinvoice Shipping Model Test

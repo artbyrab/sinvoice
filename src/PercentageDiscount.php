@@ -3,15 +3,15 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
-use Rabus\Sinvoice\AbstractDiscount;
+use artbyrab\sinvoice\AbstractDiscount;
 
 /**
  * Percentage Discount
@@ -23,7 +23,7 @@ use Rabus\Sinvoice\AbstractDiscount;
  * model it is applied to. For example if you have an invoice with a net total
  * of 100.00 and you apply a 10% discount the new net total will be 90.00.
  *
- * @author RABUS rabus@art-by-rab.com
+ * @author artbyrab contact@art-by-rab.com
  */
 class PercentageDiscount extends AbstractDiscount
 {

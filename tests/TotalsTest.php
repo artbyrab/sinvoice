@@ -1,10 +1,10 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Totals;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Shipping;
+use artbyrab\sinvoice\Totals;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Shipping;
 
 /**
  * Sinvoice Totals Model Test

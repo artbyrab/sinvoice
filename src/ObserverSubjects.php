@@ -4,13 +4,13 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 /**
  * Observer Subjects
@@ -26,7 +26,7 @@ namespace Rabus\Sinvoice;
  * This model allow you to add observers to it, and then when something
  * happens they get notified.
  *
- * @author RABUS
+ * @author artbyrab
  */
 class ObserverSubjects
 {

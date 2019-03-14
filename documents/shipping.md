@@ -10,9 +10,9 @@ When you add shipping to an invoice it automatically recalculates the invoice to
 
 ## Creating and adding shipping to an invoice
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\Entity;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\Entity;
 
 $invoice = new Invoice();
 
@@ -37,9 +37,9 @@ $invoice->addShipping($shipping);
 ## Adding as part of the invoice fluid interface
 Of course you can add the shipping as part of the invoice creation
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\Entity;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\Entity;
 
 $invoice = (new Invoice())
     ->addShipping(

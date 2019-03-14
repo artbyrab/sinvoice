@@ -1,7 +1,7 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\AbstractDiscount;
+use artbyrab\sinvoice\AbstractDiscount;
 
 /**
  * Sinvoice AbstractDiscount Model Test

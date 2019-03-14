@@ -3,10 +3,10 @@ Below are some full examples of building an invoice.
 
 ## Example One
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\Entity;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\Entity;
 
 $invoice = (new Invoice())
     ->setNumber(1)

@@ -4,13 +4,13 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 /**
  * Observer Interface
@@ -26,11 +26,10 @@ namespace Rabus\Sinvoice;
  *
  * In this instance an observer will typically be an invoice.
  *
- * @author RABUS
+ * @author artbyrab
  */
 interface Observer
 {
-
     /**
      * Update
      *

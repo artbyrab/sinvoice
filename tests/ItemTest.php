@@ -1,8 +1,8 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Item;
-use Rabus\Sinvoice\FlatDiscount;
+use artbyrab\sinvoice\Item;
+use artbyrab\sinvoice\FlatDiscount;
 
 /**
  * Sinvoice Item Model Test

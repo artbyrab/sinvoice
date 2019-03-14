@@ -1,8 +1,8 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Status;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Status;
 
 
 /**

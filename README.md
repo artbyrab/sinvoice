@@ -47,12 +47,12 @@ PHP
 Install via composer command line:
 
 ```
-composer require rabus\sinvoice:dev-master
+composer require artbyrab\sinvoice:dev-master
 ```
 
 Install via adding to your composer.json file:
 ```
-"rabus/": "0.1*"
+"artbyrab/": "0.1*"
 ```
 
 ## Usage
@@ -60,10 +60,10 @@ Install via adding to your composer.json file:
 Creating a new invoice using the fluid interface
 
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\item;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\item;
 
 $sinvoice = (new Invoice())
     ->setNumber(1)

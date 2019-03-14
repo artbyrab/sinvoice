@@ -4,13 +4,13 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 /**
  * Charge
@@ -25,7 +25,7 @@ namespace Rabus\Sinvoice;
  *  - Additional handling fee
  *  - Other costs
  *
- * @author RABUS
+ * @author artbyrab
  */
 class Charge
 {

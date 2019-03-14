@@ -3,15 +3,15 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
-use Rabus\Sinvoice\DiscountInterface;
+use artbyrab\sinvoice\DiscountInterface;
 
 /**
  * Abstract Discount
@@ -25,7 +25,7 @@ use Rabus\Sinvoice\DiscountInterface;
  * model implements the DiscountInterface and adds some attributes to it to
  * allow for easier usage.
  *
- * @author RABUS rabus@art-by-rab.com
+ * @author artbyrab contact@art-by-rab.com
  */
 class AbstractDiscount implements DiscountInterface
 {

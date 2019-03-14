@@ -4,15 +4,15 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this package.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
-use Rabus\Sinvoice\ObserverSubjects;
+use artbyrab\sinvoice\ObserverSubjects;
 
 /**
  * Basket
@@ -31,7 +31,7 @@ use Rabus\Sinvoice\ObserverSubjects;
  * functionality is important to trigger things like total re-calculations
  * whenever an item is added or removed.
  *
- * @author RABUS
+ * @author artbyrab
  */
 class Basket
 {

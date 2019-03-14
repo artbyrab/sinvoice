@@ -23,8 +23,8 @@ The below are the status types:
 
 ## Change the status
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Status;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Status;
 
 
 $invoice = new Invoice()

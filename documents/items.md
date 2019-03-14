@@ -5,8 +5,8 @@ removed or the item basket is cleared.
 
 ## Adding an item to an invoice 
 ```
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
 
 $invoice = new Invoice();
 
@@ -24,17 +24,17 @@ Your invoice will now show the items and have calculated your totals as below:
 ```
 print_r($invoice->getTotals());
 
-Rabus\Sinvoice\Totals Object
+artbyrab\sinvoice\Totals Object
 (
-    [itemNetTotal:Rabus\Sinvoice\Totals:private] => 480
-    [discount:Rabus\Sinvoice\Totals:private] => 0
-    [itemDiscountTotal:Rabus\Sinvoice\Totals:private] => 0
-    [discountTotal:Rabus\Sinvoice\Totals:private] => 0
-    [shippingHandlingTotal:Rabus\Sinvoice\Totals:private] => 0
-    [otherChargesTotal:Rabus\Sinvoice\Totals:private] => 0
-    [netTotal:Rabus\Sinvoice\Totals:private] => 480
-    [taxTotal:Rabus\Sinvoice\Totals:private] => 0
-    [grossTotal:Rabus\Sinvoice\Totals:private] => 480
+    [itemNetTotal:artbyrab\sinvoice\Totals:private] => 480
+    [discount:artbyrab\sinvoice\Totals:private] => 0
+    [itemDiscountTotal:artbyrab\sinvoice\Totals:private] => 0
+    [discountTotal:artbyrab\sinvoice\Totals:private] => 0
+    [shippingHandlingTotal:artbyrab\sinvoice\Totals:private] => 0
+    [otherChargesTotal:artbyrab\sinvoice\Totals:private] => 0
+    [netTotal:artbyrab\sinvoice\Totals:private] => 480
+    [taxTotal:artbyrab\sinvoice\Totals:private] => 0
+    [grossTotal:artbyrab\sinvoice\Totals:private] => 480
 )
 
 ```

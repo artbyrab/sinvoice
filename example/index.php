@@ -1,8 +1,8 @@
 <?php
 require ('../vendor/autoload.php');
 
-use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Item;
+use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Item;
 ?>
 
 <!doctype html>
@@ -13,7 +13,7 @@ use Rabus\Sinvoice\Item;
 
     <title>Sinvoice</title>
     <meta name="description" content="Sinvoice">
-    <meta name="author" content="RABUS">
+    <meta name="author" content="artbyrab">
 
     <!--[if lt IE 9]>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -38,10 +38,10 @@ use Rabus\Sinvoice\Item;
             </div><!--/.col-->
             <div class="col-xs-12">
                 <h2>Create an invoice with items and shipping</h2>
-                <pre><code>use Rabus\Sinvoice\Invoice;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\Shipping;
-use Rabus\Sinvoice\item;
+                <pre><code>use artbyrab\sinvoice\Invoice;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\Shipping;
+use artbyrab\sinvoice\item;
 
 $sinvoice = (new Invoice())
     ->setNumber(1)

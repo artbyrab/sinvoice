@@ -4,13 +4,13 @@
  * Sinvoice an invoicing model.
  *
  * @package   Sinvoice
- * @author    RABUS <rabus@art-by-rab.com>
+ * @author    artbyrab <contact@art-by-rab.com>
  * @link      @TODO add in link
  * For copyright and license please see LICENSE and README docs contained in
  * this paackage.
  */
 
-namespace Rabus\Sinvoice;
+namespace artbyrab\sinvoice;
 
 /**
  * Item
@@ -25,11 +25,10 @@ namespace Rabus\Sinvoice;
  * Items are attached/removed from invoice and this will trigger an update of
  * the totals via the Basket model which is used to hold the items.
  *
- * @author RABUS
+ * @author artbyrab
  */
 class Item
 {
-
     /**
      * @var string $name Is the name of the item, 'Basketball' or 'Bitcoin Mug'.
      */

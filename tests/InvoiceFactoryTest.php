@@ -1,9 +1,9 @@
 <?php 
 
 use PHPUnit\Framework\TestCase;
-use Rabus\Sinvoice\InvoiceFactory;
-use Rabus\Sinvoice\Entity;
-use Rabus\Sinvoice\Invoice;
+use artbyrab\sinvoice\InvoiceFactory;
+use artbyrab\sinvoice\Entity;
+use artbyrab\sinvoice\Invoice;
 
 /**
  * Sinvoice InvoiceFactory Model Test
